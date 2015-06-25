@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FoodAttack</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Strings for the buttons in the main menu -->
+    <string name="avail_food">Available Food</string>
+    <string name="shop_list">Shopping List</string>
+    <string name="recipes">Recipes</string>
+    <string name="roll_call">Roll Call</string>
+    <string name="title_activity_stock_list">StockList</string>
+    <string name="title_activity_shop_list">ShopList</string>
+    <string name="title_activity_recipe_list">RecipeList</string>
+    <string name="title_activity_roll_call">RollCallActivity</string>
+
+
+</resources>
