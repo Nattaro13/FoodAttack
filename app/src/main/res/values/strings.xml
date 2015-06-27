@@ -14,6 +14,12 @@
     <string name="title_activity_shop_list">ShopList</string>
     <string name="title_activity_recipe_list">RecipeList</string>
     <string name="title_activity_roll_call">RollCallActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+
+    <!-- Strings for the login screen -->
+    <string name="signing_in">Signing In...</string>
+    <string name="skipLogin">Skip Signing-in</string>
 
 
 </resources>
