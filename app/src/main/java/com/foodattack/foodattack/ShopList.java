@@ -1,9 +1,17 @@
 package com.foodattack.foodattack;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 
 public class ShopList extends ActionBarActivity {
@@ -30,6 +38,35 @@ public class ShopList extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+
+        } else if (id == R.id.action_add_item) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Add an item to the shopping list");
+            //builder.setMessage("Key in an item name");
+
+            final AlertDialog alertDialog = builder.create();
+            LayoutInflater mInflater = alertDialog.getLayoutInflater();
+            View dialogLayout = mInflater.inflate(R.layout.shop_list_dialog,null);
+
+            builder.setView(dialogLayout);
+
+
+            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Log.d("ShopList","Add an item to the shopping list");
+                }
+            });
+
+
+            builder.setNegativeButton("Cancel",null);
+
+            builder.create().show();
+            return true;
+
+        } else if (id == R.id.action_search) {
+            Log.d("ShopList","Search for an item in the shopping list");
             return true;
         }
 
