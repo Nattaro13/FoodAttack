@@ -1,8 +1,10 @@
 package com.foodattack.foodattack;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.foodattack.foodattack.db.StockListContract;
+import com.foodattack.foodattack.db.StockListDBHelper;
+
 
 public class StockList extends ActionBarActivity {
+
+    private StockListDBHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +49,37 @@ public class StockList extends ActionBarActivity {
                 View dialogLayout = inflater.inflate(R.layout.popup_stock_list,null);
                 builder.setView(dialogLayout);
 
+                //edittext var of input fields
+                final EditText rawItemName = (EditText) dialogLayout.findViewById(R.id.stocklist_ingredient_name);
+                final EditText rawItemBrand = (EditText) dialogLayout.findViewById(R.id.stocklist_brand);
+                final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.stocklist_qty);
+                final EditText rawItemRestock = (EditText) dialogLayout.findViewById(R.id.stocklist_restock);
+
                 //add button
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("StockList","blah");
+
+                        //Contents of input fields
+                        String itemName = rawItemName.getText().toString();
+                        String itemBrand = rawItemBrand.getText().toString();
+                        String itemQty = rawItemQty.getText().toString();
+                        String itemRestock = rawItemRestock.getText().toString();
+
+                        helper = new StockListDBHelper(StockList.this);
+                        SQLiteDatabase db = helper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+
+                        values.clear();
+                        values.put(StockListContract.Columns.ITEM_NAME, itemName);
+                        values.put(StockListContract.Columns.ITEM_QTY, itemQty);
+                        values.put(StockListContract.Columns.ITEM_BRAND, itemBrand);
+                        values.put(StockListContract.Columns.ITEM_RESTOCK, itemRestock);
+
+                        db.insertWithOnConflict(StockListContract.TABLE, null, values,
+                                SQLiteDatabase.CONFLICT_IGNORE);
+
+                        Log.d("StockList",itemName);
                     }
                 });
 
