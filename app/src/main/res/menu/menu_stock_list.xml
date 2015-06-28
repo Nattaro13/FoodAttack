@@ -10,4 +10,9 @@
         app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Add An ingredient" />
+
+    <item android:id="@+id/action_search"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:title="Search" />
     </menu>
