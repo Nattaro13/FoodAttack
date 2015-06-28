@@ -21,5 +21,10 @@
     <string name="signing_in">Signing In...</string>
     <string name="skipLogin">Skip Signing-in</string>
 
-
+    <!-- Hints for stocklist and shoplist -->
+    <string name="ingredient_hint">Ingredient</string>
+    <string name="qty_hint">Quantity</string>
+    <string name="brand_hint">Brand</string>
+    <string name="restock_hint">Restock</string>
+    
 </resources>

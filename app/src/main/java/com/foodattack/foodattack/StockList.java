@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 
@@ -34,15 +36,21 @@ public class StockList extends ActionBarActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Add an ingredient");
                 builder.setMessage("Ingredient Details");
-                final EditText inputField = new EditText(this);
-                builder.setView(inputField);
+
+                final AlertDialog alertDialog = builder.create();
+                LayoutInflater inflater = alertDialog.getLayoutInflater();
+                View dialogLayout = inflater.inflate(R.layout.popup_stock_list,null);
+                builder.setView(dialogLayout);
+
+                //add button
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("StockList",inputField.getText().toString());
+                        Log.d("StockList","blah");
                     }
                 });
 
+                //cancel button
                 builder.setNegativeButton("Cancel",null);
 
                 builder.create().show();
