@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.foodattack.foodattack.StockList">
+
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-</menu>
+
+    <item android:id="@+id/action_add_stock_item"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Add An ingredient" />
+    </menu>
