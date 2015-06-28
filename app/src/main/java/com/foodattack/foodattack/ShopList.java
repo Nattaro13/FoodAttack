@@ -82,7 +82,7 @@ public class ShopList extends ActionBarActivity {
                     //insert the data into the database
                     values.put(ShopListContract.Columns.ITEM_NAME,itemName);
                     values.put(ShopListContract.Columns.ITEM_BRAND,itemBrand);
-                    values.put(ShopListContract.Columns.ITEM_QUANTITY,itemQty);
+                    values.put(ShopListContract.Columns.ITEM_QTY,itemQty);
 
                     db.insertWithOnConflict(ShopListContract.TABLE,null,values,
                             SQLiteDatabase.CONFLICT_IGNORE);

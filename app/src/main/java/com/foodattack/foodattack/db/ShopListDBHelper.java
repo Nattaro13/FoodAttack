@@ -23,7 +23,7 @@ public class ShopListDBHelper extends SQLiteOpenHelper {
                                 "%s TEXT, %s TEXT, %s TEXT)", ShopListContract.TABLE,
                         ShopListContract.Columns.ITEM_NAME,
                         ShopListContract.Columns.ITEM_BRAND,
-                        ShopListContract.Columns.ITEM_QUANTITY);
+                        ShopListContract.Columns.ITEM_QTY);
 
         Log.d("TaskDBHelper","Query to form table: "+sqlQuery);
         sqlDB.execSQL(sqlQuery);

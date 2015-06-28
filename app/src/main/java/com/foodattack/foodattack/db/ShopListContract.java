@@ -16,7 +16,7 @@ public class ShopListContract {
     public class Columns {
         public static final String ITEM_NAME = "item";
         public static final String ITEM_BRAND = "brand";
-        public static final String ITEM_QUANTITY = "quantity";
+        public static final String ITEM_QTY = "quantity";
         public static final String _ID = BaseColumns._ID;
     }
 
