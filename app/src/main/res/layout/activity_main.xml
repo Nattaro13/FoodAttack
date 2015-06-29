@@ -25,16 +25,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/avail_food"
+            android:background="@drawable/custom_btn_main"
             android:onClick="getStock"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
             />
-
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/recipes"
             android:layout_weight="1"
+            android:background="@drawable/custom_btn_main"
             android:onClick="getRecipeList"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             />
 
 
@@ -56,7 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/shop_list"
+            android:background="@drawable/custom_btn_main"
             android:onClick="getShopList"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
             />
 
         <Button
@@ -64,7 +72,10 @@
             android:layout_height="wrap_content"
             android:text="@string/roll_call"
             android:layout_weight="1"
+            android:background="@drawable/custom_btn_main"
             android:onClick="getRollCallActivity"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             />
 
     </LinearLayout>
