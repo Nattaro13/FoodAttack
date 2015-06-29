@@ -2,8 +2,10 @@ package com.foodattack.foodattack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,18 +16,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SimpleCursorAdapter;
 
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
 
 
-public class ShopList extends ActionBarActivity {
+public class ShopList extends ListActivity {
     private ShopListDBHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
+
+        //update the Shopping List based on what is in the database
+        updateUI();
+
+    }
+
+    private void updateUI() {
+        helper = new ShopListDBHelper(ShopList.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+        //format of an SQlite query
+        //Cursor cursor = sqLiteDatabase.query(
+        //tableName, tableColumns, whereClause, whereArgs, groupBy, having, orderBy);
+        Cursor cursor = sqlDB.query(ShopListContract.TABLE,
+                new String[]{ShopListContract.Columns._ID,
+                        ShopListContract.Columns.ITEM_NAME,
+                        ShopListContract.Columns.ITEM_BRAND,
+                        ShopListContract.Columns.ITEM_QTY},
+                null,null,null,null,null);
+
+        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
+                this,
+                R.layout.shop_list_view,
+                cursor,
+                new String[] { ShopListContract.Columns.ITEM_NAME,
+                        ShopListContract.Columns.ITEM_BRAND,
+                        ShopListContract.Columns.ITEM_QTY},
+                new int[] { R.id.ShopList_TextView},
+                0
+        );
+        this.setListAdapter(listAdapter);
     }
 
     @Override
@@ -70,7 +103,7 @@ public class ShopList extends ActionBarActivity {
                     String itemName = rawItemName.getText().toString();
                     String itemBrand = rawItemBrand.getText().toString();
                     String itemQty = rawItemQuantity.getText().toString();
-                    Log.d("ShopList","Get item properties to store into database");
+                    Log.d("ShopList", "Get item properties to store into database");
 
                     //initialise all the stuff you need for the database
                     ShopListDBHelper helper = new ShopListDBHelper(ShopList.this);
@@ -80,14 +113,15 @@ public class ShopList extends ActionBarActivity {
                     values.clear();
 
                     //insert the data into the database
-                    values.put(ShopListContract.Columns.ITEM_NAME,itemName);
-                    values.put(ShopListContract.Columns.ITEM_BRAND,itemBrand);
-                    values.put(ShopListContract.Columns.ITEM_QTY,itemQty);
+                    values.put(ShopListContract.Columns.ITEM_NAME, itemName);
+                    values.put(ShopListContract.Columns.ITEM_BRAND, itemBrand);
+                    values.put(ShopListContract.Columns.ITEM_QTY, itemQty);
 
-                    db.insertWithOnConflict(ShopListContract.TABLE,null,values,
+                    db.insertWithOnConflict(ShopListContract.TABLE, null, values,
                             SQLiteDatabase.CONFLICT_IGNORE);
                 }
             });
+            updateUI();
 
 
             builder.setNegativeButton("Cancel",null);

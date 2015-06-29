@@ -27,4 +27,8 @@
     <string name="brand_hint">Brand</string>
     <string name="restock_hint">Restock</string>
 
+    <!--Strings for the ShopList related XML files -->
+    <string name="shop_list_remove">x</string>
+
+
 </resources>

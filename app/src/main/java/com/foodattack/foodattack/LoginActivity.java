@@ -1,5 +1,6 @@
 package com.foodattack.foodattack;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -88,6 +89,8 @@ public class LoginActivity extends Activity implements
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
     }
 
 
