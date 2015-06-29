@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.SearchManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -73,6 +76,10 @@ public class ShopList extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_shop_list, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }
@@ -142,13 +149,14 @@ public class ShopList extends ListActivity {
 
         } else if (id == R.id.action_search) {
             Log.d("ShopList","Search for an item in the shopping list");
+            onSearchRequested();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
+    
     /*
     When the remove button is pressed on the UI, this method is executed.
      */

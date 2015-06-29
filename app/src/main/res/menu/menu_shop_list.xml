@@ -8,17 +8,18 @@
 
     <!--Button to add a new item to the shopping list -->
     <item android:id="@+id/action_add_item"
-        app:showAsAction="always"
-        android:showAsAction="always"
+        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Add item to buy" />
+        android:title="Add item" />
 
     <!-- Button to search for things in your shopping list -->
     <item android:id="@+id/action_search"
-        app:showAsAction="always"
-        android:showAsAction="always"
+        app:showAsAction="collapseActionView|always"
+        android:showAsAction="collapseActionView|always"
+        android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search for item in your shopping list" />
+        android:title="Search" />
 
     <!-- Button for the settings -->
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
