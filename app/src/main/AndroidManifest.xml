@@ -40,6 +40,9 @@
             android:label="@string/title_activity_shop_list"
             android:parentActivityName=".MainActivity" >
             <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchShopList" />
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.MainActivity" />
         </activity>
@@ -68,6 +71,7 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
