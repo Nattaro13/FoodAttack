@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 
 import com.foodattack.foodattack.db.StockListContract;
 import com.foodattack.foodattack.db.StockListDBHelper;
@@ -27,6 +29,19 @@ public class StockList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_stock_list);
+
+        SQLiteDatabase sqlDB = new StockListDBHelper(this).getWritableDatabase();
+        Cursor cursor = sqlDB.query(StockListContract.TABLE,
+                new String[]{StockListContract.Columns.ITEM_NAME},
+                null,null,null,null,null);
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+            Log.d("MainActivity cursor",
+                    cursor.getString(
+                            cursor.getColumnIndexOrThrow(
+                                    StockListContract.Columns.ITEM_NAME)));
+        }
     }
 
     @Override
@@ -93,4 +108,22 @@ public class StockList extends ActionBarActivity {
                 return false;
         }
     }
+
+/*    private void updateUI() {
+        helper = new StockListDBHelper(MainActivity.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+        Cursor cursor = sqlDB.query(StockListContract.TABLE,
+                new String[]{StockListContract.Columns._ID, StockListContract.Columns.TASK},
+                null,null,null,null,null);
+
+        listAdapter = new SimpleCursorAdapter(
+                this,
+                R.layout.stock_list_view,
+                cursor,
+                new String[] { StockListContract.Columns.ITEM_NAME},
+                new int[] { R.id.taskTextView},
+                0
+        );
+        this.setListAdapter(listAdapter);
+    } */
 }
