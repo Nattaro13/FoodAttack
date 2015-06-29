@@ -1,5 +1,6 @@
 package com.foodattack.foodattack;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -72,6 +73,7 @@ public class ShopList extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_shop_list, menu);
+
         return true;
     }
 
