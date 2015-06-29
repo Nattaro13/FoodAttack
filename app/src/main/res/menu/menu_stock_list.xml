@@ -6,13 +6,18 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 
+    <!--Button to add a new item to the stock list -->
     <item android:id="@+id/action_add_stock_item"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Add An ingredient" />
 
+    <!-- Button to search for things in your stock list -->
     <item android:id="@+id/action_search"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_search_category_default"
+        app:showAsAction="collapseActionView|always"
+        android:showAsAction="collapseActionView|always"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="Search" />
     </menu>
