@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.foodattack.foodattack.db.StockListContract;
 import com.foodattack.foodattack.db.StockListDBHelper;
@@ -77,7 +74,7 @@ public class StockList extends ListActivity {
 
                 final AlertDialog alertDialog = builder.create();
                 LayoutInflater inflater = alertDialog.getLayoutInflater();
-                View dialogLayout = inflater.inflate(R.layout.popup_stock_list,null);
+                View dialogLayout = inflater.inflate(R.layout.dialog_stock_list,null);
                 builder.setView(dialogLayout);
 
                 //edittext var of input fields
@@ -130,12 +127,12 @@ public class StockList extends ListActivity {
         View v = (View) view.getParent();
         Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
 
-        String task = itemNameButton.getText().toString();
+        String itemName = itemNameButton.getText().toString();
 
         String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
                 StockListContract.TABLE,
                 StockListContract.Columns.ITEM_NAME,
-                task);
+                itemName);
 
 
         helper = new StockListDBHelper(StockList.this);
@@ -148,7 +145,53 @@ public class StockList extends ListActivity {
         View v = (View) view.getParent();
         Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit an ingredient");
+        builder.setMessage("Edit Ingredient Details");
 
-        updateUI();
+        final AlertDialog alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_stock_list,null);
+        builder.setView(dialogLayout);
+
+        //edittext var of input fields
+        final EditText rawItemName = (EditText) dialogLayout.findViewById(R.id.stocklist_ingredient_name);
+        final EditText rawItemBrand = (EditText) dialogLayout.findViewById(R.id.stocklist_brand);
+        final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.stocklist_qty);
+        final EditText rawItemRestock = (EditText) dialogLayout.findViewById(R.id.stocklist_restock);
+
+        //add button
+        builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Contents of input fields
+                String itemName = rawItemName.getText().toString();
+                String itemBrand = rawItemBrand.getText().toString();
+                String itemQty = rawItemQty.getText().toString();
+                String itemRestock = rawItemRestock.getText().toString();
+
+
+                String sql = String.format("UPDATE %s SET %s = '%s', %s = '%s', %s = '%s', %s = '%s' WHERE %s = '%s'",
+                        StockListContract.TABLE,
+                        StockListContract.Columns.ITEM_NAME, itemName,
+                        StockListContract.Columns.ITEM_BRAND, itemBrand,
+                        StockListContract.Columns.ITEM_QTY, itemQty,
+                        StockListContract.Columns.ITEM_RESTOCK, itemRestock,
+                        StockListContract.Columns.ITEM_NAME, itemName);
+
+                helper = new StockListDBHelper(StockList.this);
+                SQLiteDatabase sqlDB = helper.getWritableDatabase();
+                sqlDB.execSQL(sql);
+                Log.d("Edit StockList", itemName);
+                updateUI();
+            }
+        });
+
+        //cancel button
+        builder.setNegativeButton("Cancel",null);
+
+        builder.create().show();
+
     }
 }
