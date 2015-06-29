@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.foodattack.foodattack.db.StockListContract;
 import com.foodattack.foodattack.db.StockListDBHelper;
@@ -122,5 +124,23 @@ public class StockList extends ListActivity {
             default:
                 return false;
         }
+    }
+
+    public void onDelButtonClick(View view) {
+        View v = (View) view.getParent();
+        Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
+
+        String task = itemNameButton.getText().toString();
+
+        String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
+                StockListContract.TABLE,
+                StockListContract.Columns.ITEM_NAME,
+                task);
+
+
+        helper = new StockListDBHelper(StockList.this);
+        SQLiteDatabase sqlDB = helper.getWritableDatabase();
+        sqlDB.execSQL(sql);
+        updateUI();
     }
 }
