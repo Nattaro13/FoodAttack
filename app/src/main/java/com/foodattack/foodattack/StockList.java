@@ -47,7 +47,7 @@ public class StockList extends ListActivity {
                         StockListContract.Columns.ITEM_BRAND,
                         StockListContract.Columns.ITEM_QTY,
                         StockListContract.Columns.ITEM_RESTOCK},
-                null, null, null, null, null);
+                null, null, null, null, StockListContract.Columns.ITEM_NAME+" ASC");
 
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
                 this,
