@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <Button
+        android:id="@+id/delButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/taskTextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:text="Del"
+        android:onClick="onDelButtonClick"/>
+
+
+    <Button
+        android:id="@+id/stocklist_itemNameView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="20sp"
-        android:layout_toLeftOf="@+id/doneButton"
-        android:layout_alignBottom="@+id/doneButton"
         android:gravity="center_vertical" />
 
     <Button
+        android:id="@+id/stocklist_itemQtyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done"
-        android:id="@+id/doneButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textSize="20sp"
+        android:gravity="right|center_vertical" />
 
-</RelativeLayout>
+</LinearLayout>
