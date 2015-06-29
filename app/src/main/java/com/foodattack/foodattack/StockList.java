@@ -1,6 +1,7 @@
 package com.foodattack.foodattack;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,28 +21,40 @@ import com.foodattack.foodattack.db.StockListContract;
 import com.foodattack.foodattack.db.StockListDBHelper;
 
 
-public class StockList extends ActionBarActivity {
+public class StockList extends ListActivity {
 
     private StockListDBHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.activity_stock_list);
 
-        SQLiteDatabase sqlDB = new StockListDBHelper(this).getWritableDatabase();
-        Cursor cursor = sqlDB.query(StockListContract.TABLE,
-                new String[]{StockListContract.Columns.ITEM_NAME},
-                null,null,null,null,null);
+        //display the Stock List based on what is in the database
+        updateUI();
+    }
 
-        cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            Log.d("MainActivity cursor",
-                    cursor.getString(
-                            cursor.getColumnIndexOrThrow(
-                                    StockListContract.Columns.ITEM_NAME)));
-        }
+    private void updateUI() {
+        helper = new StockListDBHelper(StockList.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+
+        Cursor cursor = sqlDB.query(StockListContract.TABLE,
+                new String[]{StockListContract.Columns._ID,
+                        StockListContract.Columns.ITEM_NAME,
+                        StockListContract.Columns.ITEM_BRAND,
+                        StockListContract.Columns.ITEM_QTY,
+                        StockListContract.Columns.ITEM_RESTOCK},
+                null, null, null, null, null);
+
+        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
+                this,
+                R.layout.stock_list_view,
+                cursor,
+                new String[] { StockListContract.Columns.ITEM_NAME},
+                new int[] { R.id.taskTextView},
+                0
+        );
+        this.setListAdapter(listAdapter);
     }
 
     @Override
@@ -108,22 +121,4 @@ public class StockList extends ActionBarActivity {
                 return false;
         }
     }
-
-/*    private void updateUI() {
-        helper = new StockListDBHelper(MainActivity.this);
-        SQLiteDatabase sqlDB = helper.getReadableDatabase();
-        Cursor cursor = sqlDB.query(StockListContract.TABLE,
-                new String[]{StockListContract.Columns._ID, StockListContract.Columns.TASK},
-                null,null,null,null,null);
-
-        listAdapter = new SimpleCursorAdapter(
-                this,
-                R.layout.stock_list_view,
-                cursor,
-                new String[] { StockListContract.Columns.ITEM_NAME},
-                new int[] { R.id.taskTextView},
-                0
-        );
-        this.setListAdapter(listAdapter);
-    } */
 }
