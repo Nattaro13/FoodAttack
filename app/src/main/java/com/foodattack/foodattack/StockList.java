@@ -160,6 +160,13 @@ public class StockList extends ListActivity {
         final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.stocklist_qty);
         final EditText rawItemRestock = (EditText) dialogLayout.findViewById(R.id.stocklist_restock);
 
+        //set text in input fields to old details
+        rawItemName.setText(oldItemName);
+        // TODO edit set text arguments for edit dialog in stocklist
+        rawItemBrand.setText("oldBrand");
+        rawItemQty.setText("oldQty");
+        rawItemRestock.setText("oldRestock");
+
         //add button
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
