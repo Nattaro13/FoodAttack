@@ -143,7 +143,9 @@ public class StockList extends ListActivity {
 
     public void editOnClick(View view){
         View v = (View) view.getParent();
-        Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
+        Button oldItemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
+
+        final String oldItemName = oldItemNameButton.getText().toString();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit an ingredient");
@@ -171,18 +173,18 @@ public class StockList extends ListActivity {
                 String itemQty = rawItemQty.getText().toString();
                 String itemRestock = rawItemRestock.getText().toString();
 
-
-                String sql = String.format("UPDATE %s SET %s = '%s', %s = '%s', %s = '%s', %s = '%s' WHERE %s = '%s'",
+                //update SQL statement
+                String sqlUpdate = String.format("UPDATE %s SET %s = '%s', %s = '%s', %s = '%s', %s = '%s' WHERE %s = '%s'",
                         StockListContract.TABLE,
                         StockListContract.Columns.ITEM_NAME, itemName,
                         StockListContract.Columns.ITEM_BRAND, itemBrand,
                         StockListContract.Columns.ITEM_QTY, itemQty,
                         StockListContract.Columns.ITEM_RESTOCK, itemRestock,
-                        StockListContract.Columns.ITEM_NAME, itemName);
+                        StockListContract.Columns.ITEM_NAME, oldItemName);
 
                 helper = new StockListDBHelper(StockList.this);
                 SQLiteDatabase sqlDB = helper.getWritableDatabase();
-                sqlDB.execSQL(sql);
+                sqlDB.execSQL(sqlUpdate);
                 Log.d("Edit StockList", itemName);
                 updateUI();
             }
