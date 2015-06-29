@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -26,7 +27,6 @@ import android.widget.TextView;
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
 import com.foodattack.foodattack.SearchShopList;
-
 
 public class ShopList extends ListActivity {
     private ShopListDBHelper helper;
@@ -165,9 +165,9 @@ public class ShopList extends ListActivity {
     public void onShopListDeleteButtonClick(View view) {
         View v = (View) view.getParent();
         //get the item name
-        TextView itemNameTextView = (TextView) v.findViewById(R.id.ShopList_ItemName_View);
+        Button itemNameButton = (Button) v.findViewById(R.id.ShopList_ItemName_View);
         //convert item name to string
-        String itemName = itemNameTextView.getText().toString();
+        String itemName = itemNameButton.getText().toString();
 
         String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
                 ShopListContract.TABLE,
@@ -180,4 +180,63 @@ public class ShopList extends ListActivity {
         sqlDB.execSQL(sql);
         updateUI();
     }
+
+    public void editOnClick(View view){
+        View v = (View) view.getParent();
+        Button oldItemNameButton = (Button) v.findViewById(R.id.ShopList_ItemName_View);
+
+        final String oldItemName = oldItemNameButton.getText().toString();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit an ingredient's details");
+
+        final AlertDialog alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.shop_list_dialog,null);
+        builder.setView(dialogLayout);
+
+        //edittext var of input fields
+        final EditText rawItemName = (EditText) dialogLayout.findViewById(R.id.shoplist_item_name);
+        final EditText rawItemBrand = (EditText) dialogLayout.findViewById(R.id.shoplist_item_brand);
+        final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.shoplist_quantity);
+
+        //set text in input fields to old details
+        rawItemName.setText(oldItemName);
+        // TODO edit set text arguments for edit dialog in shoplist
+        rawItemBrand.setText("oldBrand");
+        rawItemQty.setText("oldQty");
+
+        //add button
+        builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Contents of input fields
+                String itemName = rawItemName.getText().toString();
+                String itemBrand = rawItemBrand.getText().toString();
+                String itemQty = rawItemQty.getText().toString();
+
+                //update SQL statement
+                String sqlUpdate = String.format("UPDATE %s SET %s = '%s', %s = '%s', %s = '%s' WHERE %s = '%s'",
+                        ShopListContract.TABLE,
+                        ShopListContract.Columns.ITEM_NAME, itemName,
+                        ShopListContract.Columns.ITEM_BRAND, itemBrand,
+                        ShopListContract.Columns.ITEM_QTY, itemQty,
+                        ShopListContract.Columns.ITEM_NAME, oldItemName);
+
+                helper = new ShopListDBHelper(ShopList.this);
+                SQLiteDatabase sqlDB = helper.getWritableDatabase();
+                sqlDB.execSQL(sqlUpdate);
+                Log.d("Edit ShopList", itemName);
+                updateUI();
+            }
+        });
+
+        //cancel button
+        builder.setNegativeButton("Cancel",null);
+
+        builder.create().show();
+
+    }
+
 }
