@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
@@ -25,6 +26,9 @@ import com.foodattack.foodattack.db.ShopListContract;
 public class ShopList extends ListActivity {
     private ShopListDBHelper helper;
 
+    /*
+    Like a constructor
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,10 @@ public class ShopList extends ListActivity {
 
     }
 
+
+    /*
+    Updates the main UI when any item is added or deleted from the database
+     */
     private void updateUI() {
         helper = new ShopListDBHelper(ShopList.this);
         SQLiteDatabase sqlDB = helper.getReadableDatabase();
@@ -44,7 +52,6 @@ public class ShopList extends ListActivity {
         Cursor cursor = sqlDB.query(ShopListContract.TABLE,
                 new String[]{ShopListContract.Columns._ID,
                         ShopListContract.Columns.ITEM_NAME,
-                        ShopListContract.Columns.ITEM_BRAND,
                         ShopListContract.Columns.ITEM_QTY},
                 null,null,null,null,null);
 
@@ -53,13 +60,13 @@ public class ShopList extends ListActivity {
                 R.layout.shop_list_view,
                 cursor,
                 new String[] { ShopListContract.Columns.ITEM_NAME,
-                        ShopListContract.Columns.ITEM_BRAND,
                         ShopListContract.Columns.ITEM_QTY},
-                new int[] { R.id.ShopList_TextView},
+                new int[] { R.id.ShopList_ItemName_View,R.id.ShopList_ItemQty_View},
                 0
         );
         this.setListAdapter(listAdapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +74,7 @@ public class ShopList extends ListActivity {
         getMenuInflater().inflate(R.menu.menu_shop_list, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,9 +127,10 @@ public class ShopList extends ListActivity {
 
                     db.insertWithOnConflict(ShopListContract.TABLE, null, values,
                             SQLiteDatabase.CONFLICT_IGNORE);
+                    updateUI();
                 }
             });
-            updateUI();
+
 
 
             builder.setNegativeButton("Cancel",null);
@@ -135,5 +144,28 @@ public class ShopList extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    When the remove button is pressed on the UI, this method is executed.
+     */
+    public void onShopListDeleteButtonClick(View view) {
+        View v = (View) view.getParent();
+        //get the item name
+        TextView itemNameTextView = (TextView) v.findViewById(R.id.ShopList_ItemName_View);
+        //convert item name to string
+        String itemName = itemNameTextView.getText().toString();
+
+        String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
+                ShopListContract.TABLE,
+                ShopListContract.Columns.ITEM_NAME,
+                itemName);
+
+
+        helper = new ShopListDBHelper(ShopList.this);
+        SQLiteDatabase sqlDB = helper.getWritableDatabase();
+        sqlDB.execSQL(sql);
+        updateUI();
     }
 }
