@@ -58,7 +58,7 @@ public class ShopList extends ListActivity {
                 new String[]{ShopListContract.Columns._ID,
                         ShopListContract.Columns.ITEM_NAME,
                         ShopListContract.Columns.ITEM_QTY},
-                null,null,null,null,null);
+                null,null,null,null, ShopListContract.Columns.ITEM_NAME+" ASC");
 
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
                 this,
