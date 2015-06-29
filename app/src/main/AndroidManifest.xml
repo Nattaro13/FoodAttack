@@ -32,6 +32,9 @@
             android:label="@string/title_activity_stock_list"
             android:parentActivityName=".MainActivity" >
             <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchShopList" />
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.MainActivity" />
         </activity>

@@ -70,20 +70,4 @@ public class SearchShopList extends ListActivity {
         this.setListAdapter(listAdapter);
     }
 
-
-
-    /**
-     * Builds a table of items matching the searchTerm in their name or description
-     */
-    /*
-    public Cursor searchMenuItems(String searchTerm) {
-        helper = new ShopListDBHelper(SearchShopList.this);
-        SQLiteDatabase sqlDB = helper.getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        qb.setTables(ShopListContract.TABLE);
-        Cursor c = qb.query(sqlDB, null, "("+ShopListContract.Columns.ITEM_NAME.toString()+" LIKE '%"+searchTerm+"%') " +
-                        "OR ("+ShopListContract.Columns.ITEM_BRAND+" LIKE '%" + searchTerm+"%')",
-                null, null, null, null);
-        return c;
-    }  */
 }
