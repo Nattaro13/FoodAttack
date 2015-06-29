@@ -143,4 +143,12 @@ public class StockList extends ListActivity {
         sqlDB.execSQL(sql);
         updateUI();
     }
+
+    public void editOnClick(View view){
+        View v = (View) view.getParent();
+        Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
+
+
+        updateUI();
+    }
 }

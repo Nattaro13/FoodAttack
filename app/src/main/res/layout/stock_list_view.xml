@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:onClick="editOnClick"/>
 
     <Button
         android:id="@+id/stocklist_itemQtyView"
