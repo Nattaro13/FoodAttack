@@ -174,12 +174,41 @@ public class StockList extends ListActivity {
         final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.stocklist_qty);
         final EditText rawItemRestock = (EditText) dialogLayout.findViewById(R.id.stocklist_restock);
 
+        helper = new StockListDBHelper(StockList.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+        Cursor cursor = sqlDB.query(StockListContract.TABLE,
+                new String[]{StockListContract.Columns._ID,
+                        StockListContract.Columns.ITEM_NAME,
+                        StockListContract.Columns.ITEM_BRAND,
+                        StockListContract.Columns.ITEM_QTY,
+                        StockListContract.Columns.ITEM_RESTOCK},
+                String.format("%s = ? ", StockListContract.Columns.ITEM_NAME),
+                new String[]{oldItemName},
+                null, null, null, null);
+
+        String oldBrand = "oldBrand";
+        String oldQty = "oldQty";
+        String oldRestock = "oldRestock";
+        if(cursor.moveToFirst()){
+            int brandColIndex = cursor.getColumnIndex(StockListContract.Columns.ITEM_BRAND);
+            oldBrand = cursor.getString(brandColIndex);
+
+            int qtyColIndex = cursor.getColumnIndex(StockListContract.Columns.ITEM_QTY);
+            oldQty = cursor.getString(qtyColIndex);
+
+            int restockColIndex = cursor.getColumnIndex(StockListContract.Columns.ITEM_RESTOCK);
+            oldRestock = cursor.getString(restockColIndex);
+        }
+
+
+        //String oldBrand = cursor.getString(brandColIndex);
+
         //set text in input fields to old details
         rawItemName.setText(oldItemName);
         // TODO edit set text arguments for edit dialog in stocklist
-        rawItemBrand.setText("oldBrand");
-        rawItemQty.setText("oldQty");
-        rawItemRestock.setText("oldRestock");
+        rawItemBrand.setText(oldBrand);
+        rawItemQty.setText(oldQty);
+        rawItemRestock.setText(oldRestock);
 
         //add button
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
