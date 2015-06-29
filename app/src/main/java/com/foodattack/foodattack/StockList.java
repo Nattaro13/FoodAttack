@@ -2,7 +2,9 @@ package com.foodattack.foodattack;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.SearchManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 
 import com.foodattack.foodattack.db.StockListContract;
@@ -44,7 +47,7 @@ public class StockList extends ListActivity {
                         StockListContract.Columns.ITEM_BRAND,
                         StockListContract.Columns.ITEM_QTY,
                         StockListContract.Columns.ITEM_RESTOCK},
-                null, null, null, null, null);
+                null, null, null, null, StockListContract.Columns.ITEM_NAME+" ASC");
 
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
                 this,
@@ -61,6 +64,12 @@ public class StockList extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stock_list, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
         return true;
     }
 
@@ -115,6 +124,11 @@ public class StockList extends ListActivity {
                 builder.setNegativeButton("Cancel",null);
 
                 builder.create().show();
+                return true;
+
+            case R.id.action_search:
+                Log.d("ShopList", "Search for an item in the shopping list");
+                onSearchRequested();
                 return true;
 
             default:
