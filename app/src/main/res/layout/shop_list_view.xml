@@ -18,9 +18,10 @@
         android:id="@+id/ShopList_ItemName_View"
         android:textSize="20sp"
         android:gravity="center_vertical"
+        style="?android:attr/borderlessButtonStyle"
         android:onClick="editOnClick"/>
 
-    <Button
+    <TextView
         android:id="@+id/ShopList_ItemQty_View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
