@@ -152,7 +152,7 @@ public class ShopList extends ListActivity {
             return true;
 
         } else if (id == R.id.action_search) {
-            Log.d("ShopList","Search for an item in the shopping list");
+            //Log.d("ShopList","Search for an item in the shopping list");
             onSearchRequested();
             return true;
         }
@@ -249,7 +249,7 @@ public class ShopList extends ListActivity {
                 helper = new ShopListDBHelper(ShopList.this);
                 SQLiteDatabase sqlDB = helper.getWritableDatabase();
                 sqlDB.execSQL(sqlUpdate);
-                Log.d("Edit ShopList", itemName);
+                //Log.d("Edit ShopList", itemName);
                 updateUI();
             }
         });

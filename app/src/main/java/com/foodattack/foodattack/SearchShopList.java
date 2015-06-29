@@ -68,6 +68,7 @@ public class SearchShopList extends ListActivity {
                 0
         );
         this.setListAdapter(listAdapter);
+
     }
 
 }
