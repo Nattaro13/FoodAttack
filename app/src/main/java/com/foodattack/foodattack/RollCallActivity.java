@@ -1,12 +1,13 @@
 package com.foodattack.foodattack;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class RollCallActivity extends ActionBarActivity {
+public class RollCallActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -28,13 +28,15 @@
             android:onClick="getStock"
             />
 
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/recipes"
             android:layout_weight="1"
-            android:text="@string/shop_list"
-            android:onClick="getShopList"
+            android:onClick="getRecipeList"
             />
+
 
     </LinearLayout>
 
@@ -52,9 +54,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recipes"
             android:layout_weight="1"
-            android:onClick="getRecipeList"
+            android:text="@string/shop_list"
+            android:onClick="getShopList"
             />
 
         <Button
