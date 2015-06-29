@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.foodattack.foodattack.db.StockListContract;
 import com.foodattack.foodattack.db.StockListDBHelper;
@@ -34,6 +36,7 @@ public class StockList extends ListActivity {
         updateUI();
     }
 
+    //update contents and display in list
     private void updateUI() {
         helper = new StockListDBHelper(StockList.this);
         SQLiteDatabase sqlDB = helper.getReadableDatabase();
@@ -50,8 +53,8 @@ public class StockList extends ListActivity {
                 this,
                 R.layout.stock_list_view,
                 cursor,
-                new String[] { StockListContract.Columns.ITEM_NAME},
-                new int[] { R.id.taskTextView},
+                new String[] { StockListContract.Columns.ITEM_NAME, StockListContract.Columns.ITEM_QTY},
+                new int[] { R.id.stocklist_itemNameView, R.id.stocklist_itemQtyView },
                 0
         );
         this.setListAdapter(listAdapter);
@@ -107,7 +110,8 @@ public class StockList extends ListActivity {
                         db.insertWithOnConflict(StockListContract.TABLE, null, values,
                                 SQLiteDatabase.CONFLICT_IGNORE);
 
-                        Log.d("StockList",itemName);
+                        Log.d("StockList", itemName);
+                        updateUI();
                     }
                 });
 
@@ -120,5 +124,23 @@ public class StockList extends ListActivity {
             default:
                 return false;
         }
+    }
+
+    public void onDelButtonClick(View view) {
+        View v = (View) view.getParent();
+        Button itemNameButton = (Button) v.findViewById(R.id.stocklist_itemNameView);
+
+        String task = itemNameButton.getText().toString();
+
+        String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
+                StockListContract.TABLE,
+                StockListContract.Columns.ITEM_NAME,
+                task);
+
+
+        helper = new StockListDBHelper(StockList.this);
+        SQLiteDatabase sqlDB = helper.getWritableDatabase();
+        sqlDB.execSQL(sql);
+        updateUI();
     }
 }
