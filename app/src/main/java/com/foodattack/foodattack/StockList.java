@@ -177,8 +177,7 @@ public class StockList extends ListActivity {
         helper = new StockListDBHelper(StockList.this);
         SQLiteDatabase sqlDB = helper.getReadableDatabase();
         Cursor cursor = sqlDB.query(StockListContract.TABLE,
-                new String[]{StockListContract.Columns._ID,
-                        StockListContract.Columns.ITEM_NAME,
+                new String[]{StockListContract.Columns.ITEM_NAME,
                         StockListContract.Columns.ITEM_BRAND,
                         StockListContract.Columns.ITEM_QTY,
                         StockListContract.Columns.ITEM_RESTOCK},
@@ -201,11 +200,8 @@ public class StockList extends ListActivity {
         }
 
 
-        //String oldBrand = cursor.getString(brandColIndex);
-
         //set text in input fields to old details
         rawItemName.setText(oldItemName);
-        // TODO edit set text arguments for edit dialog in stocklist
         rawItemBrand.setText(oldBrand);
         rawItemQty.setText(oldQty);
         rawItemRestock.setText(oldRestock);

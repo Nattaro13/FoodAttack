@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
 import com.foodattack.foodattack.SearchShopList;
+import com.foodattack.foodattack.db.StockListContract;
+import com.foodattack.foodattack.db.StockListDBHelper;
 
 public class ShopList extends ListActivity {
     private ShopListDBHelper helper;
@@ -200,11 +202,31 @@ public class ShopList extends ListActivity {
         final EditText rawItemBrand = (EditText) dialogLayout.findViewById(R.id.shoplist_item_brand);
         final EditText rawItemQty = (EditText) dialogLayout.findViewById(R.id.shoplist_quantity);
 
+        helper = new ShopListDBHelper(ShopList.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+        Cursor cursor = sqlDB.query(ShopListContract.TABLE,
+                new String[]{ShopListContract.Columns.ITEM_NAME,
+                        ShopListContract.Columns.ITEM_BRAND,
+                        ShopListContract.Columns.ITEM_QTY,},
+                String.format("%s = ? ", ShopListContract.Columns.ITEM_NAME),
+                new String[]{oldItemName},
+                null, null, null, null);
+
+        String oldBrand = "oldBrand";
+        String oldQty = "oldQty";
+        if(cursor.moveToFirst()){
+            int brandColIndex = cursor.getColumnIndex(ShopListContract.Columns.ITEM_BRAND);
+            oldBrand = cursor.getString(brandColIndex);
+
+            int qtyColIndex = cursor.getColumnIndex(ShopListContract.Columns.ITEM_QTY);
+            oldQty = cursor.getString(qtyColIndex);
+        }
+
         //set text in input fields to old details
         rawItemName.setText(oldItemName);
         // TODO edit set text arguments for edit dialog in shoplist
-        rawItemBrand.setText("oldBrand");
-        rawItemQty.setText("oldQty");
+        rawItemBrand.setText(oldBrand);
+        rawItemQty.setText(oldQty);
 
         //add button
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
