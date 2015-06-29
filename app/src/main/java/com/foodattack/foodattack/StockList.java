@@ -34,6 +34,7 @@ public class StockList extends ListActivity {
         updateUI();
     }
 
+    //update contents and display in list
     private void updateUI() {
         helper = new StockListDBHelper(StockList.this);
         SQLiteDatabase sqlDB = helper.getReadableDatabase();
@@ -50,8 +51,8 @@ public class StockList extends ListActivity {
                 this,
                 R.layout.stock_list_view,
                 cursor,
-                new String[] { StockListContract.Columns.ITEM_NAME},
-                new int[] { R.id.taskTextView},
+                new String[] { StockListContract.Columns.ITEM_NAME, StockListContract.Columns.ITEM_QTY},
+                new int[] { R.id.stocklist_itemNameView, R.id.stocklist_itemQtyView },
                 0
         );
         this.setListAdapter(listAdapter);
@@ -107,7 +108,8 @@ public class StockList extends ListActivity {
                         db.insertWithOnConflict(StockListContract.TABLE, null, values,
                                 SQLiteDatabase.CONFLICT_IGNORE);
 
-                        Log.d("StockList",itemName);
+                        Log.d("StockList", itemName);
+                        updateUI();
                     }
                 });
 
