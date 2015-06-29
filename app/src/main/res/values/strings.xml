@@ -29,6 +29,8 @@
 
     <!--Strings for the ShopList related XML files -->
     <string name="shop_list_remove">x</string>
+    <string name="search_shop_list">Search shopping list</string>
+    <string name="title_ShopList_search_results">Search Results</string>
 
 
 </resources>
