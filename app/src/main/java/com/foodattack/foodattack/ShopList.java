@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
+import com.foodattack.foodattack.SearchShopList;
 
 
 public class ShopList extends ListActivity {
@@ -80,6 +81,7 @@ public class ShopList extends ListActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         return true;
     }
@@ -156,7 +158,7 @@ public class ShopList extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    
+
     /*
     When the remove button is pressed on the UI, this method is executed.
      */
