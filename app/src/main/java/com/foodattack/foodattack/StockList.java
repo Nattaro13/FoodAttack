@@ -70,7 +70,6 @@ public class StockList extends ListActivity {
             case R.id.action_add_stock_item:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Add an ingredient");
-                builder.setMessage("Ingredient Details");
 
                 final AlertDialog alertDialog = builder.create();
                 LayoutInflater inflater = alertDialog.getLayoutInflater();
@@ -148,8 +147,7 @@ public class StockList extends ListActivity {
         final String oldItemName = oldItemNameButton.getText().toString();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit an ingredient");
-        builder.setMessage("Edit Ingredient Details");
+        builder.setTitle("Edit an ingredient's details");
 
         final AlertDialog alertDialog = builder.create();
         LayoutInflater inflater = alertDialog.getLayoutInflater();
