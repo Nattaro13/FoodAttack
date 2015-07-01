@@ -36,6 +36,15 @@ public class StockList extends ListActivity {
         updateUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();;
+        setContentView(R.layout.activity_stock_list);
+
+        //display the Stock List based on what is in the database
+        updateUI();
+    }
+
     //update contents and display in list
     private void updateUI() {
         helper = new StockListDBHelper(StockList.this);

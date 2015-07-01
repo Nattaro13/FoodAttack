@@ -47,6 +47,16 @@ public class ShopList extends ListActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_shop_list);
+
+        //update the Shopping List based on what is in the database
+        updateUI();
+    }
+
+
     /*
     Updates the main UI when any item is added or deleted from the database
      */
@@ -183,6 +193,11 @@ public class ShopList extends ListActivity {
         updateUI();
     }
 
+
+    /*
+    When an item on the shooping list is tapped, this method is executed,
+    so that people can change the details of the item.
+     */
     public void editOnClick(View view){
         View v = (View) view.getParent();
         Button oldItemNameButton = (Button) v.findViewById(R.id.ShopList_ItemName_View);
