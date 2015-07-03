@@ -19,6 +19,7 @@
 
     <!-- Strings for the login screen -->
     <string name="signing_in">Signing In...</string>
+    <string name="login_text">Create Account</string>
     <string name="skipLogin">Skip Signing-in</string>
 
     <!-- Hints for stocklist and shoplist -->

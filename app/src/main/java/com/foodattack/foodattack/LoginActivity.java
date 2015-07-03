@@ -22,6 +22,9 @@ import com.google.android.gms.plus.Plus;
 
 import java.text.BreakIterator;
 
+import com.foodattack.foodattack.db.LoginActivityContract;
+import com.foodattack.foodattack.db.LoginActivityDBHelper; 
+
 public class LoginActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {

@@ -9,6 +9,8 @@
     android:paddingTop="100dp"
     tools:context="com.foodattack.foodattack.LoginActivity">
 
+
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
@@ -16,11 +18,47 @@
         android:onClick="onSignInClicked"/>
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:text="New User"/>
+
+    <EditText
+        android:id="@+id/login_userID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User ID"
+        />
+
+    <EditText
+        android:id="@+id/login_userPW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+
+    <Button
+        android:id="@+id/local_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_text"
+        android:background="@drawable/custom_btn_main"
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFFFF"
+        />
+
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/skipLogin"
         android:onClick="getMain"
+        android:background="@drawable/custom_btn_main"
+        android:textColor="#FFFFFF"
         />
 
 </LinearLayout>
