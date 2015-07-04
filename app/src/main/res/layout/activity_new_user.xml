@@ -1,69 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
-    android:paddingTop="150dp"
-    tools:context="com.foodattack.foodattack.LoginActivity">
-
+    android:paddingTop="50dp"
+    tools:context="com.foodattack.foodattack.NewUserActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="25dp"
-        android:text="Login"/>
+        android:text="New User"/>
 
     <EditText
-        android:id="@+id/login_userID"
+        android:id="@+id/new_userID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="User ID"
         />
 
     <EditText
-        android:id="@+id/login_userPW"
+        android:id="@+id/new_userPW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/create_password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/re_key_userPW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/re_key_password"
         android:inputType="textPassword" />
 
 
     <Button
-        android:id="@+id/local_login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login_text"
-        android:background="@drawable/custom_btn_main"
-        android:layout_marginBottom="2dp"
-        android:textColor="#FFFFFF"
-        android:onClick="onLogin"
-        />
-
-
-
-    <Button
-        android:id="@+id/login_page_create_acc_btn"
+        android:id="@+id/new_user_create_acc_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_acc_text"
-        style="?android:attr/borderlessButtonStyle"
-        android:textSize="15dp"
-        android:onClick="onCreateAccBtn"
-        />
-
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/skipLogin"
-        android:onClick="getMain"
         android:background="@drawable/custom_btn_main"
         android:textColor="#FFFFFF"
+        android:onClick="onCreateNewUser"
         />
 
 </LinearLayout>

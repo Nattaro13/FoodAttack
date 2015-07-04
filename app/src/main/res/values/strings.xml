@@ -17,10 +17,14 @@
     <string name="title_activity_login">LoginActivity</string>
 
 
-    <!-- Strings for the login screen -->
+    <!-- Strings for the login screen/create new user screen -->
     <string name="signing_in">Signing In...</string>
-    <string name="login_text">Create Account</string>
-    <string name="skipLogin">Skip Signing-in</string>
+    <string name="login_text">Login</string>
+    <string name="create_acc_text">Create New Account</string>
+    <string name="create_password">Password</string>
+    <string name="re_key_password">Re-enter password</string>
+    <string name="skipLogin">Skip Signing-In</string>
+    <string name="forgot_pass_string">Forgot Password</string>
 
     <!-- Hints for stocklist and shoplist -->
     <string name="ingredient_hint">Ingredient</string>
