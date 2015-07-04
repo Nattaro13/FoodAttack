@@ -2,6 +2,7 @@ package com.foodattack.foodattack;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -9,14 +10,23 @@ import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.app.Application;
 
 import java.text.BreakIterator;
+import java.util.List;
 
 import com.foodattack.foodattack.db.LoginActivityContract;
 import com.foodattack.foodattack.db.LoginActivityDBHelper;
+import com.parse.FindCallback;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class LoginActivity extends Activity  {
 
@@ -24,8 +34,8 @@ public class LoginActivity extends Activity  {
     /* #################################################################
      * ALL THE VARS GO HERE
      */
-    private String applicationID = "4sWMVHznnjN5mmMwwHe4tFiMbv2lpvPTpl3HGzil";
-    private String clientKey = "apqmYfADARe5bX63TdOjhjqObIAY2nIwmfxCOekn";
+    private final String applicationID = "4sWMVHznnjN5mmMwwHe4tFiMbv2lpvPTpl3HGzil";
+    private final String clientKey = "apqmYfADARe5bX63TdOjhjqObIAY2nIwmfxCOekn";
 
     /*#################################################################
      * START OF METHODS */
@@ -47,18 +57,57 @@ public class LoginActivity extends Activity  {
         //convert to string
         String userName = rawUsername.getText().toString();
         String userPass = rawPassword.getText().toString();
-        //store to localdatabase
+        //store to local database
         //...
 
+        boolean userMatched = false;
         //Connect to Parse database.
+        ParseUser.logInInBackground(userName, userPass, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    // Hooray! The user is logged in.
+                    Log.d("Login", "Login Successful");
+                    changeScreen();
+                } else {
+                    Log.d("Login", "Login failed");
+                    showAlert();
 
-        //Switch interface to the main screen
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-
+                }
+            }
+        });
     }
 
 
+    /*
+    This alert is displayed when login fails.
+     */
+    public void showAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error");
+        builder.setMessage("Login failed. Please re-enter your ID and password.");
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", null);
+        builder.create().show();
+    }
+
+
+    /*
+    Upon successful login, bring the user to the main screen.
+     */
+    public void changeScreen() {
+        //Switch interface to the main screen
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    
     /*
     When the user presses the "Create New Account" button on this login screen,
     it will bring him to the "create new user" activity.
@@ -75,6 +124,7 @@ public class LoginActivity extends Activity  {
     @Override
     protected void onStart() {
         super.onStart();
+
         ActionBar actionBar = getActionBar();
         actionBar.hide();
         //TO DO!
@@ -95,8 +145,28 @@ public class LoginActivity extends Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, applicationID, clientKey);
+
+        //get current user from the cache, if user has logged in before.
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            //Switch interface to the main screen
+            Log.d("Login","Login from cache!");
+            changeScreen();
+        }
+
+        //else load login screen
         setContentView(R.layout.activity_login);
 
+
+
+        /*
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+        */
     }
 
 
