@@ -48,6 +48,7 @@
         android:background="@drawable/custom_btn_main"
         android:layout_marginBottom="5dp"
         android:textColor="#FFFFFF"
+        android:onClick="onCreateNewUser"
         />
 
 

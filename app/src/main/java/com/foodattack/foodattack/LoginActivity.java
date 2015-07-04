@@ -10,6 +10,7 @@ import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -23,7 +24,7 @@ import com.google.android.gms.plus.Plus;
 import java.text.BreakIterator;
 
 import com.foodattack.foodattack.db.LoginActivityContract;
-import com.foodattack.foodattack.db.LoginActivityDBHelper; 
+import com.foodattack.foodattack.db.LoginActivityDBHelper;
 
 public class LoginActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -74,6 +75,25 @@ public class LoginActivity extends Activity implements
     }
 
 
+    public void onCreateNewUser(View view) {
+        //get username and password from edittext fields
+        EditText rawUsername = (EditText)findViewById(R.id.login_userID);
+        EditText rawPassword = (EditText)findViewById(R.id.login_userPW);
+        //convert to string
+        String userName = rawUsername.getText().toString();
+        String userPass = rawPassword.getText().toString();
+        //store to localdatabase
+        //...
+
+        //Connect to Parse database.
+
+        //Switch interface to the main screen
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+
+    }
+
+
     //was originally private void.
     public void onSignInClicked() {
         // User clicked the sign-in button, so begin the sign-in process and automatically
@@ -94,6 +114,9 @@ public class LoginActivity extends Activity implements
         mGoogleApiClient.connect();
         ActionBar actionBar = getActionBar();
         actionBar.hide();
+        //TO DO!
+        //make this part check for any available details, then skip this screen if there's a
+        //available username and password
     }
 
 
