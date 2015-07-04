@@ -107,7 +107,7 @@ public class LoginActivity extends Activity  {
         startActivity(intent);
     }
 
-    
+
     /*
     When the user presses the "Create New Account" button on this login screen,
     it will bring him to the "create new user" activity.
