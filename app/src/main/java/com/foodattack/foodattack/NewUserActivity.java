@@ -2,9 +2,15 @@ package com.foodattack.foodattack;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Created by Xue Hui on 4/7/2015.
@@ -28,11 +34,92 @@ public class NewUserActivity extends Activity {
     }
 
 
+    /*
+    When the "sign up" button is clicked on this screen,
+    the details will be saved to the cloud (if successful) and bring the user to the main activity screen.
+    If not, an error message will be shown.
+     */
     public void onCreateNewUser(View view) {
+        //get username and password from edittext fields
+        EditText rawUsername = (EditText)findViewById(R.id.new_userID);
+        EditText rawPassword = (EditText)findViewById(R.id.new_userPW);
+        EditText rawPassword2 = (EditText)findViewById(R.id.re_key_userPW);
+        //convert to string
+        String userName = rawUsername.getText().toString();
+        String userPass = rawPassword.getText().toString();
+        String userPass2 = rawPassword2.getText().toString();
+
+        //both passwords match, let them sign up.
+        if (userPass.compareTo(userPass2) == 0) {
+            ParseUser user = new ParseUser();
+            user.setUsername(userName);
+            user.setPassword(userPass);
+
+            user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        //switch to the main screen since sign-up successful.
+                        changeScreenMain();
+                    } else {
+                        // Sign up didn't succeed, conflicts in user-id
+                        showAlertUserID();
+                    }
+                }
+            });
+
+        } else {
+            showAlertPassword();
+        }
+    }
+
+
+    /*
+    This alert is displayed when sign up fails.
+     */
+    public void showAlertUserID() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error");
+        builder.setMessage("User ID has already been taken. Please choose another User ID.");
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", null);
+        builder.create().show();
+    }
+
+
+    /*
+    This alert is displayed when passwords do not match.
+     */
+    public void showAlertPassword() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error");
+        builder.setMessage("Passwords do not match.");
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", null);
+        builder.create().show();
+    }
+
+
+    /*
+    Brings the user to the main activity screen
+     */
+    public void changeScreenMain() {
         //Switch interface to the main screen
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
-
     }
 
 

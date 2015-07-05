@@ -34,8 +34,7 @@ public class LoginActivity extends Activity  {
     /* #################################################################
      * ALL THE VARS GO HERE
      */
-    private final String applicationID = "4sWMVHznnjN5mmMwwHe4tFiMbv2lpvPTpl3HGzil";
-    private final String clientKey = "apqmYfADARe5bX63TdOjhjqObIAY2nIwmfxCOekn";
+    private boolean dDone = true;
 
     /*#################################################################
      * START OF METHODS */
@@ -57,10 +56,7 @@ public class LoginActivity extends Activity  {
         //convert to string
         String userName = rawUsername.getText().toString();
         String userPass = rawPassword.getText().toString();
-        //store to local database
-        //...
 
-        boolean userMatched = false;
         //Connect to Parse database.
         ParseUser.logInInBackground(userName, userPass, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
@@ -145,9 +141,6 @@ public class LoginActivity extends Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, applicationID, clientKey);
 
         //get current user from the cache, if user has logged in before.
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -160,8 +153,6 @@ public class LoginActivity extends Activity  {
         //else load login screen
         setContentView(R.layout.activity_login);
 
-
-
         /*
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
@@ -170,6 +161,20 @@ public class LoginActivity extends Activity  {
     }
 
 
+    protected void onResume() {
+        super.onResume();
+        //get current user from the cache, if user has logged in before.
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            //Switch interface to the main screen
+            Log.d("Login","Login from cache!");
+            changeScreen();
+        }
+
+        //else load login screen
+        setContentView(R.layout.activity_login);
+
+    }
     /**
      * Saves the resolution state.
      */

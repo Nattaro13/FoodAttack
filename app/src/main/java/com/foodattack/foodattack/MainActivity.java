@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
 
@@ -45,10 +48,30 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            return true;
+
+        } else if (id == R.id.parse_log_out) {
+            ParseUser.logOut();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser == null) {
+                Log.d("LogOut", "Successfully logged out");
+                changeScreenLogout();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+   Upon successful log out, bring the user to the login page.
+    */
+    public void changeScreenLogout() {
+        //Switch interface to the main screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 

@@ -1,6 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <uses-sdk android:minSdkVersion="15"/>
+
+    <!-- Menu button to log out of the current Parse Account -->
+    <item android:id="@+id/parse_log_out"
+        app:showAsAction="never"
+        android:showAsAction="never"
+        android:title="Log out" />
+
+
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
