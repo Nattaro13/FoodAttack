@@ -48,8 +48,11 @@ public class LoginActivity extends Activity  {
         startActivity(intent);
     }
 
-
+    /*
+    This method is called when the "login" button is clicked on the screen.
+     */
     public void onLogin(View view) {
+
         //get username and password from edittext fields
         EditText rawUsername = (EditText)findViewById(R.id.login_userID);
         EditText rawPassword = (EditText)findViewById(R.id.login_userPW);
@@ -153,11 +156,6 @@ public class LoginActivity extends Activity  {
         //else load login screen
         setContentView(R.layout.activity_login);
 
-        /*
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-        */
     }
 
 
