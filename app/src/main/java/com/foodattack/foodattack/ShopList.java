@@ -1,7 +1,5 @@
 package com.foodattack.foodattack;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.SearchManager;
@@ -10,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,16 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.foodattack.foodattack.db.ShopListDBHelper;
 import com.foodattack.foodattack.db.ShopListContract;
-import com.foodattack.foodattack.SearchShopList;
-import com.foodattack.foodattack.db.StockListContract;
-import com.foodattack.foodattack.db.StockListDBHelper;
 
 public class ShopList extends ListActivity {
     private ShopListDBHelper helper;
@@ -117,7 +109,7 @@ public class ShopList extends ListActivity {
 
             final AlertDialog alertDialog = builder.create();
             LayoutInflater mInflater = alertDialog.getLayoutInflater();
-            View dialogLayout = mInflater.inflate(R.layout.shop_list_dialog, null);
+            View dialogLayout = mInflater.inflate(R.layout.dialog_shop_list, null);
 
             builder.setView(dialogLayout);
 
@@ -209,7 +201,7 @@ public class ShopList extends ListActivity {
 
         final AlertDialog alertDialog = builder.create();
         LayoutInflater inflater = alertDialog.getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.shop_list_dialog,null);
+        View dialogLayout = inflater.inflate(R.layout.dialog_shop_list,null);
         builder.setView(dialogLayout);
 
         //edittext var of input fields
