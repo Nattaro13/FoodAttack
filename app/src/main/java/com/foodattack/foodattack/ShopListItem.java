@@ -38,7 +38,7 @@ public class ShopListItem extends ParseObject {
     }
 
     public void setItemQty(String itemQty) {
-        put("itemBrand", itemQty);
+        put("itemQty", itemQty);
     }
 
     //TODO what is uuid ?_?
