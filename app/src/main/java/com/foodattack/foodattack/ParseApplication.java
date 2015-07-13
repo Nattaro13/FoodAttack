@@ -21,6 +21,7 @@ public class ParseApplication extends Application {
         ParseCrashReporting.enable(this);
         Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(ShopListItem.class);
+        ParseObject.registerSubclass(StockListItem.class);
         Parse.initialize(this, applicationID, clientKey);
     }
 }
