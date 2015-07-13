@@ -3,6 +3,7 @@ package com.foodattack.foodattack;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.UUID;
 
@@ -49,6 +50,16 @@ public class StockListItem extends ParseObject {
 
     public void setItemRestock(String itemRestock) {
         put("itemRestock", itemRestock);
+    }
+
+    //getters and setters for author
+    // TODO not sure if needed; remove if not required
+    public ParseUser getAuthor() {
+        return getParseUser("author");
+    }
+
+    public void setAuthor(ParseUser currentUser) {
+        put("author", currentUser);
     }
 
     //TODO what is uuid ?_?
