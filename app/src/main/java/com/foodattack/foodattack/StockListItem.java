@@ -47,7 +47,7 @@ public class StockListItem extends ParseObject {
         return getString("itemRestock");
     }
 
-    public void setItemQty(String itemRestock) {
+    public void setItemRestock(String itemRestock) {
         put("itemRestock", itemRestock);
     }
 
