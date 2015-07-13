@@ -6,37 +6,31 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.foodattack.foodattack.ParseApplication"
+        android:name=".ParseApplication"
         android:allowBackup="true"
         android:icon="@drawable/apple"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".NewUserActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:parentActivityName=".LoginActivity"
-            >
+            android:parentActivityName=".LoginActivity" >
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:noHistory="true">
+            android:noHistory="true" >
         </activity>
-
         <activity
             android:name=".StockList"
             android:label="@string/title_activity_stock_list"
@@ -67,7 +61,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.MainActivity" />
         </activity>
-
         <activity
             android:name=".RollCallActivity"
             android:label="@string/title_activity_roll_call"
@@ -76,40 +69,42 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.MainActivity" />
         </activity>
-
         <activity
             android:name=".SearchShopList"
             android:label="@string/title_ShopList_search_results"
-            android:launchMode="singleTop">
-
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
         </activity>
-
-
         <activity
             android:name=".SearchStockList"
             android:label="@string/title_ShopList_search_results"
-            android:launchMode="singleTop">
-
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
         </activity>
-
+        <activity
+            android:name=".MainSettingsActivity"
+            android:label="@string/title_activity_main_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodattack.foodattack.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -36,6 +36,13 @@
     <string name="shop_list_remove">x</string>
     <string name="search_shop_list">Search for item</string>
     <string name="title_ShopList_search_results">Search Results</string>
+    <string name="title_activity_main_settings">Settings</string>
+
+    <!--Strings for the Settings page (opened by clicking settings in the main menu -->
+    <string name="settings_family_status">View family status</string>
+    <string name="settings_add_family">Add family member</string>
+    <string name="settings_remove_family">Remove family member</string>
+
 
 
 </resources>

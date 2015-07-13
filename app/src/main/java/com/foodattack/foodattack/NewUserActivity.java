@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -45,7 +46,7 @@ public class NewUserActivity extends Activity {
         EditText rawPassword = (EditText)findViewById(R.id.new_userPW);
         EditText rawPassword2 = (EditText)findViewById(R.id.re_key_userPW);
         //convert to string
-        String userName = rawUsername.getText().toString();
+        final String userName = rawUsername.getText().toString();
         String userPass = rawPassword.getText().toString();
         String userPass2 = rawPassword2.getText().toString();
 
@@ -58,6 +59,10 @@ public class NewUserActivity extends Activity {
             user.signUpInBackground(new SignUpCallback() {
                 public void done(ParseException e) {
                     if (e == null) {
+                        ParseObject newFamily = new ParseObject("Family");
+                        newFamily.put("Owner",userName);
+                        newFamily.put("familyID",userName);
+                        newFamily.saveInBackground();
                         //switch to the main screen since sign-up successful.
                         changeScreenMain();
                     } else {

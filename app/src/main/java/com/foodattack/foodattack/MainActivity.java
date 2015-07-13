@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            changeScreenSettings();
             return true;
 
         } else if (id == R.id.parse_log_out) {
@@ -62,6 +62,15 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    Bring user to the Settings page
+     */
+    public void changeScreenSettings() {
+        Intent intent = new Intent(this, MainSettingsActivity.class);
+        startActivity(intent);
     }
 
 
