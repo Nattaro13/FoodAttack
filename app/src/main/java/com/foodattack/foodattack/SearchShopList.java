@@ -178,7 +178,6 @@ public class SearchShopList extends ListActivity {
 
         //set text in input fields to old details
         rawItemName.setText(oldItemName);
-        // TODO edit set text arguments for edit dialog in shoplist
         rawItemBrand.setText(oldBrand);
         rawItemQty.setText(oldQty);
 
