@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
          */
 
-        Intent intent = new Intent(this,StockList.class);
+        Intent intent = new Intent(this,StockListActivityParse.class);
         startActivity(intent);
     }
 
