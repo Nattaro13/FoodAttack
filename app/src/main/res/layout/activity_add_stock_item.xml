@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    tools:context="com.foodattack.foodattack.AddStockItemActivity">
+
+    <!-- Input field for stock item name -->
+    <EditText
+        android:id="@+id/add_stock_itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ingredient_hint" />
+
+    <!-- Input field for stock item brand -->
+    <EditText
+        android:id="@+id/add_stock_itemBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/brand_hint" />
+
+    <!-- Input field for stock item qty -->
+    <EditText
+        android:id="@+id/add_stock_itemQty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/qty_hint" />
+
+    <!-- Input field for stock item restock -->
+    <EditText
+        android:id="@+id/add_stock_itemRestock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/restock_hint" />
+
+    <!-- Button to add new item -->
+    <Button
+        android:id="@+id/add_stock_saveItem"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/action_add_item" />
+
+</LinearLayout>
