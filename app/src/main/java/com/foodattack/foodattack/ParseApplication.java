@@ -24,15 +24,6 @@ public class ParseApplication extends Application {
 
         ParseCrashReporting.enable(this);
 
-
-        //TODO remove enableLocalDatastore when rdy --> online access only
-        Parse.enableLocalDatastore(this);
-
         Parse.initialize(this, applicationID, clientKey);
-
-        // TODO find out what these 3 lines do
-//        ParseUser.enableAutomaticUser();
-//        ParseACL defaultACL = new ParseACL();
-//        ParseACL.setDefaultACL(defaultACL, true);
     }
 }
