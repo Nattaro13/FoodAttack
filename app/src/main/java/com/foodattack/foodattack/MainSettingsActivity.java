@@ -7,11 +7,16 @@ import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -55,7 +60,7 @@ public class MainSettingsActivity extends Activity {
 
 
     //############################################################################################
-    //THIS PART IS ALL FOR ADD FAMILY MEMBER
+    //THIS PART IS ALL FOR ADDING FAMILY MEMBERS
     //############################################################################################
     /*
     Called when the "add family member" button is clicked
@@ -80,7 +85,7 @@ public class MainSettingsActivity extends Activity {
                 //convert to string
                 String familyName = rawFamilyName.getText().toString();
 
-                //check if that member exists on the parse database
+                //check if that new member exists on the parse "Family" database
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
                 query.whereEqualTo("Owner", familyName);
                 query.findInBackground(new FindCallback<ParseObject>() {
@@ -90,7 +95,7 @@ public class MainSettingsActivity extends Activity {
                             //that of the adder/head of the family.
                             ParseObject newMember = objects.get(0);
                             Log.d("New Member Name", newMember.getObjectId());
-                            getFamilyID(newMember.getObjectId());
+                            getFamilyID(newMember.getObjectId(), alertDialog);
 
                         } else {
                             alertDialog.cancel();
@@ -106,7 +111,7 @@ public class MainSettingsActivity extends Activity {
     }
 
 
-    public void getFamilyID(String newMemberID) {
+    public void getFamilyID(String newMemberID, final AlertDialog oldDialog) {
         final String newMemberObjectID = newMemberID;
 
         ParseQuery <ParseObject> query = ParseQuery.getQuery("Family");
@@ -114,7 +119,7 @@ public class MainSettingsActivity extends Activity {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    Log.d("Current User",ParseUser.getCurrentUser().getUsername());
+                    Log.d("Current User", ParseUser.getCurrentUser().getUsername());
                     ParseObject userData = objects.get(0);
                     final String familyID = userData.getString("familyID");
                     Log.d("Curr User Family ID", familyID);
@@ -127,8 +132,10 @@ public class MainSettingsActivity extends Activity {
                                 newMember.put("familyID", familyID);
                                 Log.d("New Family ID updated", familyID);
                                 newMember.saveInBackground();
+                                oldDialog.cancel();
+                                showAlertSuccess();
                             } else {
-                                Log.d("Unable to update",e.getMessage());
+                                Log.d("Unable to update", e.getMessage());
                             }
                         }
                     });
@@ -139,8 +146,34 @@ public class MainSettingsActivity extends Activity {
 
 
     /*
-    This alert is displayed when sign up fails.
+    This alert is displayed when adding family member to the family database is successful.
      */
+    public void showAlertSuccess() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Success!");
+        builder.setMessage("New family member added to your database.");
+        final AlertDialog alertDialog = builder.create();
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, final int i) {
+                alertDialog.cancel();
+            }
+        });
+        builder.create().show();
+
+    }
+
+    /*
+    This alert is displayed when adding family member fails.
+    */
     public void showAlertNoSuchUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Error");
@@ -165,19 +198,76 @@ public class MainSettingsActivity extends Activity {
 
     //###########################################################################################
 
-
-    /*
-    Called when the "remove family member" button is clicked
-     */
-    public void removeFamily(View view) {
-
-    }
+    //THIS ENTIRE SECTION GOES TO VIEWING THE FAMILY STATUS
+    //##########################################################################################
 
 
     /*
     Called when the "view family status" button is clicked
      */
     public void viewFamily(View view) {
+        //construct query for the "Family" database
+        ParseQuery <ParseObject> query = ParseQuery.getQuery("Family");
+        //get the owner's data from the database
+        query.whereEqualTo("Owner", ParseUser.getCurrentUser().getUsername());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+                if ((e == null) && (!objects.isEmpty())) {
+                    //get the owner's family ID.
+                    ParseObject userData = objects.get(0);
+                    final String currFamilyID = userData.getString("familyID");
+
+                    //construct query for the "Family" database to get all entries with
+                    //the same familyID
+                    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Family");
+                    query2.whereEqualTo("familyID",currFamilyID);
+                    query2.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if ((e == null) && (!objects.isEmpty())) {
+                                setLayout(objects);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    public void setLayout(List<ParseObject> objects) {
+        //initialise fields for linear layout
+        TextView temp;
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        //initialise fields to allow scrolling (if many family members)
+        ScrollView scroll = new ScrollView(this);
+        scroll.setBackgroundColor(android.R.color.transparent);
+        scroll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+
+        for(int i=0; i<objects.size(); i++) {
+            //get a family member's name and add it to the textview
+            String memberName = objects.get(i).getString("Owner");
+            temp = new TextView(this);
+            temp.setText(memberName);
+            temp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            temp.setGravity(Gravity.CENTER);
+            layout.addView(temp);
+
+        }
+        //add the linear layout view to the scroll view
+        scroll.addView(layout);
+
+        //create alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Family Members");
+        final AlertDialog alertDialog = builder.create();
+        //add scroll view to the alert dialog's layout
+        builder.setView(scroll);
+        //set button to close dialog when done
+        builder.setNegativeButton("Ok",null);
+        builder.create().show();
 
     }
 }

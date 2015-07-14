@@ -41,7 +41,6 @@
     <!--Strings for the Settings page (opened by clicking settings in the main menu -->
     <string name="settings_family_status">View family status</string>
     <string name="settings_add_family">Add family member</string>
-    <string name="settings_remove_family">Remove family member</string>
 
 
 

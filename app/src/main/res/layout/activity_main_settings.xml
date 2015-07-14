@@ -29,15 +29,4 @@
         android:onClick="addFamily"
         />
 
-    <Button
-        android:id="@+id/btn_remove_family"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_remove_family"
-        android:background="@drawable/custom_btn_main"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="5dp"
-        android:onClick="removeFamily"
-        />
-
 </LinearLayout>
