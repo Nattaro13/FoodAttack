@@ -13,9 +13,8 @@ public class StockListItem extends ParseObject {
     /**
      * constructor
      **/
-     public StockListItem(){
-
-     }
+    public StockListItem(){
+    }
 
     /**
      * getters and setters for itemName

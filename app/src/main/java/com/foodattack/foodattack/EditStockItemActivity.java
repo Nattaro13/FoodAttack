@@ -1,6 +1,7 @@
 package com.foodattack.foodattack;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
@@ -18,7 +20,7 @@ import com.parse.SaveCallback;
 
 public class EditStockItemActivity extends Activity {
 
-    private StockListItem mStockItem;
+    //private StockListItem mStockItem;
     private EditText mItemNameEditText;
     private EditText mItemBrandEditText;
     private EditText mItemQtyEditText;
@@ -27,6 +29,7 @@ public class EditStockItemActivity extends Activity {
     private String mItemBrand;
     private String mItemQty;
     private String mItemRestock;
+    private String mItemID;
     private Button mSaveButton;
 
     @Override
@@ -36,18 +39,20 @@ public class EditStockItemActivity extends Activity {
 
         Intent intent = this.getIntent();
 
+        //get edit texts
         mItemNameEditText = (EditText) findViewById(R.id.add_stock_itemName);
         mItemBrandEditText = (EditText) findViewById(R.id.add_stock_itemBrand);
         mItemQtyEditText = (EditText) findViewById(R.id.add_stock_itemQty);
         mItemRestockEditText = (EditText) findViewById(R.id.add_stock_itemRestock);
 
-        //this part need to be slightly different from sitepoint code
         if(intent.getExtras() != null){
-
+            //set input fields to previously entered data
             mItemNameEditText.setText(intent.getStringExtra("itemName"));
             mItemBrandEditText.setText(intent.getStringExtra("itemBrand"));
             mItemQtyEditText.setText(intent.getStringExtra("itemQty"));
             mItemRestockEditText.setText(intent.getStringExtra("itemRestock"));
+            //get objectID of item clicked
+            mItemID = intent.getStringExtra("itemID");
         }
 
         mSaveButton = (Button) findViewById(R.id.edit_stock_saveItem);
@@ -76,12 +81,14 @@ public class EditStockItemActivity extends Activity {
         mItemQty.trim();
         mItemRestock.trim();
 
+        //if the user does not enter item name, do nothing
         //if the user enters at least item name and qty, save
+        //if the user enters item name but no qty, give warning
         if((!mItemName.isEmpty()) && (!mItemQty.isEmpty())){
 
             //check if item is being added or edited
-            //if item is being added, save it
-            if (mStockItem == null){
+            //if item is being added (i.e. item has no objectID yet), save it
+            if (mItemID == null){
                 //create a new stockListItem
                 StockListItem stockItem = new StockListItem();
                 stockItem.setItemName(mItemName);
@@ -91,29 +98,61 @@ public class EditStockItemActivity extends Activity {
                 stockItem.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e == null){
-                            //show toast msg - saved successfully
-                            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            //show toast msg - save failed
-                            Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
-                            Log.d(getClass().getSimpleName(), "User update error: " + e);
-                        }
+                        saveToast(e);
                     }
                 });
             }
             //if item is being edited, update it
             else{
+                //query
                 ParseQuery<StockListItem> query = ParseQuery.getQuery(StockListItem.class);
+                //retrieve item by id
+                query.getInBackground(mItemID, new GetCallback<StockListItem>() {
+                    @Override
+                    public void done(StockListItem stockItem, ParseException e) {
+                        if (e == null){
+                            //update data
+                            stockItem.setItemName(mItemName);
+                            stockItem.setItemBrand(mItemBrand);
+                            stockItem.setItemQty(mItemQty);
+                            stockItem.setItemRestock(mItemRestock);
+                            stockItem.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    saveToast(e);
+                                }
+                            });
+                        }
+                    }
+                });
             }
-
-
         }
-
-
+        else if ((!mItemName.isEmpty()) && (mItemQty.isEmpty())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(EditStockItemActivity.this);
+            builder.setMessage(R.string.edit_error_no_qty)
+                    .setTitle(R.string.edit_error_title)
+                    .setPositiveButton(android.R.string.ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
+    /**
+     * saveToast
+     * Description: display toast msg depending if saved successfully or unsuccessfully
+     * @param e
+     */
+    private void saveToast(ParseException e) {
+        if (e == null){
+            //show toast msg - saved successfully
+            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //show toast msg - save failed
+            Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
+            Log.d(getClass().getSimpleName(), "User update error: " + e);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
