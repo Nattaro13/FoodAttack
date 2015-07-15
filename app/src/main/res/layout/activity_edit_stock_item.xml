@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
-    tools:context="com.foodattack.foodattack.AddStockItemActivity">
+    tools:context="com.foodattack.foodattack.EditStockItemActivity">
 
     <!-- Input field for stock item name -->
     <EditText
@@ -36,10 +36,10 @@
 
     <!-- Button to add new item -->
     <Button
-        android:id="@+id/add_stock_saveItem"
+        android:id="@+id/edit_stock_saveItem"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/action_add_item" />
+        android:text="@string/action_save_item" />
 
 </LinearLayout>
