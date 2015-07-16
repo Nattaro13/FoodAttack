@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -140,7 +139,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
          */
 
-        Intent intent = new Intent(this,StockList.class);
+        Intent intent = new Intent(this,StockListActivityParse.class);
         startActivity(intent);
     }
 

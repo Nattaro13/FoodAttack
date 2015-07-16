@@ -30,6 +30,17 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:noHistory="true" >
+<<<<<<< HEAD
+=======
+        </activity>
+        <activity
+            android:name=".StockListActivityParse"
+            android:label="@string/title_activity_stock_list"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodattack.foodattack.MainActivity" />
+>>>>>>> origin/master
         </activity>
         <activity
             android:name=".StockList"
@@ -98,6 +109,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".MainSettingsActivity"
             android:label="@string/title_activity_main_settings"
             android:parentActivityName=".MainActivity" >
@@ -120,6 +132,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.RecipeList" />
+=======
+            android:name=".EditStockItemActivity"
+            android:label="@string/title_activity_add_stock_item"
+            android:parentActivityName=".StockListActivityParse">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodattack.foodattack.StockListActivityParse" />
+>>>>>>> origin/master
         </activity>
     </application>
 

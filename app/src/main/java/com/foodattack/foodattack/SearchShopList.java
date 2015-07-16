@@ -1,6 +1,5 @@
 package com.foodattack.foodattack;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.SearchManager;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -150,7 +148,7 @@ public class SearchShopList extends ListActivity {
 
         final AlertDialog alertDialog = builder.create();
         LayoutInflater inflater = alertDialog.getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.shop_list_dialog,null);
+        View dialogLayout = inflater.inflate(R.layout.dialog_shop_list,null);
         builder.setView(dialogLayout);
 
         //edittext var of input fields
@@ -180,7 +178,6 @@ public class SearchShopList extends ListActivity {
 
         //set text in input fields to old details
         rawItemName.setText(oldItemName);
-        // TODO edit set text arguments for edit dialog in shoplist
         rawItemBrand.setText(oldBrand);
         rawItemQty.setText(oldQty);
 

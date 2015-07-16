@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseObject;
 
 /**
  * Created by Xue Hui on 5/7/2015.
@@ -17,8 +18,12 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        //register subclasses
+        ParseObject.registerSubclass(ShopListItem.class);
+        ParseObject.registerSubclass(StockListItem.class);
+
         ParseCrashReporting.enable(this);
-        Parse.enableLocalDatastore(this);
+
         Parse.initialize(this, applicationID, clientKey);
     }
 }

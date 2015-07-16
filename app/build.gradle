@@ -26,4 +26,11 @@ dependencies {
     compile files('libs/Parse-1.9.3.jar')
     compile files('libs/ParseCrashReporting-1.9.3.jar')
 
+    compile 'com.baoyz.swipemenulistview:library:1.1.0'
+}
+
+repositories {
+    maven {
+        url  "http://dl.bintray.com/baoyongzhang/maven"
+    }
 }
