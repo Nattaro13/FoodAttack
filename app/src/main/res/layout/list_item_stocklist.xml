@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
+    android:padding="16dp"
     android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -22,14 +23,5 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:gravity="right|center_vertical" />
-
-    <!-- Edit Button -->
-    <ImageButton
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit_black"
-        style="?android:attr/borderlessButtonStyle"
-        android:onClick="onEditButtonClick"/>
 
 </LinearLayout>

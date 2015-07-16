@@ -12,6 +12,7 @@ import java.util.List;
 
 public class StockListAdapter extends ArrayAdapter<StockListItem> {
 
+
     /**
      * Member Variables
      **/
