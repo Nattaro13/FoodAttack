@@ -268,6 +268,36 @@ public class MainSettingsActivity extends Activity {
         //set button to close dialog when done
         builder.setNegativeButton("Ok",null);
         builder.create().show();
+    }
+
+
+    //###########################################################################################
+
+    //THIS ENTIRE SECTION GOES TO VIEWING THE USER'S ACCOUNT INFO
+    //##########################################################################################
+
+    public void viewUserStatus(View view) {
+        String currUser = ParseUser.getCurrentUser().getUsername();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Current UserID");
+        builder.setMessage(currUser);
+        final AlertDialog alertDialog = builder.create();
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, final int i) {
+                alertDialog.cancel();
+            }
+        });
+        builder.create().show();
 
     }
+
 }
