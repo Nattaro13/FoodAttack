@@ -1,7 +1,6 @@
 package com.foodattack.foodattack;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -89,7 +88,7 @@ public class StockListActivityParse extends Activity {
                         break;
                     case 1:
                         onDeleteButtonClick(stockItem);
-                        updateStockList();
+                        break;
                 }
 
                 return false;
@@ -98,11 +97,19 @@ public class StockListActivityParse extends Activity {
 
     }
 
+    //TODO solved the refresh prob for add but not edit
+    // edit's refresh works sometimes only
+    // --> maybe use startactivtyforresult and onactivity result
+    protected void onRestart (){
+        super.onRestart();
+        updateStockList();
+    }
+
     /**
      * updateStockList
      * Description: fetch item data from parse
      */
-    private void updateStockList(){
+    public void updateStockList(){
         ParseQuery<StockListItem> query = ParseQuery.getQuery(StockListItem.class);
 
         //TODO - currently shows items by users only, not the family - need to change later
@@ -162,20 +169,11 @@ public class StockListActivityParse extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    //supposed to enable a user to select a list item and see its details in the Add/Edit view
-/*    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-        StockListItem item = mStockList.get(position);
-        Intent intent = new Intent(this, EditStockItemActivity.class);
-        intent.putExtra("itemName", item.getItemName());
-        intent.putExtra("itemBrand", item.getItemBrand());
-        intent.putExtra("itemQty", item.getItemQty());
-        intent.putExtra("itemRestock", item.getItemRestock());
-        intent.putExtra("itemID", item.getObjectId());
-        startActivity(intent);
-
-    }*/
-
+    /**
+     * onDeleteButtonClick
+     * Description: code for delete in swipe menu
+     * @param item
+     */
     private void onDeleteButtonClick(StockListItem item){
         String itemID = item.getObjectId();
         ParseObject itemParseObject = ParseObject.createWithoutData(StockListItem.class, itemID);
@@ -184,6 +182,7 @@ public class StockListActivityParse extends Activity {
             public void done(ParseException e) {
                 if(e == null){
                     Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                    updateStockList();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
@@ -193,6 +192,11 @@ public class StockListActivityParse extends Activity {
         });
     }
 
+    /**
+     * onEditOptionClick
+     * Description: code for edit in swipe menu
+     * @param item
+     */
     private void onEditOptionClick(StockListItem item){
         Intent intent = new Intent(this, EditStockItemActivity.class);
         intent.putExtra("itemName", item.getItemName());
@@ -202,6 +206,5 @@ public class StockListActivityParse extends Activity {
         intent.putExtra("itemID", item.getObjectId());
         startActivity(intent);
     }
-
 
 }

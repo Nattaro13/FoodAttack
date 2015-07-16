@@ -60,9 +60,9 @@ public class EditStockItemActivity extends Activity {
         }
 
         mSaveButton = (Button) findViewById(R.id.edit_stock_saveItem);
-        mSaveButton.setOnClickListener(new View.OnClickListener(){
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 saveItem();
             }
         });
@@ -110,11 +110,13 @@ public class EditStockItemActivity extends Activity {
                         setProgressBarIndeterminateVisibility(false);
                         saveToast(e);
                         //prevents item to be saved multiple times if alrdy saved
-                        if (e == null){
+                        if (e == null) {
                             mItemID = stockItem.getObjectId();
                         }
                     }
                 });
+
+                finish();
             }
             //if item is being edited, update it
             else{
@@ -143,6 +145,8 @@ public class EditStockItemActivity extends Activity {
                         }
                     }
                 });
+
+                finish();
             }
         }
         else if ((!mItemName.isEmpty()) && (mItemQty.isEmpty())){
@@ -193,4 +197,5 @@ public class EditStockItemActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
