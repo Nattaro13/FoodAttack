@@ -2,6 +2,7 @@ package com.foodattack.foodattack;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * ShopListItem is a ParseObject that encapsulates items in the stocklist
@@ -60,6 +61,17 @@ public class StockListItem extends ParseObject {
 
     public void setItemRestock(String itemRestock) {
         put("itemRestock", itemRestock);
+    }
+
+    /**
+     * getters and setters for itemFamily
+     **/
+    //TODO currently gets user, not the user's family --> NEED to change later
+        public ParseUser getItemFamily(){
+        return getParseUser("itemfamily");
+    }
+    public void setItemFamily(ParseUser itemFamily){
+        put("itemFamily", itemFamily);
     }
 
 }

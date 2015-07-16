@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,9 @@ public class StockListActivityParse extends ListActivity {
      */
     private void updateStockList(){
         ParseQuery<StockListItem> query = ParseQuery.getQuery(StockListItem.class);
+
+        //TODO - currently shows items by users only, not the family - need to change later
+        query.whereEqualTo("itemFamily", ParseUser.getCurrentUser());
 
         setProgressBarIndeterminateVisibility(true);
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 
@@ -35,6 +37,8 @@ public class EditStockItemActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //loading indicator
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_edit_stock_item);
 
         Intent intent = this.getIntent();
@@ -90,15 +94,25 @@ public class EditStockItemActivity extends Activity {
             //if item is being added (i.e. item has no objectID yet), save it
             if (mItemID == null){
                 //create a new stockListItem
-                StockListItem stockItem = new StockListItem();
+                final StockListItem stockItem = new StockListItem();
                 stockItem.setItemName(mItemName);
                 stockItem.setItemBrand(mItemBrand);
                 stockItem.setItemQty(mItemQty);
                 stockItem.setItemRestock(mItemRestock);
+                //TODO currently sets family as own user --> need to change to family head's user id later
+                stockItem.setItemFamily(ParseUser.getCurrentUser());
+                //loading indicator start
+                setProgressBarIndeterminateVisibility(true);
                 stockItem.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
+                        //loading indicator end
+                        setProgressBarIndeterminateVisibility(false);
                         saveToast(e);
+                        //prevents item to be saved multiple times if alrdy saved
+                        if (e == null){
+                            mItemID = stockItem.getObjectId();
+                        }
                     }
                 });
             }
@@ -116,9 +130,13 @@ public class EditStockItemActivity extends Activity {
                             stockItem.setItemBrand(mItemBrand);
                             stockItem.setItemQty(mItemQty);
                             stockItem.setItemRestock(mItemRestock);
+                            //loading indicator start
+                            setProgressBarIndeterminateVisibility(true);
                             stockItem.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
+                                    //loading indicator end
+                                    setProgressBarIndeterminateVisibility(false);
                                     saveToast(e);
                                 }
                             });
