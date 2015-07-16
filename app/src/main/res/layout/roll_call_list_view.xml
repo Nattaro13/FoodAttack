@@ -15,7 +15,7 @@
         android:id="@+id/roll_call_member_name"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:onClick="editOnClick" />
+        />
 
     <TextView
         android:id="@+id/roll_call_meal_type"

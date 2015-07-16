@@ -62,6 +62,9 @@ public class NewUserActivity extends Activity {
                         ParseObject newFamily = new ParseObject("Family");
                         newFamily.put("Owner",userName);
                         newFamily.put("familyID",userName);
+                        newFamily.put("Breakfast",false);
+                        newFamily.put("Lunch",false);
+                        newFamily.put("Dinner",false);
                         newFamily.saveInBackground();
                         //switch to the main screen since sign-up successful.
                         changeScreenMain();

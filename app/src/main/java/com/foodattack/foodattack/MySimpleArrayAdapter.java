@@ -51,11 +51,9 @@ public class MySimpleArrayAdapter extends ArrayAdapter {
 
             // Hold the view objects in an object, that way the don't need to be "re-finded"
             view = new ViewHolder();
-            Log.d("ViewHolder","Initialised!");
             view.isEating = (CheckBox) rowView.findViewById(R.id.roll_call_check_box);
             view.memberName = (TextView) rowView.findViewById(R.id.roll_call_member_name);
             view.mealID= (TextView) rowView.findViewById(R.id.roll_call_meal_type);
-            Log.d("Variables","Initialised!");
             rowView.setTag(view);
         } else {
             view = (ViewHolder) rowView.getTag();
@@ -63,7 +61,6 @@ public class MySimpleArrayAdapter extends ArrayAdapter {
 
         /** Set data to your Views. */
         PersonInfo person = values.get(position);
-        Log.d("Person Name",person.getName());
         if(person.getEating()) {
             view.isEating.setChecked(true);
             Log.d("Person eat","true" );
@@ -72,9 +69,8 @@ public class MySimpleArrayAdapter extends ArrayAdapter {
             Log.d("Person Eat","false");
         }
         view.memberName.setText(person.getName());
-        Log.d("Member Name","Set");
         view.mealID.setText(person.getMealID());
-        Log.d("mealID","Set");
+
         return rowView;
     }
 }

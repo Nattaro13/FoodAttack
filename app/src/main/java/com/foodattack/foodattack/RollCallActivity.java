@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -165,7 +167,68 @@ public class RollCallActivity extends Activity {
     When the checkbox is clicked for an item, update meal preferences for that family member
      */
     public void updateMeal(View view) {
+        View v = (View) view.getParent();
+        //get all your variable info
+        final TextView personName = (TextView) v.findViewById(R.id.roll_call_member_name);
+        final TextView mealID = (TextView) v.findViewById(R.id.roll_call_meal_type);
 
+
+        //Find user on the "Family" database
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
+        query.whereEqualTo("Owner", personName.getText().toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+                if ((e == null) && (!objects.isEmpty())) {
+                    //If the query was successful, update meal preferences
+                    ParseObject memberData = objects.get(0);
+                    //Log.d("Person Name", memberData.getObjectId());
+                    updateMealPreferences(memberData.getObjectId(), mealID.getText().toString());
+
+                }
+            }
+        });
+    }
+
+
+    /*
+    Update the meal preferences for a family member
+     */
+    public void updateMealPreferences(String MemberID,String mealID) {
+        final String personObjectID = MemberID;
+        final String mealType = mealID;
+
+        ParseQuery <ParseObject> query = ParseQuery.getQuery("Family");
+
+        query.getInBackground(personObjectID, new GetCallback<ParseObject>() {
+            public void done(ParseObject personObject, ParseException e) {
+                if (e == null) {
+                    //if breakfast, update breakfast.
+                    if(mealType.compareTo("B") == 0) {
+                        if (personObject.getBoolean("Breakfast") == true) {
+                            personObject.put("Breakfast",false);
+                        } else {
+                            personObject.put("Breakfast", true);
+                        }
+                    } else if (mealType.compareTo("L") == 0) {
+                        //update lunch
+                        if (personObject.getBoolean("Lunch") == true) {
+                            personObject.put("Lunch",false);
+                        } else {
+                            personObject.put("Lunch", true);
+                        }
+                    } else {
+                        //update dinner
+                        if (personObject.getBoolean("Dinner") == true) {
+                            personObject.put("Dinner",false);
+                        } else {
+                            personObject.put("Dinner", true);
+                        }
+                    }
+
+                    personObject.saveInBackground();
+                }
+            }
+        });
     }
 
 
