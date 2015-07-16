@@ -24,6 +24,7 @@ import java.util.List;
 
 
 public class RecipeList extends Activity {
+    protected List<ParseObject> recipeObjects = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class RecipeList extends Activity {
                                 for (int i = 0; i < objects.size(); i++) {
                                     recipesList[i] = objects.get(i).getString("recipeTitle");
                                 }
-                                viewList(listView,recipesList);
+                                viewList(listView,recipesList,objects);
                             }
                         }
                     });
@@ -66,7 +67,8 @@ public class RecipeList extends Activity {
     }
 
 
-    public void viewList(ListView listView, String[] recipesList) {
+    public void viewList(ListView listView, String[] recipesList, List<ParseObject> objects) {
+        recipeObjects = objects;
         final ListView listView2 = listView;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.recipe_list_row, R.id.recipe_title, recipesList);
@@ -116,11 +118,20 @@ public class RecipeList extends Activity {
     Executed when a recipe title is clicked.
      */
     public void viewRecipe(View view) {
+        String recipeID = null;
         TextView recipeTitle = (TextView) view.findViewById(R.id.recipe_title);
         Log.d("Recipe clicked",recipeTitle.getText().toString());
+        String recipeTitleString = recipeTitle.getText().toString();
+        //find the recipe's ID
+        for(int i=0; i<recipeObjects.size(); i++) {
+            if(recipeObjects.get(i).getString("recipeTitle").compareTo(recipeTitleString) == 0) {
+                recipeID = recipeObjects.get(i).getObjectId();
+            }
+        }
         //Switch interface to "view recipe activity"
         Intent intent = new Intent(this, DisplayRecipe.class);
-        intent.putExtra("RECIPE_NAME",recipeTitle.getText().toString());
+        intent.putExtra("RECIPE_ID",recipeID);
+        intent.putExtra("RECIPE_NAME",recipeTitleString);
         startActivity(intent);
 
     }
