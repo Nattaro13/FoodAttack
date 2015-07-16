@@ -113,6 +113,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.RecipeList" />
         </activity>
+        <activity
+            android:name=".DisplayRecipe"
+            android:label="@string/title_activity_display_recipe"
+            android:parentActivityName=".RecipeList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodattack.foodattack.RecipeList" />
+        </activity>
     </application>
 
 </manifest>

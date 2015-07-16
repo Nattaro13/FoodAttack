@@ -49,6 +49,7 @@
     <string name="hint_recipe_name">Name of Recipe</string>
     <string name="hint_recipe_ingredients">Ingredients</string>
     <string name="hint_recipe_steps">Steps</string>
+    <string name="title_activity_display_recipe">DisplayRecipe</string>
 
 
 </resources>
