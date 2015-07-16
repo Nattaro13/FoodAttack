@@ -123,7 +123,7 @@ public class SearchStockList extends ListActivity {
 
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
                 this,
-                R.layout.stock_list_view,
+                R.layout.list_item_stocklist,
                 cursor,
                 new String[] { StockListContract.Columns.ITEM_NAME,
                         StockListContract.Columns.ITEM_QTY},

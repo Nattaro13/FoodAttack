@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">FoodAttack</string>
+    <string name="hello_world">It\'s boring here</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
 
     <!-- Strings for the buttons in the main menu -->
     <string name="avail_food">Available Food</string>
@@ -30,12 +29,17 @@
     <string name="ingredient_hint">Ingredient</string>
     <string name="qty_hint">Quantity</string>
     <string name="brand_hint">Brand</string>
-    <string name="restock_hint">Restock</string>
+    <string name="restock_hint">Restock Duration</string>
 
     <!--Strings for the ShopList related XML files -->
     <string name="shop_list_remove">x</string>
     <string name="search_shop_list">Search for item</string>
     <string name="title_ShopList_search_results">Search Results</string>
 
-
+    <string name="action_refresh">Refresh</string>
+    <string name="action_save_item">Save</string>
+    <string name="action_add_item">Add</string>
+    <string name="title_activity_add_stock_item">Add Stock Item</string>
+    <string name="edit_error_title">Error!</string>
+    <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
 </resources>

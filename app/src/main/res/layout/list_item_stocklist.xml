@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageButton
-        android:id="@+id/delButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_delete"
-        style="?android:attr/borderlessButtonStyle"
-        android:onClick="onDelButtonClick"/>
-
-
-    <Button
+    <!-- TextView that displays itemName -->
+    <TextView
         android:id="@+id/stocklist_itemNameView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:gravity="center_vertical"
-        style="?android:attr/borderlessButtonStyle"
-        android:onClick="editOnClick"/>
+        android:gravity="center_vertical"/>
 
+    <!-- TextView that displays itemQty -->
     <TextView
         android:id="@+id/stocklist_itemQtyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:gravity="right|center_vertical" />
+
+    <!-- Edit Button -->
+    <ImageButton
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit_black"
+        style="?android:attr/borderlessButtonStyle"
+        android:onClick="onEditButtonClick"/>
 
 </LinearLayout>
