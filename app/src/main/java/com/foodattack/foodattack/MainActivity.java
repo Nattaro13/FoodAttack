@@ -1,6 +1,8 @@
 package com.foodattack.foodattack;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -59,9 +61,44 @@ public class MainActivity extends Activity {
                 changeScreenLogout();
             }
             return true;
+        } else if (id == R.id.about_app) {
+            aboutApp();
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    Displays information about the app when the "About" button is clicked
+    on the action bar
+     */
+    public void aboutApp()  {
+        String msg = "This app, created by Xue Hui and Yi Yan, allows families keep track of their " +
+                "food stock in the kitchen, as well as automatically update their shopping list. " +
+                "The data can be shared among a few users of the same family.";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("About this app");
+        builder.setMessage(msg);
+        final AlertDialog alertDialog = builder.create();
+
+        //Re-Enable this when we do a custom style for alert dialog
+        //final AlertDialog alertDialog = builder.create();
+        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
+        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
+
+        //builder.setView(dialogLayout);
+
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, final int i) {
+                alertDialog.cancel();
+            }
+        });
+        builder.create().show();
+
     }
 
 
