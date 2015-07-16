@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox android:id="@+id/roll_call_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="updateMeal"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/roll_call_member_name"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:onClick="editOnClick" />
+
+    <TextView
+        android:id="@+id/roll_call_meal_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center_vertical" />
+
+</LinearLayout>

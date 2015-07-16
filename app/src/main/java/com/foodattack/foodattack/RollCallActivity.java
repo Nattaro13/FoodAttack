@@ -2,6 +2,8 @@ package com.foodattack.foodattack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -9,8 +11,11 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -20,6 +25,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -28,6 +35,7 @@ public class RollCallActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_roll_call);
 
         //construct query for the "Family" database
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
@@ -58,6 +66,7 @@ public class RollCallActivity extends Activity {
     }
 
 
+
     /*
     Returns the dynamic layout for the family's roll call register
      */
@@ -69,40 +78,70 @@ public class RollCallActivity extends Activity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         layout.setPadding(30,30,30,30);
+
         //initialise fields to allow scrolling (if many family members)
         ScrollView scroll = new ScrollView(this);
         scroll.setBackgroundColor(android.R.color.transparent);
-        scroll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
+        scroll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        //init name list
+        ArrayList<PersonInfo> nameListB = new ArrayList<PersonInfo>();
+        for (int i = 0; i < objects.size(); i++) {
+            //get a family member's info and add it to the nameList
+            boolean isEating = objects.get(i).getBoolean("Breakfast");
+            String memberName = objects.get(i).getString("Owner");
+            String mealType = "B";
+            PersonInfo person = new PersonInfo(isEating,memberName,mealType);
+            nameListB.add(person);
+        }
+
+        ArrayList<PersonInfo> nameListL = new ArrayList<PersonInfo>();
+        for (int i = 0; i < objects.size(); i++) {
+            //get a family member's info and add it to the nameList
+            boolean isEating = objects.get(i).getBoolean("Lunch");
+            String memberName = objects.get(i).getString("Owner");
+            String mealType = "L";
+            PersonInfo person = new PersonInfo(isEating,memberName,mealType);
+            nameListL.add(person);
+        }
+
+        ArrayList<PersonInfo> nameListD = new ArrayList<PersonInfo>();
+        for (int i = 0; i < objects.size(); i++) {
+            //get a family member's info and add it to the nameList
+            boolean isEating = objects.get(i).getBoolean("Dinner");
+            String memberName = objects.get(i).getString("Owner");
+            String mealType = "D";
+            PersonInfo person = new PersonInfo(isEating,memberName,mealType);
+            nameListD.add(person);
+        }
+
+        MySimpleArrayAdapter adapter1 = new MySimpleArrayAdapter(this, nameListB);
+
+        MySimpleArrayAdapter adapter2 = new MySimpleArrayAdapter(this, nameListL);
+
+        MySimpleArrayAdapter adapter3 = new MySimpleArrayAdapter(this, nameListD);
+
+        final int adapterCount = adapter1.getCount();
 
         bf = new TextView(this);
         bf.setText("Breakfast");
         bf.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         layout.addView(bf);
 
-        for(int i=0; i<objects.size(); i++) {
-            //get a family member's name and add it to the check box
-            String memberName = objects.get(i).getString("Owner");
-            temp = new CheckBox(this);
-            temp.setText(memberName);
-            temp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            layout.addView(temp);
-
+        for (int i=0; i<adapterCount; i++) {
+            View item = adapter1.getView(i, null, null);
+            layout.addView(item);
         }
+
 
         lun = new TextView(this);
         lun.setText("Lunch");
         lun.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         layout.addView(lun);
 
-        for(int i=0; i<objects.size(); i++) {
-            //get a family member's name and add it to the check box
-            String memberName = objects.get(i).getString("Owner");
-            temp = new CheckBox(this);
-            temp.setText(memberName);
-            temp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            layout.addView(temp);
-
+        for (int i=0; i<adapterCount; i++) {
+            View item = adapter2.getView(i, null, null);
+            layout.addView(item);
         }
 
         din = new TextView(this);
@@ -110,14 +149,9 @@ public class RollCallActivity extends Activity {
         din.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         layout.addView(din);
 
-        for(int i=0; i<objects.size(); i++) {
-            //get a family member's name and add it to the check box
-            String memberName = objects.get(i).getString("Owner");
-            temp = new CheckBox(this);
-            temp.setText(memberName);
-            temp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            layout.addView(temp);
-
+        for (int i=0; i<adapterCount; i++) {
+            View item = adapter3.getView(i, null, null);
+            layout.addView(item);
         }
 
         //add the linear layout view to the scroll view
@@ -126,6 +160,13 @@ public class RollCallActivity extends Activity {
         return scroll;
     }
 
+
+    /*
+    When the checkbox is clicked for an item, update meal preferences for that family member
+     */
+    public void updateMeal(View view) {
+
+    }
 
 
     @Override
