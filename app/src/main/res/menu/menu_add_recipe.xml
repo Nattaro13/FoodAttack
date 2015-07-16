@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.foodattack.foodattack.AddRecipe">
+
+    <!--Button to add a new item to the shopping list -->
+    <item android:id="@+id/action_add_recipe"
+        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_done"
+        android:title="Add item" />
+</menu>
