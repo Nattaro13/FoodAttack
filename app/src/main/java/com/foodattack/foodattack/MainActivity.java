@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
 
     //called when the user clicks the "Shopping List" button in the main menu
     public void getShopList(View view) {
-        Intent intent = new Intent(this,ShopList.class);
+        Intent intent = new Intent(this,ShopListActivityParse.class);
         startActivity(intent);
     }
 
