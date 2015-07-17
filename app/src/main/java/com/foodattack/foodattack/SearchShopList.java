@@ -71,7 +71,7 @@ public class SearchShopList extends ListActivity {
                 cursor,
                 new String[] { ShopListContract.Columns.ITEM_NAME,
                         ShopListContract.Columns.ITEM_QTY},
-                new int[] { R.id.ShopList_ItemName_View,R.id.ShopList_ItemQty_View},
+                new int[] { R.id.shoplist_itemNameView,R.id.shoplist_itemQtyView},
                 0
         );
         this.setListAdapter(listAdapter);
@@ -85,7 +85,7 @@ public class SearchShopList extends ListActivity {
     public void onShopListDeleteButtonClick(View view) {
         View v = (View) view.getParent();
         //get the item name
-        Button itemNameButton = (Button) v.findViewById(R.id.ShopList_ItemName_View);
+        Button itemNameButton = (Button) v.findViewById(R.id.shoplist_itemNameView);
         //convert item name to string
         String itemName = itemNameButton.getText().toString();
 
@@ -126,7 +126,7 @@ public class SearchShopList extends ListActivity {
                 cursor,
                 new String[] { ShopListContract.Columns.ITEM_NAME,
                         ShopListContract.Columns.ITEM_QTY},
-                new int[] { R.id.ShopList_ItemName_View,R.id.ShopList_ItemQty_View},
+                new int[] { R.id.shoplist_itemNameView,R.id.shoplist_itemQtyView},
                 0
         );
         this.setListAdapter(listAdapter);
@@ -139,7 +139,7 @@ public class SearchShopList extends ListActivity {
      */
     public void editOnClick(View view){
         View v = (View) view.getParent();
-        Button oldItemNameButton = (Button) v.findViewById(R.id.ShopList_ItemName_View);
+        Button oldItemNameButton = (Button) v.findViewById(R.id.shoplist_itemNameView);
 
         final String oldItemName = oldItemNameButton.getText().toString();
 
