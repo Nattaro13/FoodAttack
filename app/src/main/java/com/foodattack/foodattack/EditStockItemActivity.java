@@ -16,13 +16,18 @@ import android.widget.Toast;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+/**
+ * EditStockItemActiviy is the activity that is started when the user
+ * clicks on the "edit" in the swipe menu or "add" in the action bar
+ **/
 
 public class EditStockItemActivity extends Activity {
 
-    //private StockListItem mStockItem;
+    /**
+     * Member Variables
+     **/
     private EditText mItemNameEditText;
     private EditText mItemBrandEditText;
     private EditText mItemQtyEditText;
@@ -32,12 +37,12 @@ public class EditStockItemActivity extends Activity {
     private String mItemQty;
     private String mItemRestock;
     private String mItemID;
+    private String mItemFamilyID;
     private Button mSaveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //loading indicator
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_edit_stock_item);
 
@@ -49,15 +54,20 @@ public class EditStockItemActivity extends Activity {
         mItemQtyEditText = (EditText) findViewById(R.id.add_stock_itemQty);
         mItemRestockEditText = (EditText) findViewById(R.id.add_stock_itemRestock);
 
+        //if edit is clicked, get data of item to be edited
         if(intent.getExtras() != null){
             //set input fields to previously entered data
             mItemNameEditText.setText(intent.getStringExtra("itemName"));
             mItemBrandEditText.setText(intent.getStringExtra("itemBrand"));
             mItemQtyEditText.setText(intent.getStringExtra("itemQty"));
             mItemRestockEditText.setText(intent.getStringExtra("itemRestock"));
+
             //get objectID of item clicked
             mItemID = intent.getStringExtra("itemID");
         }
+
+        //always get the familyID of user
+        mItemFamilyID = intent.getStringExtra("itemFamilyID");
 
         mSaveButton = (Button) findViewById(R.id.edit_stock_saveItem);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -99,14 +109,13 @@ public class EditStockItemActivity extends Activity {
                 stockItem.setItemBrand(mItemBrand);
                 stockItem.setItemQty(mItemQty);
                 stockItem.setItemRestock(mItemRestock);
-                //TODO currently sets family as own user --> need to change to family head's user id later
-                stockItem.setItemFamily(ParseUser.getCurrentUser());
-                //loading indicator start
+                stockItem.setItemFamily(mItemFamilyID);
+
+                //save stockItem to parse
                 setProgressBarIndeterminateVisibility(true);
                 stockItem.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        //loading indicator end
                         setProgressBarIndeterminateVisibility(false);
                         saveToast(e);
                         //prevents item to be saved multiple times if alrdy saved
@@ -120,9 +129,8 @@ public class EditStockItemActivity extends Activity {
             }
             //if item is being edited, update it
             else{
-                //query
+                //create query object and retrieve item by id
                 ParseQuery<StockListItem> query = ParseQuery.getQuery(StockListItem.class);
-                //retrieve item by id
                 query.getInBackground(mItemID, new GetCallback<StockListItem>() {
                     @Override
                     public void done(StockListItem stockItem, ParseException e) {
@@ -132,12 +140,10 @@ public class EditStockItemActivity extends Activity {
                             stockItem.setItemBrand(mItemBrand);
                             stockItem.setItemQty(mItemQty);
                             stockItem.setItemRestock(mItemRestock);
-                            //loading indicator start
                             setProgressBarIndeterminateVisibility(true);
                             stockItem.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    //loading indicator end
                                     setProgressBarIndeterminateVisibility(false);
                                     saveToast(e);
                                 }

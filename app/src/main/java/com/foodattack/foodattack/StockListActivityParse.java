@@ -8,15 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuLayout;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -27,13 +26,20 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
+/**
+ * StockListActivityParse is the activity that is started when
+ * "Available Food" of the main activity is clicked
+ **/
 
 public class StockListActivityParse extends Activity {
 
+    /**
+     * Member Variables
+     */
     private List<StockListItem> mStockList;
     private StockListAdapter mAdapter;
     private SwipeMenuListView mStockList_ListView;
+    private String mUserFamilyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +52,60 @@ public class StockListActivityParse extends Activity {
         //set up adapter
         mStockList = new ArrayList<StockListItem>();
         mAdapter = new StockListAdapter(this, mStockList);
-        //setListAdapter(mAdapter);
         mStockList_ListView.setAdapter(mAdapter);
 
         //display stocklist
         updateStockList();
+        setSwipeMenu();
+    }
 
+    /**
+     * updateStockList
+     * Description: fetch item data from parse
+     */
+    public void updateStockList() {
+        //retrieve current user's familyID from "Family" class
+        setProgressBarIndeterminateVisibility(true);
+        ParseQuery<ParseObject> familyQuery = ParseQuery.getQuery("Family");
+        familyQuery.whereEqualTo("Owner", ParseUser.getCurrentUser().getUsername());
+        familyQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> userList, ParseException e) {
+                if (e == null) {
+                    ParseObject userData = userList.get(0);
+                    mUserFamilyID = userData.getString("familyID");
+
+                    //retrieve all stock items entered by user's family
+                    ParseQuery<StockListItem> stockListQuery = ParseQuery.getQuery(StockListItem.class);
+                    stockListQuery.whereEqualTo("itemFamilyID", mUserFamilyID);
+                    stockListQuery.orderByAscending("itemName");
+                    stockListQuery.findInBackground(new FindCallback<StockListItem>() {
+                        @Override
+                        public void done(List<StockListItem> stockList, ParseException e) {
+                            setProgressBarIndeterminateVisibility(false);
+                            if (e == null) {
+                                //following gadget habit's tutorial
+                                mAdapter.clear();
+                                mAdapter.addAll(stockList);
+                            } else {
+                                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * setSwipeMenu
+     * Description: Controls what the swipe options will look like and
+     * what happens when they are clicked
+     */
+    private void setSwipeMenu() {
         SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+
+            /*set the look of the swipe options*/
             @Override
             public void create(SwipeMenu menu) {
                 //Edit menu option
@@ -77,12 +130,12 @@ public class StockListActivityParse extends Activity {
         //set menu creator
         mStockList_ListView.setMenuCreator(swipeMenuCreator);
 
-        //listener swipe options click event
+        /*set what happens when the swipe options are clicked*/
         mStockList_ListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu swipeMenu, int index) {
                 StockListItem stockItem = mStockList.get(position);
-                switch (index){
+                switch (index) {
                     case 0:
                         onEditOptionClick(stockItem);
                         break;
@@ -92,102 +145,6 @@ public class StockListActivityParse extends Activity {
                 }
 
                 return false;
-            }
-        });
-
-    }
-
-    //TODO solved the refresh prob for add but not edit
-    // edit's refresh works sometimes only
-    // --> maybe use startactivtyforresult and onactivity result
-    protected void onRestart (){
-        super.onRestart();
-        updateStockList();
-    }
-
-    /**
-     * updateStockList
-     * Description: fetch item data from parse
-     */
-    public void updateStockList(){
-        ParseQuery<StockListItem> query = ParseQuery.getQuery(StockListItem.class);
-
-        //TODO - currently shows items by users only, not the family - need to change later
-        query.whereEqualTo("itemFamily", ParseUser.getCurrentUser());
-
-        setProgressBarIndeterminateVisibility(true);
-
-        query.findInBackground(new FindCallback<StockListItem>() {
-            @Override
-            public void done(List<StockListItem> stockList, ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
-                if (e == null) {
-                    //following gadget habit's tutorial
-                    mAdapter.clear();
-                    mAdapter.addAll(stockList);
-                } else {
-                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-                }
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_list, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id) {
-
-            case R.id.action_refresh: {
-                updateStockList();
-                break;
-            }
-
-            case R.id.action_add_stock_item: {
-                Intent intent = new Intent(this, EditStockItemActivity.class);
-                startActivity(intent);
-                break;
-            }
-
-            case R.id.action_settings: {
-                // Do something when user selects Settings from Action Bar overlay
-                break;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * onDeleteButtonClick
-     * Description: code for delete in swipe menu
-     * @param item
-     */
-    private void onDeleteButtonClick(StockListItem item){
-        String itemID = item.getObjectId();
-        ParseObject itemParseObject = ParseObject.createWithoutData(StockListItem.class, itemID);
-        itemParseObject.deleteInBackground(new DeleteCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null){
-                    Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                    updateStockList();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
-                    Log.d(getClass().getSimpleName(), "User delete error: " + e);
-                }
             }
         });
     }
@@ -204,7 +161,83 @@ public class StockListActivityParse extends Activity {
         intent.putExtra("itemQty", item.getItemQty());
         intent.putExtra("itemRestock", item.getItemRestock());
         intent.putExtra("itemID", item.getObjectId());
+        intent.putExtra("itemFamilyID", mUserFamilyID);
         startActivity(intent);
+    }
+
+    /**
+     * onDeleteButtonClick
+     * Description: code for delete in swipe menu
+     * @param item
+     */
+    private void onDeleteButtonClick(StockListItem item){
+        String itemID = item.getObjectId();
+        ParseObject itemParseObject = ParseObject.createWithoutData(StockListItem.class, itemID);
+        itemParseObject.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                    updateStockList();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "User delete error: " + e);
+                }
+            }
+        });
+    }
+
+    //TODO solved the refresh prob for add but not edit
+    // edit's refresh works sometimes only
+    // --> maybe use startactivtyforresult and onactivity result
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateStockList();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_stock_list, menu);
+
+        return true;
+    }
+
+    /**
+     * opOptionsItemSelected
+     * @param item
+     * @return
+     * Description: controls what happens when action bar buttons are clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.action_refresh: {
+                updateStockList();
+                break;
+            }
+
+            case R.id.action_add_stock_item: {
+                Intent intent = new Intent(this, EditStockItemActivity.class);
+                intent.putExtra("itemFamilyID", mUserFamilyID);
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.action_settings: {
+                // Do something when user selects Settings from Action Bar overlay
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

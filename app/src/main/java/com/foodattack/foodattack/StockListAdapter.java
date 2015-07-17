@@ -1,6 +1,5 @@
 package com.foodattack.foodattack;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+/**
+ * StockListAdapter set view that displays stock item's itemName and itemQty
+ **/
 
 public class StockListAdapter extends ArrayAdapter<StockListItem> {
 
