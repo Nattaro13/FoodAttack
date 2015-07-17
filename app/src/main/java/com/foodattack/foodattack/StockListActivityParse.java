@@ -88,10 +88,15 @@ public class StockListActivityParse extends Activity {
                                 mAdapter.clear();
                                 mAdapter.addAll(stockList);
                             } else {
+                                Toast.makeText(getApplicationContext(), "Something went wrong when retrieving data", Toast.LENGTH_SHORT).show();
                                 Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
                             }
                         }
                     });
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Something went wrong when retrieving data", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
                 }
             }
         });
