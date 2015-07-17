@@ -66,7 +66,7 @@ public class ShopList extends ListActivity {
 
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
                 this,
-                R.layout.shop_list_view,
+                R.layout.list_item_shoplist,
                 cursor,
                 new String[] { ShopListContract.Columns.ITEM_NAME,
                         ShopListContract.Columns.ITEM_QTY},
