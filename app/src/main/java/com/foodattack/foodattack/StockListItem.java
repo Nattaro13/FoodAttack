@@ -63,7 +63,7 @@ public class StockListItem extends ParseObject {
     }
 
     /**
-     * getters and setters for itemFamily
+     * getters and setters for itemFamilyID
      **/
     public String getItemFamilyID(){
         return getString("itemfamilyID");
