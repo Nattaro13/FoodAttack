@@ -65,10 +65,10 @@ public class StockListItem extends ParseObject {
     /**
      * getters and setters for itemFamily
      **/
-    public String getItemFamily(){
+    public String getItemFamilyID(){
         return getString("itemfamilyID");
     }
-    public void setItemFamily(String itemFamilyID){
+    public void setItemFamilyID(String itemFamilyID){
         put("itemFamilyID", itemFamilyID);
     }
 

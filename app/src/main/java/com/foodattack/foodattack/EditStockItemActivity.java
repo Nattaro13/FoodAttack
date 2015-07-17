@@ -109,7 +109,7 @@ public class EditStockItemActivity extends Activity {
                 stockItem.setItemBrand(mItemBrand);
                 stockItem.setItemQty(mItemQty);
                 stockItem.setItemRestock(mItemRestock);
-                stockItem.setItemFamily(mItemFamilyID);
+                stockItem.setItemFamilyID(mItemFamilyID);
 
                 //save stockItem to parse
                 setProgressBarIndeterminateVisibility(true);

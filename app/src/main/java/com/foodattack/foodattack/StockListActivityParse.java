@@ -166,7 +166,7 @@ public class StockListActivityParse extends Activity {
         intent.putExtra("itemQty", item.getItemQty());
         intent.putExtra("itemRestock", item.getItemRestock());
         intent.putExtra("itemID", item.getObjectId());
-        intent.putExtra("itemFamilyID", mUserFamilyID);
+        intent.putExtra("itemFamilyID", item.getItemFamilyID());
         startActivity(intent);
     }
 
