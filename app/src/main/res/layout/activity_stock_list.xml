@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.foodattack.foodattack.StockList">
+    tools:context="com.foodattack.foodattack.StockListActivityParse">
 
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/stocklist_listview"
