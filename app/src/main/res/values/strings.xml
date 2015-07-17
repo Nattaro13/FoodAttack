@@ -53,7 +53,8 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_save_item">Save</string>
     <string name="action_add_item">Add</string>
-    <string name="title_activity_add_stock_item">Add Stock Item</string>
+    <string name="title_activity_edit_stock_item">Add Stock Item</string>
     <string name="edit_error_title">Error!</string>
     <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
+    <string name="title_activity_edit_shop_item">Add Shop Item</string>
 </resources>
