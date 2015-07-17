@@ -1,30 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<!--<?xml version="1.0" encoding="utf-8"?>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.foodattack.foodattack.ShopList">
-    <uses-sdk android:minSdkVersion="15"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.foodattack.foodattack.ShopListActivityParse">
+
+    <!-- Refresh Button -->
+    <item
+        android:id="@+id/action_refresh_shoplist"
+        android:icon="@drawable/ic_refresh_white"
+        android:showAsAction="always|withText"
+        android:title="@string/action_refresh">
+    </item>
 
     <!--Button to add a new item to the shopping list -->
-    <item android:id="@+id/action_add_item"
+    <item android:id="@+id/action_add_shop_item"
         app:showAsAction="ifRoom"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Add item" />
+        android:title="@string/action_add_item" />
 
     <!-- Button to search for things in your shopping list -->
-    <item android:id="@+id/action_search"
+    <!--<item android:id="@+id/action_search"
         app:showAsAction="collapseActionView|always"
         android:showAsAction="collapseActionView|always"
         android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search" />
+        android:title="Search" />-->
 
-    <!-- Button for the settings -->
+    <!--Settings option in drop down list -->
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-
 
 </menu>
 
