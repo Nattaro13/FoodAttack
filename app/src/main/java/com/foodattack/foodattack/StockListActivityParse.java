@@ -224,7 +224,7 @@ public class StockListActivityParse extends Activity {
 
         switch (id) {
 
-            case R.id.action_refresh: {
+            case R.id.action_refresh_stocklist: {
                 updateStockList();
                 break;
             }

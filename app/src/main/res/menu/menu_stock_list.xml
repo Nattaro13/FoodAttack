@@ -5,7 +5,7 @@
 
     <!-- Refresh Button -->
     <item
-        android:id="@+id/action_refresh"
+        android:id="@+id/action_refresh_stocklist"
         android:icon="@drawable/ic_refresh_white"
         android:showAsAction="always|withText"
         android:title="@string/action_refresh">
