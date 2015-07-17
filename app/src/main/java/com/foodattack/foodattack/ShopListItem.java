@@ -2,10 +2,6 @@ package com.foodattack.foodattack;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.util.UUID;
 
 /**
  * ShopListItem is a ParseObject that encapsulates items in the shopping list
@@ -14,7 +10,15 @@ import java.util.UUID;
 @ParseClassName("ShopListItem")
 public class ShopListItem extends ParseObject {
 
-    //getters and setters for itemName
+    /**
+     * Constructor
+     **/
+    public ShopListItem(){
+    }
+
+    /**
+     * getters and setters for itemName
+     **/
     public String getItemName() {
         return getString("itemName");
     }
@@ -23,7 +27,9 @@ public class ShopListItem extends ParseObject {
         put("itemName", itemName);
     }
 
-    //getters and setters for itemBrand
+    /**
+     * getters and setters for itemBrand
+     **/
     public String getItemBrand() {
         return getString("itemBrand");
     }
@@ -32,8 +38,10 @@ public class ShopListItem extends ParseObject {
         put("itemBrand", itemBrand);
     }
 
-    //getters and setters for itemQty
-    // TODO change qty to double when shoplistparse ready
+    /**
+     * getters and setters for itemQty
+     **/
+    //TODO change qty to double when shoplistparse ready
     public String getItemQty() {
         return getString("itemQty");
     }
@@ -42,28 +50,13 @@ public class ShopListItem extends ParseObject {
         put("itemQty", itemQty);
     }
 
-    //getters and setters for author
-    // TODO not sure if needed; remove if not required
-    public ParseUser getAuthor() {
-        return getParseUser("author");
+    /**
+     * getters and setters for itemFamilyID
+     **/
+    public String getItemFamilyID(){
+        return getString("itemfamilyID");
     }
-
-    public void setAuthor(ParseUser currentUser) {
-        put("author", currentUser);
+    public void setItemFamilyID(String itemFamilyID){
+        put("itemFamilyID", itemFamilyID);
     }
-
-    //TODO what is uuid ?_?
-    public void setUuidString() {
-        UUID uuid = UUID.randomUUID();
-        put("uuid", uuid.toString());
-    }
-
-    public String getUuidString() {
-        return getString("uuid");
-    }
-
-    public static ParseQuery<ShopListItem> getQuery() {
-        return ParseQuery.getQuery(ShopListItem.class);
-    }
-
 }
