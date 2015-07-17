@@ -49,10 +49,10 @@ public class EditStockItemActivity extends Activity {
         Intent intent = this.getIntent();
 
         //get edit texts
-        mItemNameEditText = (EditText) findViewById(R.id.add_stock_itemName);
-        mItemBrandEditText = (EditText) findViewById(R.id.add_stock_itemBrand);
-        mItemQtyEditText = (EditText) findViewById(R.id.add_stock_itemQty);
-        mItemRestockEditText = (EditText) findViewById(R.id.add_stock_itemRestock);
+        mItemNameEditText = (EditText) findViewById(R.id.edit_stock_itemName);
+        mItemBrandEditText = (EditText) findViewById(R.id.edit_stock_itemBrand);
+        mItemQtyEditText = (EditText) findViewById(R.id.edit_stock_itemQty);
+        mItemRestockEditText = (EditText) findViewById(R.id.edit_stock_itemRestock);
 
         //if edit is clicked, get data of item to be edited
         if(intent.getExtras() != null){
