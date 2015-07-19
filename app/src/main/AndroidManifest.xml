@@ -121,10 +121,18 @@
         <activity
             android:name=".EditStockItemActivity"
             android:label="@string/title_activity_add_stock_item"
-            android:parentActivityName=".StockListActivityParse">
+            android:parentActivityName=".StockListActivityParse" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.StockListActivityParse" />
+        </activity>
+        <activity
+            android:name=".EditRecipe"
+            android:label="@string/title_activity_edit_recipe"
+            android:parentActivityName=".RecipeList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodattack.foodattack.RecipeList" />
         </activity>
     </application>
 

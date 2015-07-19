@@ -111,7 +111,7 @@ public class RecipeList extends Activity {
                 Log.d("recipe name", recipeItem.getString("recipeTitle"));
                 switch (index) {
                     case 0:
-                        //edit function!
+                        jumpToEditScreen(recipeItem.getObjectId(),recipeItem.getString("recipeTitle"));
                         break;
                     case 1:
                         //delete function!
@@ -122,6 +122,19 @@ public class RecipeList extends Activity {
                 return false; //close menu
             }
         });
+    }
+
+
+    /*
+    When the edit button is pressed on the swipe layout, it will jump to the
+    Edit Recipe class to allow user to edit his recipe.
+     */
+    public void jumpToEditScreen(String itemID, String recipeTitleString) {
+        //Switch interface to the "add recipe activity"
+        Intent intent = new Intent(this, EditRecipe.class);
+        intent.putExtra("RECIPE_ID",itemID);
+        intent.putExtra("RECIPE_NAME",recipeTitleString);
+        startActivity(intent);
     }
 
 

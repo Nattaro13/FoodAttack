@@ -56,4 +56,5 @@
     <string name="title_activity_add_stock_item">Add Stock Item</string>
     <string name="edit_error_title">Error!</string>
     <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
+    <string name="title_activity_edit_recipe">EditRecipe</string>
 </resources>
