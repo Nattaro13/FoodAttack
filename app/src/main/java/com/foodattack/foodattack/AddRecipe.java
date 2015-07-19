@@ -90,4 +90,12 @@ public class AddRecipe extends Activity {
 
     }
 
+    /*
+    Bring user to the RecipeList class when back button is pressed.
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,RecipeList.class);
+        startActivity(intent);
+    }
+
 }

@@ -15,13 +15,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +38,9 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 
 public class RecipeList extends Activity {
     protected List<ParseObject> recipeObjects = null;
-    //private SwipeMenuListView mStockList_ListView;
+    protected ArrayList<String> recipeTitles;
+    protected ArrayAdapter<String> m_adapter;
+    protected SwipeMenuListView m_listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +96,9 @@ public class RecipeList extends Activity {
                     query2.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> objects, ParseException e) {
                             if ((e == null) && (!objects.isEmpty())) {
-                                String[] recipesList = new String[objects.size()];
+                                ArrayList<String> recipesList = new ArrayList<String>();
                                 for (int i = 0; i < objects.size(); i++) {
-                                    recipesList[i] = objects.get(i).getString("recipeTitle");
+                                    recipesList.add(objects.get(i).getString("recipeTitle"));
                                 }
                                 viewList(listView, recipesList, objects);
                             }
@@ -115,7 +121,8 @@ public class RecipeList extends Activity {
                         break;
                     case 1:
                         //delete function!
-                        //update list!
+                        deleteRecipe(recipeItem.getObjectId());
+                        updateUI(position);
                         break;
                 }
 
@@ -138,12 +145,15 @@ public class RecipeList extends Activity {
     }
 
 
-    public void viewList(ListView listView, String[] recipesList, List<ParseObject> objects) {
+    public void viewList(SwipeMenuListView listView, ArrayList<String> recipesList, List<ParseObject> objects) {
         recipeObjects = objects; //pointer to the objects list. global add.
-        final ListView listView2 = listView;
+        recipeTitles = recipesList; //pointer to array
+        final SwipeMenuListView listView2 = listView;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.recipe_list_row, R.id.recipe_title, recipesList);
-        listView2.setAdapter(adapter);
+                R.layout.recipe_list_row, R.id.recipe_title, recipeTitles);
+        m_adapter = adapter; //pointer
+
+        listView2.setAdapter(m_adapter);
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -153,6 +163,7 @@ public class RecipeList extends Activity {
 
             }
         });
+        m_listView = listView2;
     }
 
 
@@ -206,4 +217,37 @@ public class RecipeList extends Activity {
         startActivity(intent);
 
     }
+
+
+    /*
+    Executed when the user presses Delete on the swipe menu
+     */
+    public void deleteRecipe(String recipeID) {
+        //construct a parse Query to obtain the recipe details
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
+
+        query.getInBackground(recipeID, new GetCallback<ParseObject>() {
+            public void done(ParseObject recipeObject, ParseException e) {
+                if (e == null) {
+                    recipeObject.deleteInBackground();
+                    Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    /*
+    Update the UI after deleting a recipe
+     */
+    public void updateUI(int position) {
+
+        recipeObjects.remove(position);
+        recipeTitles.remove(position);
+
+        m_adapter.notifyDataSetChanged();
+    }
+
 }

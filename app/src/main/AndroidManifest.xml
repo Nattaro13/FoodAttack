@@ -50,6 +50,7 @@
         <activity
             android:name=".RecipeList"
             android:label="@string/title_activity_recipe_list"
+            android:noHistory="true"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -103,10 +104,8 @@
             android:name=".AddRecipe"
             android:label="@string/title_activity_add_recipe"
             android:noHistory="true"
-            android:parentActivityName=".RecipeList" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.foodattack.foodattack.RecipeList" />
+            >
+
         </activity>
         <activity
             android:name=".DisplayRecipe"
