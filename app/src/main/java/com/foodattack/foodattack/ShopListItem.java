@@ -54,7 +54,7 @@ public class ShopListItem extends ParseObject {
      * getters and setters for itemFamilyID
      **/
     public String getItemFamilyID(){
-        return getString("itemfamilyID");
+        return getString("itemFamilyID");
     }
     public void setItemFamilyID(String itemFamilyID){
         put("itemFamilyID", itemFamilyID);
