@@ -6,19 +6,26 @@
     android:orientation="horizontal"
     android:weightSum="4"
     android:baselineAligned="false"
+    android:layout_marginBottom="40dp"
     >
-
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="5dp"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingTop="10dp"
         android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
         android:orientation="vertical"
         android:id="@+id/main_buttons1"
         android:layout_weight="2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Food"
+            android:textColor="#D32F2F"
+            android:gravity="right"
+            android:textSize="35dp"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -28,6 +35,7 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/custom_btn_main"
             android:onClick="getStock"
+            android:textSize="20dp"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="1dp"
             />
@@ -38,6 +46,7 @@
             android:text="@string/recipes"
             android:textColor="#FFFFFF"
             android:layout_weight="1"
+            android:textSize="20dp"
             android:background="@drawable/custom_btn_main"
             android:onClick="getRecipeList"
             android:layout_marginTop="5dp"
@@ -52,11 +61,19 @@
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent" android:paddingLeft="5dp"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingTop="10dp"
         android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
         android:orientation="vertical"
         android:id="@+id/main_buttons2"
         android:layout_weight="2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attack!"
+            android:textColor="#D32F2F"
+            android:gravity="left"
+            android:textSize="35dp"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -64,6 +81,7 @@
             android:layout_weight="1"
             android:text="@string/shop_list"
             android:textColor="#FFFFFF"
+            android:textSize="20dp"
             android:background="@drawable/custom_btn_main"
             android:onClick="getShopList"
             android:layout_marginLeft="1dp"
@@ -76,6 +94,7 @@
             android:text="@string/roll_call"
             android:textColor="#FFFFFF"
             android:layout_weight="1"
+            android:textSize="20dp"
             android:background="@drawable/custom_btn_main"
             android:onClick="getRollCallActivity"
             android:layout_marginLeft="1dp"
