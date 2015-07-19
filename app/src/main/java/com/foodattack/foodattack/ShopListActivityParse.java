@@ -197,38 +197,39 @@ public class ShopListActivityParse extends Activity {
 
     /**
      * onDoneOptionClick
-     * Description: code for done in swipe menu
+     * Description: code for done in swipe menu; when the done option is clicked
+     * a dialog that prompts the user to add a restock duration pop up
+     * when the user click "save", the shop item will be added to the stocklist and
+     * deleted from the shoplist
      * @param item
      */
-    //TODO add code for done option in swipe menu of shop list
     private void onDoneOptionClick(ShopListItem item){
         //get item details
         final String itemName = item.getItemName();
         final String itemBrand = item.getItemBrand();
         final String itemQty = item.getItemQty();
-        String itemID = item.getObjectId();
+        final String itemID = item.getObjectId();
         final String itemFamilyID = item.getItemFamilyID();
 
         /* set what the alert dialog will look like */
         //set title and msg of dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ShopListActivityParse.this);
-        builder.setTitle(R.string.dialog_done_title);
-        builder.setMessage("Add a restock duration for" + itemName);
+        builder.setTitle("Add a restock duration for " + itemName);
+        //builder.setMessage("Add a restock duration for " + itemName);
 
         //set layout of dialog
-        AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
         LayoutInflater inflater = alertDialog.getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.dialog_done_swipe_option, null);
+        final View dialogLayout = inflater.inflate(R.layout.dialog_done_swipe_option, null);
         builder.setView(dialogLayout);
 
         //save button
-        builder.setPositiveButton("@strings/action_save_item", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.action_save_item, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //get restock date
-                EditText itemRestockEditText = (EditText) findViewById(R.id.dialog_done_swipe_restock);
+                EditText itemRestockEditText = (EditText) dialogLayout.findViewById(R.id.dialog_done_swipe_restock);
                 String itemRestock = itemRestockEditText.getText().toString();
-                itemRestock.trim();
 
                 //create a new stockListItem
                 StockListItem stockItem = new StockListItem();
@@ -242,23 +243,35 @@ public class ShopListActivityParse extends Activity {
                 stockItem.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e == null){
+                        if (e == null) {
                             Log.d("added to", "StockList!!");
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getApplicationContext(), "Failed to Save to Stock List", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
                 //delete the shopItem
-                //TODO here here here 
+                ParseObject shopItem = ParseObject.createWithoutData(ShopListItem.class, itemID);
+                shopItem.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(getApplicationContext(), "Updated Both Stock and Shop List", Toast.LENGTH_SHORT).show();
+                            updateShopList();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Failed to Delete from Shop List", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "User delete error: " + e);
+                        }
+                    }
+                });
             }
         });
 
+        //cancel button
+        builder.setNegativeButton("Cancel", null);
 
-
-        Log.d("done", "is clicked!!");
+        builder.create().show();
     }
 
     /**
