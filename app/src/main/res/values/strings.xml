@@ -49,6 +49,7 @@
     <string name="hint_recipe_ingredients">Ingredients</string>
     <string name="hint_recipe_steps">Steps</string>
     <string name="title_activity_display_recipe">DisplayRecipe</string>
+    <string name="title_activity_edit_recipe">EditRecipe</string>
 
     <string name="action_refresh">Refresh</string>
     <string name="action_save_item">Save</string>
@@ -58,6 +59,6 @@
     <string name="edit_error_title">Error!</string>
     <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
     <string name="title_activity_edit_shop_item">Add Shop Item</string>
-
     <string name="dialog_done_title">Add restock duration</string>
+
 </resources>

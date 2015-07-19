@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.foodattack.foodattack.AddRecipe">
+    tools:context="com.foodattack.foodattack.EditRecipe">
 
-    <!--Button to add a new recipe to the recipeslist -->
+    <!--Button to add the edits to the recipe -->
     <item android:id="@+id/action_add_recipe"
         app:showAsAction="ifRoom"
         android:showAsAction="ifRoom"

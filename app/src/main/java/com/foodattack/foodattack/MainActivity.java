@@ -120,6 +120,18 @@ public class MainActivity extends Activity {
     }
 
 
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to home screen of their android phone
+    ie. EXIT APP.
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 
     /**
      * WHEN BUTTONS ON THE MAIN MENU ARE CLICKED: ALL THE CODE GOES BELOW.

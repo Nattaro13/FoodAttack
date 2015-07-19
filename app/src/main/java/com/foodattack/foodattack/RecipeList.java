@@ -2,6 +2,8 @@ package com.foodattack.foodattack;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,26 +15,67 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuLayout;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.baoyz.swipemenulistview.SwipeMenu;
 
 
 public class RecipeList extends Activity {
     protected List<ParseObject> recipeObjects = null;
+    protected ArrayList<String> recipeTitles;
+    protected ArrayAdapter<String> m_adapter;
+    protected SwipeMenuListView m_listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
+        //set up swipe menu
+        SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                //Edit menu option
+                SwipeMenuItem editOption = new SwipeMenuItem(getApplicationContext());
+                editOption.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                editOption.setWidth(200);
+                editOption.setTitle("Edit");
+                editOption.setTitleSize(18);
+                editOption.setTitleColor(Color.WHITE);
+                menu.addMenuItem(editOption);
+
+                //Delete menu option
+                SwipeMenuItem deleteOption = new SwipeMenuItem(getApplicationContext());
+                deleteOption.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
+                deleteOption.setWidth(200);
+                deleteOption.setTitle("Delete");
+                deleteOption.setTitleSize(18);
+                deleteOption.setTitleColor(Color.WHITE);
+                menu.addMenuItem(deleteOption);
+            }
+        };
+
         //set the view for the list
-        final ListView listView = (ListView) findViewById(R.id.recipe_list);
+        final SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.recipe_list);
+
+        // set creator
+        listView.setMenuCreator(swipeMenuCreator);
 
         //get the recipe titles for that familyID
         //construct query for the "Family" database
@@ -53,26 +96,64 @@ public class RecipeList extends Activity {
                     query2.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> objects, ParseException e) {
                             if ((e == null) && (!objects.isEmpty())) {
-                                String[] recipesList = new String[objects.size()];
+                                ArrayList<String> recipesList = new ArrayList<String>();
                                 for (int i = 0; i < objects.size(); i++) {
-                                    recipesList[i] = objects.get(i).getString("recipeTitle");
+                                    recipesList.add(objects.get(i).getString("recipeTitle"));
                                 }
-                                viewList(listView,recipesList,objects);
+                                viewList(listView, recipesList, objects);
                             }
                         }
                     });
                 }
             }
         });
+
+        //listener swipe options click event
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu swipeMenu, int index) {
+                //StockListItem recipeItem = mStockList.get(position);
+                ParseObject recipeItem = recipeObjects.get(position);
+                Log.d("recipe name", recipeItem.getString("recipeTitle"));
+                switch (index) {
+                    case 0:
+                        jumpToEditScreen(recipeItem.getObjectId(),recipeItem.getString("recipeTitle"));
+                        break;
+                    case 1:
+                        //delete function!
+                        deleteRecipe(recipeItem.getObjectId());
+                        updateUI(position);
+                        break;
+                }
+
+                return false; //close menu
+            }
+        });
     }
 
 
-    public void viewList(ListView listView, String[] recipesList, List<ParseObject> objects) {
-        recipeObjects = objects;
-        final ListView listView2 = listView;
+    /*
+    When the edit button is pressed on the swipe layout, it will jump to the
+    Edit Recipe class to allow user to edit his recipe.
+     */
+    public void jumpToEditScreen(String itemID, String recipeTitleString) {
+        //Switch interface to the "add recipe activity"
+        Intent intent = new Intent(this, EditRecipe.class);
+        intent.putExtra("RECIPE_ID",itemID);
+        intent.putExtra("RECIPE_NAME",recipeTitleString);
+        startActivity(intent);
+    }
+
+
+    public void viewList(SwipeMenuListView listView, ArrayList<String> recipesList, List<ParseObject> objects) {
+        recipeObjects = objects; //pointer to the objects list. global add.
+        recipeTitles = recipesList; //pointer to array
+        final SwipeMenuListView listView2 = listView;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.recipe_list_row, R.id.recipe_title, recipesList);
-        listView2.setAdapter(adapter);
+                R.layout.recipe_list_row, R.id.recipe_title, recipeTitles);
+        m_adapter = adapter; //pointer
+
+        listView2.setAdapter(m_adapter);
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -82,6 +163,7 @@ public class RecipeList extends Activity {
 
             }
         });
+        m_listView = listView2;
     }
 
 
@@ -135,4 +217,37 @@ public class RecipeList extends Activity {
         startActivity(intent);
 
     }
+
+
+    /*
+    Executed when the user presses Delete on the swipe menu
+     */
+    public void deleteRecipe(String recipeID) {
+        //construct a parse Query to obtain the recipe details
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
+
+        query.getInBackground(recipeID, new GetCallback<ParseObject>() {
+            public void done(ParseObject recipeObject, ParseException e) {
+                if (e == null) {
+                    recipeObject.deleteInBackground();
+                    Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    /*
+    Update the UI after deleting a recipe
+     */
+    public void updateUI(int position) {
+
+        recipeObjects.remove(position);
+        recipeTitles.remove(position);
+
+        m_adapter.notifyDataSetChanged();
+    }
+
 }

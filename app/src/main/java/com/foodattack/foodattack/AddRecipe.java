@@ -54,6 +54,9 @@ public class AddRecipe extends Activity {
     }
 
 
+    /*
+    Stores your recipe onto Parse once you are done! :D
+     */
     public void storeRecipe() {
         //get all your recipe info!
         final EditText recipeTitle = (EditText) findViewById(R.id.recipe_name);
@@ -85,6 +88,14 @@ public class AddRecipe extends Activity {
             }
         });
 
+    }
+
+    /*
+    Bring user to the RecipeList class when back button is pressed.
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,RecipeList.class);
+        startActivity(intent);
     }
 
 }
