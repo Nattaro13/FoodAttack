@@ -122,7 +122,7 @@ public class ShopListActivityParse extends Activity {
 
                 //Done menu option
                 SwipeMenuItem doneOption = new SwipeMenuItem(getApplicationContext());
-                doneOption.setBackground(new ColorDrawable(Color.rgb(0xFF, 0xFF, 0x00)));
+                doneOption.setBackground(new ColorDrawable(Color.rgb(0xFF, 0x99, 0x3B)));
                 doneOption.setWidth(200);
                 doneOption.setTitle("Done");
                 doneOption.setTitleSize(18);
