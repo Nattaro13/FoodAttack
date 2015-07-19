@@ -2,6 +2,8 @@ package com.foodattack.foodattack;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,19 +22,54 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Collections;
 import java.util.List;
+
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuLayout;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.baoyz.swipemenulistview.SwipeMenu;
 
 
 public class RecipeList extends Activity {
     protected List<ParseObject> recipeObjects = null;
+    //private SwipeMenuListView mStockList_ListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
+        //set up swipe menu
+        SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                //Edit menu option
+                SwipeMenuItem editOption = new SwipeMenuItem(getApplicationContext());
+                editOption.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                editOption.setWidth(200);
+                editOption.setTitle("Edit");
+                editOption.setTitleSize(18);
+                editOption.setTitleColor(Color.WHITE);
+                menu.addMenuItem(editOption);
+
+                //Delete menu option
+                SwipeMenuItem deleteOption = new SwipeMenuItem(getApplicationContext());
+                deleteOption.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
+                deleteOption.setWidth(200);
+                deleteOption.setTitle("Delete");
+                deleteOption.setTitleSize(18);
+                deleteOption.setTitleColor(Color.WHITE);
+                menu.addMenuItem(deleteOption);
+            }
+        };
+
         //set the view for the list
-        final ListView listView = (ListView) findViewById(R.id.recipe_list);
+        final SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.recipe_list);
+
+        // set creator
+        listView.setMenuCreator(swipeMenuCreator);
 
         //get the recipe titles for that familyID
         //construct query for the "Family" database
@@ -57,18 +94,52 @@ public class RecipeList extends Activity {
                                 for (int i = 0; i < objects.size(); i++) {
                                     recipesList[i] = objects.get(i).getString("recipeTitle");
                                 }
-                                viewList(listView,recipesList,objects);
+                                viewList(listView, recipesList, objects);
                             }
                         }
                     });
                 }
             }
         });
+
+        //listener swipe options click event
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu swipeMenu, int index) {
+                //StockListItem recipeItem = mStockList.get(position);
+                ParseObject recipeItem = recipeObjects.get(position);
+                Log.d("recipe name", recipeItem.getString("recipeTitle"));
+                switch (index) {
+                    case 0:
+                        jumpToEditScreen(recipeItem.getObjectId(),recipeItem.getString("recipeTitle"));
+                        break;
+                    case 1:
+                        //delete function!
+                        //update list!
+                        break;
+                }
+
+                return false; //close menu
+            }
+        });
+    }
+
+
+    /*
+    When the edit button is pressed on the swipe layout, it will jump to the
+    Edit Recipe class to allow user to edit his recipe.
+     */
+    public void jumpToEditScreen(String itemID, String recipeTitleString) {
+        //Switch interface to the "add recipe activity"
+        Intent intent = new Intent(this, EditRecipe.class);
+        intent.putExtra("RECIPE_ID",itemID);
+        intent.putExtra("RECIPE_NAME",recipeTitleString);
+        startActivity(intent);
     }
 
 
     public void viewList(ListView listView, String[] recipesList, List<ParseObject> objects) {
-        recipeObjects = objects;
+        recipeObjects = objects; //pointer to the objects list. global add.
         final ListView listView2 = listView;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.recipe_list_row, R.id.recipe_title, recipesList);
