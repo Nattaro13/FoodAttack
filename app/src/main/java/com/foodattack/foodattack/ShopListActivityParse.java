@@ -1,14 +1,20 @@
 package com.foodattack.foodattack;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -21,6 +27,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +46,7 @@ public class ShopListActivityParse extends Activity {
     private ShopListAdapter mAdapter;
     private SwipeMenuListView mShopList_ListView;
     private String mUserFamilyID;
+    private Button mDoneShoppingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,15 @@ public class ShopListActivityParse extends Activity {
         // display shoplist
         updateShopList();
         setSwipeMenu();
+
+        //set what happens when "done shopping" button is clicked
+        mDoneShoppingButton = (Button) findViewById(R.id.shoplist_done_shopping_button);
+        mDoneShoppingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDoneShoppingClick();
+            }
+        });
     }
 
     /**
@@ -185,7 +202,63 @@ public class ShopListActivityParse extends Activity {
      */
     //TODO add code for done option in swipe menu of shop list
     private void onDoneOptionClick(ShopListItem item){
-        Log.d("done", "is clicked");
+        //get item details
+        final String itemName = item.getItemName();
+        final String itemBrand = item.getItemBrand();
+        final String itemQty = item.getItemQty();
+        String itemID = item.getObjectId();
+        final String itemFamilyID = item.getItemFamilyID();
+
+        /* set what the alert dialog will look like */
+        //set title and msg of dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(ShopListActivityParse.this);
+        builder.setTitle(R.string.dialog_done_title);
+        builder.setMessage("Add a restock duration for" + itemName);
+
+        //set layout of dialog
+        AlertDialog alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_done_swipe_option, null);
+        builder.setView(dialogLayout);
+
+        //save button
+        builder.setPositiveButton("@strings/action_save_item", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //get restock date
+                EditText itemRestockEditText = (EditText) findViewById(R.id.dialog_done_swipe_restock);
+                String itemRestock = itemRestockEditText.getText().toString();
+                itemRestock.trim();
+
+                //create a new stockListItem
+                StockListItem stockItem = new StockListItem();
+                stockItem.setItemName(itemName);
+                stockItem.setItemBrand(itemBrand);
+                stockItem.setItemQty(itemQty);
+                stockItem.setItemRestock(itemRestock);
+                stockItem.setItemFamilyID(itemFamilyID);
+
+                //save stockItem to parse
+                stockItem.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            Log.d("added to", "StockList!!");
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Failed to Save to Stock List", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                //delete the shopItem
+                //TODO here here here 
+            }
+        });
+
+
+
+        Log.d("done", "is clicked!!");
     }
 
     /**
@@ -195,7 +268,6 @@ public class ShopListActivityParse extends Activity {
      */
     private void onDeleteButtonClick(ShopListItem item){
         String itemID = item.getObjectId();
-        // TODO HERE HERE HERE
         ParseObject itemParseObject = ParseObject.createWithoutData(ShopListItem.class, itemID);
         itemParseObject.deleteInBackground(new DeleteCallback() {
             @Override
@@ -209,6 +281,15 @@ public class ShopListActivityParse extends Activity {
                 }
             }
         });
+    }
+
+    /**
+     * onDoneShoppinhClick
+     * Description: code for done shopping button
+     */
+    // TODO add code for DONE SHOPPING button
+    private void onDoneShoppingClick(){
+        Log.d("DONE SHOPPING","clicked!!");
     }
 
     //TODO solved the refresh prob for add but not edit in shoplistactivityparse

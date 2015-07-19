@@ -58,4 +58,6 @@
     <string name="edit_error_title">Error!</string>
     <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
     <string name="title_activity_edit_shop_item">Add Shop Item</string>
+
+    <string name="dialog_done_title">Add restock duration</string>
 </resources>

@@ -19,5 +19,4 @@
         android:layout_width="match_parent"
         android:hint="Quantity" />
 
-
 </LinearLayout>
