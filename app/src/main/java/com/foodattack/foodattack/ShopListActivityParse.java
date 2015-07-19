@@ -223,7 +223,7 @@ public class ShopListActivityParse extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_list, menu);
+        getMenuInflater().inflate(R.menu.menu_shop_list, menu);
 
         return true;
     }
@@ -249,7 +249,6 @@ public class ShopListActivityParse extends Activity {
             }
 
             case R.id.action_add_shop_item: {
-                Log.d("add clicked", "!!");
                 Intent intent = new Intent(this, EditShopItemActivity.class);
                 intent.putExtra("itemFamilyID", mUserFamilyID);
                 startActivity(intent);
