@@ -63,7 +63,7 @@ public class StockListActivityParse extends Activity {
      * updateStockList
      * Description: fetch item data from parse
      */
-    public void updateStockList() {
+    private void updateStockList() {
         //retrieve current user's familyID from "Family" class
         setProgressBarIndeterminateVisibility(true);
         ParseQuery<ParseObject> familyQuery = ParseQuery.getQuery("Family");
