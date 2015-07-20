@@ -47,6 +47,7 @@ public class ShopListActivityParse extends Activity {
     private ShopListAdapter mAdapter;
     private SwipeMenuListView mShopList_ListView;
     private String mUserFamilyID;
+    private Button mDoneShoppingFooter;
     private Button mDoneShoppingButton;
 
     @Override
@@ -68,12 +69,20 @@ public class ShopListActivityParse extends Activity {
 
         //add DONE SHOPPING button to the end of the list
         LayoutInflater inflater = this.getLayoutInflater();
-        LinearLayout doneShoppingLayout = (LinearLayout)inflater.inflate(R.layout.button_done_shopping, null);
+        LinearLayout doneShoppingLayout = (LinearLayout)inflater.inflate(R.layout.list_footer_done_shopping, null);
         mShopList_ListView.addFooterView(doneShoppingLayout);
 
+        //set what happens when "done shopping" button as footer is clicked
+        mDoneShoppingFooter = (Button) doneShoppingLayout.findViewById(R.id.footer_done_shopping_button);
+        mDoneShoppingFooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDoneShoppingClick();
+            }
+        });
 
-        //set what happens when "done shopping" button is clicked
-        mDoneShoppingButton = (Button) doneShoppingLayout.findViewById(R.id.shoplist_done_shopping_button);
+        //set what happens when "done shopping" button that always stays at the bottom of screen
+        mDoneShoppingButton = (Button) findViewById(R.id.shoplist_done_shopping_button);
         mDoneShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +91,7 @@ public class ShopListActivityParse extends Activity {
         });
 
         //don't show doneShopping Button until items are retrieved
+        mDoneShoppingFooter.setVisibility(View.GONE);
         mDoneShoppingButton.setVisibility(View.GONE);
     }
 
@@ -115,10 +125,18 @@ public class ShopListActivityParse extends Activity {
                                 mAdapter.addAll(shopList);
 
                                 //set DONE SHOPPING button to be visible only when there are shop items
+                                //if there is no enough items to fill the screen,
+                                //the DONE SHOPPING button is shown at near the bottom of the screen
+                                //else the button scrolls with the screen 
                                 if(shopList.isEmpty()){
+                                    mDoneShoppingFooter.setVisibility(View.GONE);
                                     mDoneShoppingButton.setVisibility(View.GONE);
-                                } else {
+                                } else if (shopList.size() <= 6) {
+                                    mDoneShoppingFooter.setVisibility(View.GONE);
                                     mDoneShoppingButton.setVisibility(View.VISIBLE);
+                                } else {
+                                    mDoneShoppingFooter.setVisibility(View.VISIBLE);
+                                    mDoneShoppingButton.setVisibility(View.GONE);
                                 }
 
                             } else {
