@@ -299,13 +299,46 @@ public class ShopListActivityParse extends Activity {
     // TODO add code for DONE SHOPPING button
     private void onDoneShoppingClick(){
 
-        //mShopList contains the items to be added, can retrieve object id
-//        Log.d("0", String.valueOf(mShopList.get(0).getObjectId()));
-//        Log.d("1", String.valueOf(mShopList.get(1).getObjectId()));
-        Log.d("DONE SHOPPING","clicked!!");
+        for (ShopListItem shopItem : mShopList){
+            //get shopItem details
+            final String itemName = shopItem.getItemName();
+            String itemBrand = shopItem.getItemBrand();
+            String itemQty = shopItem.getItemQty();
+            String itemFamilyID = shopItem.getItemFamilyID();
 
-        // TODO change this delete all
-        ParseObject.deleteAllInBackground(mShopList);
+            //create and save stockItem
+            StockListItem stockItem = new StockListItem();
+            stockItem.setItemName(itemName);
+            stockItem.setItemBrand(itemBrand);
+            stockItem.setItemQty(itemQty);
+            stockItem.setItemFamilyID(itemFamilyID);
+            stockItem.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null){
+                        Log.d("Successfully saved", "" + itemName);
+                    } else {
+                        Log.d("Failed to save", "" + itemName);
+                        Toast.makeText(getApplicationContext(), "Oops! Something went wrong during update of stock list", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            //delete shopItem
+            shopItem.deleteInBackground(new DeleteCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null){
+                        Log.d("Successfully deleted", "" + itemName);
+                    } else {
+                        Log.d("Failed to delete", "" + itemName);
+                        Toast.makeText(getApplicationContext(), "Oops! Something went wrong during update of shop list", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }
+
         updateShopList();
     }
 
