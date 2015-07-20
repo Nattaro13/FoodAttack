@@ -157,28 +157,26 @@ public class StockListActivityParse extends Activity {
     /**
      * onEditOptionClick
      * Description: code for edit in swipe menu
-     * @param item
+     * @param stockItem
      */
-    private void onEditOptionClick(StockListItem item){
+    private void onEditOptionClick(StockListItem stockItem){
         Intent intent = new Intent(this, EditStockItemActivity.class);
-        intent.putExtra("itemName", item.getItemName());
-        intent.putExtra("itemBrand", item.getItemBrand());
-        intent.putExtra("itemQty", item.getItemQty());
-        intent.putExtra("itemRestock", item.getItemRestock());
-        intent.putExtra("itemID", item.getObjectId());
-        intent.putExtra("itemFamilyID", item.getItemFamilyID());
+        intent.putExtra("itemName", stockItem.getItemName());
+        intent.putExtra("itemBrand", stockItem.getItemBrand());
+        intent.putExtra("itemQty", stockItem.getItemQty());
+        intent.putExtra("itemRestock", stockItem.getItemRestock());
+        intent.putExtra("itemID", stockItem.getObjectId());
+        intent.putExtra("itemFamilyID", stockItem.getItemFamilyID());
         startActivity(intent);
     }
 
     /**
      * onDeleteButtonClick
      * Description: code for delete in swipe menu
-     * @param item
+     * @param stockItem
      */
-    private void onDeleteButtonClick(StockListItem item){
-        String itemID = item.getObjectId();
-        ParseObject itemParseObject = ParseObject.createWithoutData(StockListItem.class, itemID);
-        itemParseObject.deleteInBackground(new DeleteCallback() {
+    private void onDeleteButtonClick(StockListItem stockItem){
+        stockItem.deleteInBackground(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
