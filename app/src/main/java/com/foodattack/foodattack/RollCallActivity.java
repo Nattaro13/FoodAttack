@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,6 +129,7 @@ public class RollCallActivity extends Activity {
         bf = new TextView(this);
         bf.setText("Breakfast");
         bf.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+        bf.setTextColor(Color.parseColor("#D32F2F"));
         layout.addView(bf);
 
         for (int i=0; i<adapterCount; i++) {
@@ -139,6 +141,7 @@ public class RollCallActivity extends Activity {
         lun = new TextView(this);
         lun.setText("Lunch");
         lun.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+        lun.setTextColor(Color.parseColor("#D32F2F"));
         layout.addView(lun);
 
         for (int i=0; i<adapterCount; i++) {
@@ -149,6 +152,7 @@ public class RollCallActivity extends Activity {
         din = new TextView(this);
         din.setText("Dinner");
         din.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+        din.setTextColor(Color.parseColor("#D32F2F"));
         layout.addView(din);
 
         for (int i=0; i<adapterCount; i++) {

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">FoodAttack</string>
-    <string name="hello_world">It\'s boring here</string>
 
     <string name="action_settings">Settings</string>
 
@@ -9,11 +8,11 @@
     <string name="shop_list">Shopping List</string>
     <string name="recipes">Recipes</string>
     <string name="roll_call">Roll Call</string>
-    <string name="title_activity_stock_list">StockList</string>
-    <string name="title_activity_shop_list">ShopList</string>
-    <string name="title_activity_recipe_list">RecipeList</string>
-    <string name="title_activity_roll_call">RollCallActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_stock_list">Available Items</string>
+    <string name="title_activity_shop_list">Shopping List</string>
+    <string name="title_activity_recipe_list">Recipes</string>
+    <string name="title_activity_roll_call">Roll Call</string>
+    <string name="title_activity_login">Login</string>
 
 
     <!-- Strings for the login screen/create new user screen -->
