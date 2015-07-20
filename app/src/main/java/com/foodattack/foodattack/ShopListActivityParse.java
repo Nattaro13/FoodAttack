@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -65,8 +66,14 @@ public class ShopListActivityParse extends Activity {
         updateShopList();
         setSwipeMenu();
 
+        //add DONE SHOPPING button to the end of the list
+        LayoutInflater inflater = this.getLayoutInflater();
+        LinearLayout doneShoppingLayout = (LinearLayout)inflater.inflate(R.layout.button_done_shopping, null);
+        mShopList_ListView.addFooterView(doneShoppingLayout);
+
+
         //set what happens when "done shopping" button is clicked
-        mDoneShoppingButton = (Button) findViewById(R.id.shoplist_done_shopping_button);
+        mDoneShoppingButton = (Button) doneShoppingLayout.findViewById(R.id.shoplist_done_shopping_button);
         mDoneShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
