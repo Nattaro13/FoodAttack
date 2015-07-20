@@ -73,6 +73,9 @@ public class ShopListActivityParse extends Activity {
                 onDoneShoppingClick();
             }
         });
+
+        //don't show doneShopping Button until items are retrieved
+        mDoneShoppingButton.setVisibility(View.GONE);
     }
 
     /**
@@ -103,6 +106,14 @@ public class ShopListActivityParse extends Activity {
                                 //following gadget habit's tutorial
                                 mAdapter.clear();
                                 mAdapter.addAll(shopList);
+
+                                //set DONE SHOPPING button to be visible only when there are shop items
+                                if(shopList.isEmpty()){
+                                    mDoneShoppingButton.setVisibility(View.GONE);
+                                } else {
+                                    mDoneShoppingButton.setVisibility(View.VISIBLE);
+                                }
+
                             } else {
                                 Toast.makeText(getApplicationContext(), "Something went wrong when retrieving data", Toast.LENGTH_SHORT).show();
                                 Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
