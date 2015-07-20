@@ -13,6 +13,7 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:onClick="viewRecipe"
+        android:textColor="#D32F2F"
         android:layout_weight="1"/>
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -59,36 +60,43 @@ public class AddRecipe extends Activity {
      */
     public void storeRecipe() {
         //get all your recipe info!
-        final EditText recipeTitle = (EditText) findViewById(R.id.recipe_name);
-        final EditText recipeIngredients = (EditText) findViewById(R.id.recipe_ingredients);
-        final EditText recipeSteps = (EditText) findViewById(R.id.recipe_steps);
-        Log.d("Recipe",recipeTitle.getText().toString());
+        final EditText rawRecipeTitle = (EditText) findViewById(R.id.recipe_name);
+        final EditText rawRecipeIngredients = (EditText) findViewById(R.id.recipe_ingredients);
+        final EditText rawRecipeSteps = (EditText) findViewById(R.id.recipe_steps);
 
-        //construct query for the "Family" database
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
-        //get the owner's data from the database
-        query.whereEqualTo("Owner", ParseUser.getCurrentUser().getUsername());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
-                if ((e == null) && (!objects.isEmpty())) {
-                    //get the owner's family ID.
-                    ParseObject userData = objects.get(0);
-                    final String currFamilyID = userData.getString("familyID");
+        final String recipeTitle = rawRecipeTitle.getText().toString().trim();
+        final String recipeIngredients = rawRecipeIngredients.getText().toString().trim();
+        final String recipeSteps = rawRecipeSteps.getText().toString().trim();
 
-                    //construct object to store Recipe into the Parse Database.
-                    ParseObject newRecipe = new ParseObject("Recipe");
-                    newRecipe.put("familyID",currFamilyID);
-                    newRecipe.put("recipeTitle", recipeTitle.getText().toString());
-                    newRecipe.put("recipeIngredients",recipeIngredients.getText().toString());
-                    newRecipe.put("recipeSteps",recipeSteps.getText().toString());
-                    //store into the database
-                    newRecipe.saveInBackground();
+        if ((!recipeTitle.isEmpty())
+                || (!recipeIngredients.isEmpty())
+                || (!recipeSteps.isEmpty())) {
+            //construct query for the "Family" database
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
+            //get the owner's data from the database
+            query.whereEqualTo("Owner", ParseUser.getCurrentUser().getUsername());
+            query.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if ((e == null) && (!objects.isEmpty())) {
+                        //get the owner's family ID.
+                        ParseObject userData = objects.get(0);
+                        final String currFamilyID = userData.getString("familyID");
 
+                        //construct object to store Recipe into the Parse Database.
+                        ParseObject newRecipe = new ParseObject("Recipe");
+                        newRecipe.put("familyID", currFamilyID);
+                        newRecipe.put("recipeTitle", recipeTitle);
+                        newRecipe.put("recipeIngredients", recipeIngredients);
+                        newRecipe.put("recipeSteps", recipeSteps);
+                        //store into the database
+                        newRecipe.saveInBackground();
+                        Toast.makeText(getApplicationContext(), "Recipe added", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-
+            });
+        }
     }
+
 
     /*
     Bring user to the RecipeList class when back button is pressed.

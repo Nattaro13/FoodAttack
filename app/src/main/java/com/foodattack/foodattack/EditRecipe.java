@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -91,25 +92,36 @@ public class EditRecipe extends Activity {
      */
     public void storeRecipe() {
         //get all your recipe info!
-        final EditText recipeTitle = (EditText) findViewById(R.id.edit_recipe_name);
-        final EditText recipeIngredients = (EditText) findViewById(R.id.edit_recipe_ingredients);
-        final EditText recipeSteps = (EditText) findViewById(R.id.edit_recipe_steps);
-        Log.d("Recipe",recipeTitle.getText().toString());
+        final EditText rawRecipeTitle = (EditText) findViewById(R.id.edit_recipe_name);
+        final EditText rawRecipeIngredients = (EditText) findViewById(R.id.edit_recipe_ingredients);
+        final EditText rawRecipeSteps = (EditText) findViewById(R.id.edit_recipe_steps);
 
-        //construct query for the "Family" database
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
-        //get the recipe object from the database
-        query.getInBackground(recipeID, new GetCallback<ParseObject>() {
-            public void done(ParseObject recipeDetails, ParseException e) {
-                if (e == null) {
-                    recipeDetails.put("recipeTitle", recipeTitle.getText().toString());
-                    recipeDetails.put("recipeIngredients", recipeIngredients.getText().toString());
-                    recipeDetails.put("recipeSteps", recipeSteps.getText().toString());
-                    //store into the database
-                    recipeDetails.saveInBackground();
+        final String recipeTitle = rawRecipeTitle.getText().toString().trim();
+        final String recipeIngredients = rawRecipeIngredients.getText().toString().trim();
+        final String recipeSteps = rawRecipeSteps.getText().toString().trim();
 
+        if ((!recipeTitle.isEmpty())
+                || (!recipeIngredients.isEmpty())
+                || (!recipeSteps.isEmpty())) {
+
+            //construct query for the "Family" database
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
+            //get the recipe object from the database
+            query.getInBackground(recipeID, new GetCallback<ParseObject>() {
+                public void done(ParseObject recipeDetails, ParseException e) {
+                    if (e == null) {
+                        recipeDetails.put("recipeTitle", recipeTitle);
+                        recipeDetails.put("recipeIngredients", recipeIngredients);
+                        recipeDetails.put("recipeSteps", recipeSteps);
+                        //store into the database
+                        recipeDetails.saveInBackground();
+                        Toast.makeText(getApplicationContext(), "Recipe updated", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Update failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }
