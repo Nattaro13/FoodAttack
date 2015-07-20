@@ -183,15 +183,15 @@ public class ShopListActivityParse extends Activity {
     /**
      * onEditOptionClick
      * Description: code for edit in swipe menu
-     * @param item
+     * @param shopItem
      */
-    private void onEditOptionClick(ShopListItem item){
+    private void onEditOptionClick(ShopListItem shopItem){
         Intent intent = new Intent(this, EditShopItemActivity.class);
-        intent.putExtra("itemName", item.getItemName());
-        intent.putExtra("itemBrand", item.getItemBrand());
-        intent.putExtra("itemQty", item.getItemQty());
-        intent.putExtra("itemID", item.getObjectId());
-        intent.putExtra("itemFamilyID", item.getItemFamilyID());
+        intent.putExtra("itemName", shopItem.getItemName());
+        intent.putExtra("itemBrand", shopItem.getItemBrand());
+        intent.putExtra("itemQty", shopItem.getItemQty());
+        intent.putExtra("itemID", shopItem.getObjectId());
+        intent.putExtra("itemFamilyID", shopItem.getItemFamilyID());
         startActivity(intent);
     }
 
@@ -205,17 +205,16 @@ public class ShopListActivityParse extends Activity {
      */
     private void onDoneOptionClick(ShopListItem item){
         //get item details
-        final String itemName = item.getItemName();
-        final String itemBrand = item.getItemBrand();
-        final String itemQty = item.getItemQty();
-        final String itemID = item.getObjectId();
-        final String itemFamilyID = item.getItemFamilyID();
+        final ShopListItem shopItem = item;
+        final String itemName = shopItem.getItemName();
+        final String itemBrand = shopItem.getItemBrand();
+        final String itemQty = shopItem.getItemQty();
+        final String itemFamilyID = shopItem.getItemFamilyID();
 
         /* set what the alert dialog will look like */
         //set title and msg of dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ShopListActivityParse.this);
         builder.setTitle("Add a restock duration for " + itemName);
-        //builder.setMessage("Add a restock duration for " + itemName);
 
         //set layout of dialog
         final AlertDialog alertDialog = builder.create();
@@ -252,7 +251,6 @@ public class ShopListActivityParse extends Activity {
                 });
 
                 //delete the shopItem
-                ParseObject shopItem = ParseObject.createWithoutData(ShopListItem.class, itemID);
                 shopItem.deleteInBackground(new DeleteCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -277,12 +275,10 @@ public class ShopListActivityParse extends Activity {
     /**
      * onDeleteButtonClick
      * Description: code for delete in swipe menu
-     * @param item
+     * @param shopItem
      */
-    private void onDeleteButtonClick(ShopListItem item){
-        String itemID = item.getObjectId();
-        ParseObject itemParseObject = ParseObject.createWithoutData(ShopListItem.class, itemID);
-        itemParseObject.deleteInBackground(new DeleteCallback() {
+    private void onDeleteButtonClick(ShopListItem shopItem){
+        shopItem.deleteInBackground(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -302,7 +298,15 @@ public class ShopListActivityParse extends Activity {
      */
     // TODO add code for DONE SHOPPING button
     private void onDoneShoppingClick(){
+
+        //mShopList contains the items to be added, can retrieve object id
+//        Log.d("0", String.valueOf(mShopList.get(0).getObjectId()));
+//        Log.d("1", String.valueOf(mShopList.get(1).getObjectId()));
         Log.d("DONE SHOPPING","clicked!!");
+
+        // TODO change this delete all
+        ParseObject.deleteAllInBackground(mShopList);
+        updateShopList();
     }
 
     //TODO solved the refresh prob for add but not edit in shoplistactivityparse
