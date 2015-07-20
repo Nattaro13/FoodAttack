@@ -127,7 +127,7 @@ public class ShopListActivityParse extends Activity {
                                 //set DONE SHOPPING button to be visible only when there are shop items
                                 //if there is no enough items to fill the screen,
                                 //the DONE SHOPPING button is shown at near the bottom of the screen
-                                //else the button scrolls with the screen 
+                                //else the button scrolls with the screen
                                 if(shopList.isEmpty()){
                                     mDoneShoppingFooter.setVisibility(View.GONE);
                                     mDoneShoppingButton.setVisibility(View.GONE);
@@ -373,6 +373,9 @@ public class ShopListActivityParse extends Activity {
             });
 
         }
+
+        //remind users to add restock dates for items bought
+        Toast.makeText(getApplicationContext(), "Please remember to add restock dates for the items you bought", Toast.LENGTH_SHORT).show();
 
         updateShopList();
     }
