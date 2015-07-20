@@ -81,7 +81,7 @@ public class ShopListActivityParse extends Activity {
             }
         });
 
-        //set what happens when "done shopping" button that always stays at the bottom of screen
+        //set what happens when "done shopping" button that always stays at the bottom of screen is clicked
         mDoneShoppingButton = (Button) findViewById(R.id.shoplist_done_shopping_button);
         mDoneShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +90,7 @@ public class ShopListActivityParse extends Activity {
             }
         });
 
-        //don't show doneShopping Button until items are retrieved
+        //don't show doneShopping button or footer until items are retrieved
         mDoneShoppingFooter.setVisibility(View.GONE);
         mDoneShoppingButton.setVisibility(View.GONE);
     }
