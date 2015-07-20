@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -149,25 +150,7 @@ public class MainSettingsActivity extends Activity {
     This alert is displayed when adding family member to the family database is successful.
      */
     public void showAlertSuccess() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Success!");
-        builder.setMessage("New family member added to your database.");
-        final AlertDialog alertDialog = builder.create();
-
-        //Re-Enable this when we do a custom style for alert dialog
-        //final AlertDialog alertDialog = builder.create();
-        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
-        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
-
-        //builder.setView(dialogLayout);
-
-        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, final int i) {
-                alertDialog.cancel();
-            }
-        });
-        builder.create().show();
+        Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -175,25 +158,8 @@ public class MainSettingsActivity extends Activity {
     This alert is displayed when adding family member fails.
     */
     public void showAlertNoSuchUser() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage("No such user exists.");
-        final AlertDialog alertDialog = builder.create();
+        Toast.makeText(getApplicationContext(), "Error: No such user", Toast.LENGTH_SHORT).show();
 
-        //Re-Enable this when we do a custom style for alert dialog
-        //final AlertDialog alertDialog = builder.create();
-        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
-        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
-
-        //builder.setView(dialogLayout);
-
-        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, final int i) {
-                alertDialog.cancel();
-            }
-        });
-        builder.create().show();
     }
 
     //###########################################################################################

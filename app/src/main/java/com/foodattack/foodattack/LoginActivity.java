@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.app.Application;
+import android.widget.Toast;
 
 import java.text.BreakIterator;
 import java.util.List;
@@ -81,19 +82,7 @@ public class LoginActivity extends Activity  {
     This alert is displayed when login fails.
      */
     public void showAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage("Login failed. Please re-enter your ID and password.");
-
-        //Re-Enable this when we do a custom style for alert dialog
-        //final AlertDialog alertDialog = builder.create();
-        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
-        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
-
-        //builder.setView(dialogLayout);
-
-        builder.setNegativeButton("Ok", null);
-        builder.create().show();
+        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -85,19 +86,7 @@ public class NewUserActivity extends Activity {
     This alert is displayed when sign up fails.
      */
     public void showAlertUserID() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage("User ID has already been taken. Please choose another User ID.");
-
-        //Re-Enable this when we do a custom style for alert dialog
-        //final AlertDialog alertDialog = builder.create();
-        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
-        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
-
-        //builder.setView(dialogLayout);
-
-        builder.setNegativeButton("Ok", null);
-        builder.create().show();
+        Toast.makeText(getApplicationContext(), "Error: UserID unavailable", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -105,19 +94,8 @@ public class NewUserActivity extends Activity {
     This alert is displayed when passwords do not match.
      */
     public void showAlertPassword() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage("Passwords do not match.");
+        Toast.makeText(getApplicationContext(), "Error: Passwords do not match", Toast.LENGTH_SHORT).show();
 
-        //Re-Enable this when we do a custom style for alert dialog
-        //final AlertDialog alertDialog = builder.create();
-        //LayoutInflater mInflater = alertDialog.getLayoutInflater();
-        //View dialogLayout = mInflater.inflate(R.layout.dialog_login_error, null);
-
-        //builder.setView(dialogLayout);
-
-        builder.setNegativeButton("Ok", null);
-        builder.create().show();
     }
 
 
