@@ -307,7 +307,6 @@ public class ShopListActivityParse extends Activity {
      * onDoneShoppinhClick
      * Description: code for done shopping button
      */
-    // TODO add code for DONE SHOPPING button
     private void onDoneShoppingClick(){
 
         for (ShopListItem shopItem : mShopList){
