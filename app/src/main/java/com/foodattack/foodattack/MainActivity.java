@@ -75,9 +75,7 @@ public class MainActivity extends Activity {
     on the action bar
      */
     public void aboutApp()  {
-        String msg = "This app, created by Xue Hui and Yi Yan, allows families keep track of their " +
-                "food stock in the kitchen, as well as automatically update their shopping list. " +
-                "The data can be shared among a few users of the same family.";
+        String msg = "This app was created by Xue Hui and Yi Yan for NUS Orbital 2015.";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("About this app");
         builder.setMessage(msg);

@@ -3,6 +3,38 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+
+        <!--
+        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
+        <item name="dropDownListViewStyle">@style/PopupMenuListView</item> -->
+
+        <!-- OverFlow Menu Text Color -->
+        <item name="android:textColor">@color/action_item_text_color</item>
+
+
+        <!-- Alert Dialog styles -->
+        <!--
+        <item name="android:alertDialogTheme">@style/YourAlertDialogTheme</item>
+        <item name="android:alertDialogStyle">@style/AlertDialog_Sphinx</item> -->
+
     </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/actionbar_background</item>
+    </style>
+
+
+    <!-- OverFlow menu Styles -->
+    <!--
+    <style name="PopupMenuListView" parent="android:Theme.Holo.Light.DarkActionBar" >
+        <item name="android:divider">#F44336</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:background">#FFFFFF</item>
+    </style> -->
+
+
 
 </resources>
