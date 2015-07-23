@@ -64,9 +64,23 @@ public class MainActivity extends Activity {
             aboutApp();
 
             return true;
+        } else if (id == R.id.app_tutorial) {
+            viewTutorial();
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    /*
+    Bring user to the Tutorial
+     */
+    public void viewTutorial() {
+        Intent intent = new Intent(this, Tutorial.class);
+        startActivity(intent);
     }
 
 

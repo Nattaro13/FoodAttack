@@ -118,9 +118,6 @@ public class LoginActivity extends Activity  {
 
         ActionBar actionBar = getActionBar();
         actionBar.hide();
-        //TO DO!
-        //make this part check for any available details, then skip this screen if there's a
-        //available username and password
     }
 
 
@@ -178,6 +175,21 @@ public class LoginActivity extends Activity  {
         setContentView(R.layout.activity_login);
 
     }
+
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to home screen of their android phone
+    ie. EXIT APP.
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
     /**
      * Saves the resolution state.
      */

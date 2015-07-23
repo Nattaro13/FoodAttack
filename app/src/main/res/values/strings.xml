@@ -59,5 +59,9 @@
     <string name="edit_error_no_qty">You cannot save an item without it\'s quantity.</string>
     <string name="title_activity_edit_shop_item">Add Shop Item</string>
     <string name="dialog_done_title">Add restock duration</string>
+    <string name="title_activity_splash">Food Attack</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_tutorial">Tutorial</string>
 
 </resources>

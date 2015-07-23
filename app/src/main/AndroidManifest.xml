@@ -103,14 +103,12 @@
         <activity
             android:name=".AddRecipe"
             android:label="@string/title_activity_add_recipe"
-            android:noHistory="true"
-            >
-
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".DisplayRecipe"
-            android:noHistory="true"
             android:label="@string/title_activity_display_recipe"
+            android:noHistory="true"
             android:parentActivityName=".RecipeList" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -118,25 +116,23 @@
         </activity>
         <activity
             android:name=".EditStockItemActivity"
-            android:noHistory="true"
             android:label="@string/title_activity_edit_stock_item"
+            android:noHistory="true"
             android:parentActivityName=".StockListActivityParse" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.StockListActivityParse" />
         </activity>
-
         <activity
             android:name=".EditShopItemActivity"
-            android:noHistory="true"
             android:label="@string/title_activity_edit_shop_item"
+            android:noHistory="true"
             android:parentActivityName=".ShopListActivityParse" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.ShopListActivityParse" />
         </activity>
-
-	    <activity
+        <activity
             android:name=".EditRecipe"
             android:label="@string/title_activity_edit_recipe"
             android:noHistory="true"
@@ -144,7 +140,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.foodattack.foodattack.RecipeList" />
- 
+        </activity>
+        <activity
+            android:name=".Tutorial"
+            android:label="@string/title_activity_tutorial" >
         </activity>
     </application>
 
