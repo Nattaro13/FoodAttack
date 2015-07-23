@@ -8,12 +8,15 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.app.Application;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.text.BreakIterator;
@@ -144,7 +147,20 @@ public class LoginActivity extends Activity  {
 
         //else load login screen
         setContentView(R.layout.activity_login);
+    }
 
+
+    /*
+    When the activity comes into view, load the blink feed
+     */
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        //load the blink feed
+        ImageView imageView = (ImageView) findViewById(R.id.login_blink_feed);
+        imageView.setBackgroundResource(R.drawable.blink);
+        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
+        //start animation
+        anim.start();
     }
 
 
