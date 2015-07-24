@@ -47,6 +47,7 @@ public class StockSearchResultsActivity  extends Activity {
         mStockList = new ArrayList<StockListItem>();
         mAdapter = new StockListAdapter(this, mStockList);
         mStockList_ListView.setAdapter(mAdapter);
+        mStockList_ListView.setEmptyView(findViewById(R.id.search_stock_empty));
 
         setSwipeMenu();
         handleIntent(getIntent());
@@ -60,12 +61,15 @@ public class StockSearchResultsActivity  extends Activity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            mQueryStr = intent.getStringExtra(SearchManager.QUERY);
-
+            mQueryStr = intent.getStringExtra(SearchManager.QUERY).trim();
             showResults();
         }
     }
 
+    /**
+     * showResults
+     * Description: search for item with name or brand that matches the query
+     **/
     private void showResults(){
         //retrieve current user's familyID from "Family" class
         setProgressBarIndeterminateVisibility(true);
@@ -78,11 +82,21 @@ public class StockSearchResultsActivity  extends Activity {
                     ParseObject userData = userList.get(0);
                     mUserFamilyID = userData.getString("familyID");
 
-                    //retrieve all stock items entered by user's family
-                    //that matches mQueryStr
-                    ParseQuery<StockListItem> stockListQuery = ParseQuery.getQuery(StockListItem.class);
-                    stockListQuery.whereEqualTo("itemFamilyID", mUserFamilyID);
-                    stockListQuery.whereMatches("itemName", mQueryStr, "i");
+                    /*retrieve all stock items entered by user's family that contains mQueryStr*/
+                    //query for item names that contains mQueryStr
+                    ParseQuery<StockListItem> itemNameQuery = ParseQuery.getQuery(StockListItem.class);
+                    itemNameQuery.whereEqualTo("itemFamilyID", mUserFamilyID);
+                    itemNameQuery.whereMatches("itemName", mQueryStr, "i");
+                    //query for item brands that contains mQueryStr
+                    ParseQuery<StockListItem> itemBrandQuery = ParseQuery.getQuery(StockListItem.class);
+                    itemBrandQuery.whereEqualTo("itemFamilyID", mUserFamilyID);
+                    itemBrandQuery.whereMatches("itemBrand", mQueryStr, "i");
+                    //add query for item name and brand into list
+                    List<ParseQuery<StockListItem>> queries = new ArrayList<ParseQuery<StockListItem>>();
+                    queries.add(itemNameQuery);
+                    queries.add(itemBrandQuery);
+                    //find items that fulfills criteria in queries
+                    ParseQuery<StockListItem> stockListQuery = ParseQuery.or(queries);
                     stockListQuery.orderByAscending("itemName");
                     stockListQuery.findInBackground(new FindCallback<StockListItem>() {
                         @Override
@@ -92,6 +106,7 @@ public class StockSearchResultsActivity  extends Activity {
                                 //following gadget habit's tutorial
                                 mAdapter.clear();
                                 mAdapter.addAll(stockList);
+
                             } else {
                                 Toast.makeText(getApplicationContext(), "Something went wrong during the search", Toast.LENGTH_SHORT).show();
                                 Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
@@ -104,7 +119,6 @@ public class StockSearchResultsActivity  extends Activity {
                 }
             }
         });
-
     }
 
     /**
@@ -159,6 +173,8 @@ public class StockSearchResultsActivity  extends Activity {
         });
     }
 
+
+    //TODO fix edit bug
     /**
      * onEditOptionClick
      * Description: code for edit in swipe menu
@@ -186,7 +202,7 @@ public class StockSearchResultsActivity  extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                    showResults();
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "User delete error: " + e);
