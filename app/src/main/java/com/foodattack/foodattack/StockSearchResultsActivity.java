@@ -24,6 +24,12 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * StockSearchResultsActivity is the activity that is started when
+ * StockListActivityParse is searched
+ * It displays the search results
+ **/
+
 public class StockSearchResultsActivity  extends Activity {
 
     /**
@@ -58,6 +64,11 @@ public class StockSearchResultsActivity  extends Activity {
         handleIntent(intent);
     }
 
+    /**
+     * handleIntent
+     * @param intent
+     * Description: if action is search, show results for query
+     */
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mQueryStr = intent.getStringExtra(SearchManager.QUERY).trim();
@@ -67,7 +78,8 @@ public class StockSearchResultsActivity  extends Activity {
 
     /**
      * showResults
-     * Description: search for item with name or brand that matches the query
+     * Description: search for item with name or brand that
+     * matches the query and display results
      **/
     private void showResults(){
         //retrieve current user's familyID from "Family" class
