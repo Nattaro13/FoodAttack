@@ -21,34 +21,35 @@ public class Tutorial extends AppIntro {
         // Just set a title, description, background and image. AppIntro will do the rest
         addSlide(AppIntroFragment.newInstance("Monitor food supplies",
                 "Use our 'Available Food' feature to record,delete, or update the food you currently have in your fridge/ cupboard",
-                R.drawable.apple,
-                Color.parseColor("#3F51B5") ));
+                R.drawable.carousel_1,
+                Color.parseColor("#FF5722") ));
 
         addSlide(AppIntroFragment.newInstance("Track your shopping list",
                 "Items removed from your available food will automatically go into the Shopping List. You can also add new items to the shopping list." +
                         "Click on 'Done Shopping' once you have gone to the supermarket!",
-                R.drawable.apple,
-                Color.parseColor("#3F51B5") ));
+                R.drawable.carousel_2,
+                Color.parseColor("#9C27B0") ));
 
         addSlide(AppIntroFragment.newInstance("Record recipes",
                 "Store recipes in this app and share it with your entire family!",
-                R.drawable.apple,
-                Color.parseColor("#3F51B5") ));
+                R.drawable.carousel_3,
+                Color.parseColor("#4CAF50") ));
 
         addSlide(AppIntroFragment.newInstance("Make informed cooking choices",
                 "Keep track of who will be coming back for dinner using our 'Roll Call' feature!",
-                R.drawable.apple,
+                R.drawable.carousel_4,
                 Color.parseColor("#3F51B5") ));
 
         addSlide(AppIntroFragment.newInstance("End of Tutorial",
                 "You are ready to use this app. Click on 'Done', and you're set to go!",
                 R.drawable.apple,
-                Color.parseColor("#3F51B5") ));
+                Color.parseColor("#F44336") ));
+
 
         // OPTIONAL METHODS
         // Override bar/separator color
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        //setBarColor(Color.parseColor("#3F51B5"));
+        setSeparatorColor(Color.parseColor("#FFFFFF"));
 
         // Hide Skip/Done button
         showSkipButton(false);
