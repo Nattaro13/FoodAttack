@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.foodattack.foodattack.StockListActivityParse">
 
-    <!-- TODO when search search expands other icons should disappear -->
+    <!-- TODO when search expands other icons should disappear -->
 
     <!-- Refresh Button -->
     <item
         android:id="@+id/action_refresh_stocklist"
         android:icon="@drawable/ic_refresh_white"
         android:showAsAction="ifRoom"
-        android:title="@string/action_refresh">
-    </item>
+        android:title="@string/action_refresh" />
 
     <!--Button to add a new item to the stock list -->
     <item android:id="@+id/action_add_stock_item"
