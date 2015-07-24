@@ -66,10 +66,10 @@ public class MySimpleArrayAdapter extends ArrayAdapter {
         PersonInfo person = values.get(position);
         if(person.getEating()) {
             view.isEating.setChecked(true);
-            Log.d("Person eat","true" );
+            //Log.d("Person eat","true" );
         } else {
             view.isEating.setChecked(false);
-            Log.d("Person Eat","false");
+            //Log.d("Person Eat","false");
         }
         view.memberName.setText(person.getName());
         view.memberName.setTextColor(Color.parseColor("#000000"));

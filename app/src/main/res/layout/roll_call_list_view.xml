@@ -4,16 +4,14 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="5dp">
 
-    <Switch android:id="@+id/roll_call_check_box"
+    <TextView
+        android:id="@+id/roll_call_meal_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="updateMeal"
-        android:textOn="Yes"
-        android:textOff="No"
-        android:thumb="@drawable/roll_call_btn"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        />
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"/>
+
 
     <TextView
         android:layout_width="0dp"
@@ -25,12 +23,17 @@
         android:layout_marginBottom="5dp"
         />
 
-    <TextView
-        android:id="@+id/roll_call_meal_type"
+    <Switch android:id="@+id/roll_call_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="5dp"/>
+        android:onClick="updateMeal"
+        android:textOn="Yes"
+        android:textOff="No"
+        android:thumb="@drawable/roll_call_btn"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
+
 
 </LinearLayout>
