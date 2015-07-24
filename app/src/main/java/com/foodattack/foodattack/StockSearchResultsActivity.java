@@ -47,7 +47,6 @@ public class StockSearchResultsActivity  extends Activity {
         mStockList = new ArrayList<StockListItem>();
         mAdapter = new StockListAdapter(this, mStockList);
         mStockList_ListView.setAdapter(mAdapter);
-        mStockList_ListView.setEmptyView(findViewById(R.id.search_stock_empty));
 
         setSwipeMenu();
         handleIntent(getIntent());
@@ -106,6 +105,9 @@ public class StockSearchResultsActivity  extends Activity {
                                 //following gadget habit's tutorial
                                 mAdapter.clear();
                                 mAdapter.addAll(stockList);
+
+                                //set view for empty list
+                                mStockList_ListView.setEmptyView(findViewById(R.id.search_stock_empty));
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "Something went wrong during the search", Toast.LENGTH_SHORT).show();

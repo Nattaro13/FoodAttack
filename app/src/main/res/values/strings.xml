@@ -31,8 +31,6 @@
     <string name="restock_hint">Restock Duration</string>
 
     <!--Strings for the ShopList related XML files -->
-    <string name="search_shop_list">Search for item</string>
-    <string name="title_ShopList_search_results">Search Results</string>
     <string name="title_activity_main_settings">Settings</string>
 
     <!--Strings for the Settings page (opened by clicking settings in the main menu -->
@@ -41,6 +39,11 @@
     <string name="settings_add_family">Add family member</string>
     <string name="title_activity_add_recipe">AddRecipe</string>
 
+    <!--Strings for search-->
+    <string name="action_search">Search</string>
+    <string name="search_shop_list">Search for item</string>
+    <string name="title_ShopList_search_results">Search Results</string>
+    <string name="no_results">Your search did not yield any results</string>
 
     <!--Strings in the RecipeList page -->
     <string name="hint_recipe_name">Name of Recipe</string>
@@ -49,7 +52,7 @@
     <string name="title_activity_display_recipe">DisplayRecipe</string>
     <string name="title_activity_edit_recipe">EditRecipe</string>
 
-    <string name="action_search">Search</string>
+
     <string name="action_refresh">Refresh</string>
     <string name="action_save_item">Save</string>
     <string name="action_add_item">Add</string>
