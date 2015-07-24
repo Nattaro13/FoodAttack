@@ -66,7 +66,7 @@
         </activity>
         <activity
             android:name=".SearchShopList"
-            android:label="@string/title_ShopList_search_results"
+            android:label="@string/title_search_results"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -81,7 +81,7 @@
 
         <activity
             android:name=".StockSearchResultsActivity"
-            android:label="@string/title_ShopList_search_results"
+            android:label="@string/title_search_results"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

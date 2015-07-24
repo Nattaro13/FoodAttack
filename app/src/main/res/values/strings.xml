@@ -41,8 +41,8 @@
 
     <!--Strings for search-->
     <string name="action_search">Search</string>
-    <string name="search_shop_list">Search for item</string>
-    <string name="title_ShopList_search_results">Search Results</string>
+    <string name="hint_search">Search for item</string>
+    <string name="title_search_results">Search Results</string>
     <string name="no_results">Your search did not yield any results</string>
 
     <!--Strings in the RecipeList page -->
