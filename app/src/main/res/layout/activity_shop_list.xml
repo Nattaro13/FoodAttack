@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.foodattack.foodattack.ShopListActivityParse">
 
+    <!--View for no search results -->
+    <TextView
+        android:id="@+id/search_shop_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="16dp"
+        android:text="@string/no_results"
+        android:textColor="#BDBDBD"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/shoplist_listview"
         android:layout_width="match_parent"
@@ -26,18 +38,10 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:background="@drawable/btn_done_shopping"/>
-
-    <!--View for no search results -->
-    <TextView
-        android:id="@+id/search_shop_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="16dp"
-        android:text="@string/no_results"
-        android:textColor="#BDBDBD"
-        android:textSize="20sp"
+        android:background="@drawable/btn_done_shopping"
         android:visibility="gone"/>
+
+
+
 
 </LinearLayout>
