@@ -1,16 +1,16 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.foodattack.foodattack.ShopListActivityParse">
 
+    <!-- TODO when search expands other icons should disappear -->
+
     <!-- Refresh Button -->
     <item
         android:id="@+id/action_refresh_shoplist"
         android:icon="@drawable/ic_refresh_white"
-        android:showAsAction="always|withText"
-        android:title="@string/action_refresh">
-    </item>
+        android:showAsAction="ifRoom"
+        android:title="@string/action_refresh" />
 
     <!--Button to add a new item to the shopping list -->
     <item android:id="@+id/action_add_shop_item"
@@ -20,12 +20,12 @@
         android:title="@string/action_add_item" />
 
     <!-- Button to search for things in your shopping list -->
-    <!--<item android:id="@+id/action_search"
+    <item android:id="@+id/action_shop_list_search"
         app:showAsAction="collapseActionView|always"
         android:showAsAction="collapseActionView|always"
         android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search" />-->
+        android:title="@string/action_search" />
 
     <!--Settings option in drop down list -->
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
