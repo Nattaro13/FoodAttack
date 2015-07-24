@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="5dp">
 
-    <CheckBox android:id="@+id/roll_call_check_box"
+    <Switch android:id="@+id/roll_call_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="updateMeal"/>
+        android:onClick="updateMeal"
+        android:textOn="Yes"
+        android:textOff="No"
+        android:thumb="@drawable/roll_call_btn"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        />
 
     <TextView
         android:layout_width="0dp"
@@ -15,6 +22,7 @@
         android:id="@+id/roll_call_member_name"
         android:textSize="20sp"
         android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
         />
 
     <TextView
@@ -22,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"/>
 
 </LinearLayout>
