@@ -31,7 +31,6 @@
     <string name="restock_hint">Restock Duration</string>
 
     <!--Strings for the ShopList related XML files -->
-    <string name="shop_list_remove">x</string>
     <string name="search_shop_list">Search for item</string>
     <string name="title_ShopList_search_results">Search Results</string>
     <string name="title_activity_main_settings">Settings</string>
@@ -50,6 +49,7 @@
     <string name="title_activity_display_recipe">DisplayRecipe</string>
     <string name="title_activity_edit_recipe">EditRecipe</string>
 
+    <string name="action_search">Search</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_save_item">Save</string>
     <string name="action_add_item">Add</string>
@@ -63,5 +63,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_tutorial">Tutorial</string>
+
 
 </resources>
