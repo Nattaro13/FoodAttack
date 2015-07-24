@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -76,7 +77,7 @@ public class RollCallActivity extends Activity {
     public ScrollView setLayout(List<ParseObject> objects) {
         //initialise fields for linear layout
         TextView bf,lun,din;
-        CheckBox temp;
+        //Switch temp;
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
