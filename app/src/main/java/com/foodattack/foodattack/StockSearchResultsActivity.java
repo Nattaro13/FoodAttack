@@ -216,13 +216,13 @@ public class StockSearchResultsActivity  extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "User delete error: " + e);
                 }
             }
         });
+        finish();
     }
 
 }
