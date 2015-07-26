@@ -225,4 +225,14 @@ public class StockSearchResultsActivity  extends Activity {
         finish();
     }
 
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to prev screen
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,StockListActivityParse.class);
+        startActivity(intent);
+    }
+
 }

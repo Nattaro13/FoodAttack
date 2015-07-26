@@ -3,6 +3,7 @@ package com.foodattack.foodattack;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -264,6 +265,16 @@ public class MainSettingsActivity extends Activity {
         });
         builder.create().show();
 
+    }
+
+    //=====================================================================================
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
 }

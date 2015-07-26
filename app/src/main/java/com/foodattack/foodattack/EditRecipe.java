@@ -124,4 +124,14 @@ public class EditRecipe extends Activity {
             Toast.makeText(getApplicationContext(), "Update failed", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,RecipeList.class);
+        startActivity(intent);
+    }
 }

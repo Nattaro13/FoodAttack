@@ -250,4 +250,13 @@ public class RecipeList extends Activity {
         m_adapter.notifyDataSetChanged();
     }
 
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
 }

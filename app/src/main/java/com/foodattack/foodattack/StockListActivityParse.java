@@ -96,8 +96,7 @@ public class StockListActivityParse extends Activity {
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Something went wrong when retrieving data", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
                 }
@@ -249,6 +248,16 @@ public class StockListActivityParse extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
 }

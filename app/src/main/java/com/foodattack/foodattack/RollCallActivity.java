@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -208,23 +209,23 @@ public class RollCallActivity extends Activity {
             public void done(ParseObject personObject, ParseException e) {
                 if (e == null) {
                     //if breakfast, update breakfast.
-                    if(mealType.compareTo("B") == 0) {
+                    if (mealType.compareTo("B") == 0) {
                         if (personObject.getBoolean("Breakfast") == true) {
-                            personObject.put("Breakfast",false);
+                            personObject.put("Breakfast", false);
                         } else {
                             personObject.put("Breakfast", true);
                         }
                     } else if (mealType.compareTo("L") == 0) {
                         //update lunch
                         if (personObject.getBoolean("Lunch") == true) {
-                            personObject.put("Lunch",false);
+                            personObject.put("Lunch", false);
                         } else {
                             personObject.put("Lunch", true);
                         }
                     } else {
                         //update dinner
                         if (personObject.getBoolean("Dinner") == true) {
-                            personObject.put("Dinner",false);
+                            personObject.put("Dinner", false);
                         } else {
                             personObject.put("Dinner", true);
                         }
@@ -257,5 +258,15 @@ public class RollCallActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }

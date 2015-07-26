@@ -1,6 +1,7 @@
 package com.foodattack.foodattack;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,5 +80,15 @@ public class DisplayRecipe extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*
+    Executed when back button on the phone pad is pressed.
+    Brings user to main activity
+     */
+    public void onBackPressed() {
+        Intent intent = new Intent(this,RecipeList.class);
+        startActivity(intent);
     }
 }
