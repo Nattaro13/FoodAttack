@@ -28,7 +28,7 @@
     <string name="ingredient_hint">Ingredient</string>
     <string name="qty_hint">Quantity</string>
     <string name="brand_hint">Brand</string>
-    <string name="restock_hint">Restock Duration</string>
+    <string name="restock_hint">Restock Date</string>
 
     <!--Strings for the ShopList related XML files -->
     <string name="title_activity_main_settings">Settings</string>
