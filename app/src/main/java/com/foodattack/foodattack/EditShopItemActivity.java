@@ -196,4 +196,17 @@ public class EditShopItemActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(this,ShopListActivityParse.class);
+        startActivity(intent);
+    }
+
+
+    public void onBackPressed() {
+        Intent intent = new Intent(this,ShopListActivityParse.class);
+        startActivity(intent);
+    }
 }

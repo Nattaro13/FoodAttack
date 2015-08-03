@@ -249,4 +249,16 @@ public class EditStockItemActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(this,StockListActivityParse.class);
+        startActivity(intent);
+    }
+
+
+    public void onBackPressed() {
+        Intent intent = new Intent(this,StockListActivityParse.class);
+        startActivity(intent);
+    }
 }
