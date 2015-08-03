@@ -112,10 +112,13 @@ public class EditStockItemActivity extends Activity {
         mItemRestockEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    new DatePickerDialog(EditStockItemActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                if (hasFocus) {
+                    DatePickerDialog dpd = new DatePickerDialog(EditStockItemActivity.this, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                    dpd.setTitle("Change Restock Date");
+                    dpd.show();
+                }
             }
         });
     }
