@@ -33,6 +33,9 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/action_save_item" />
+        android:text="@string/action_save_item"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custom_btn_main"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
