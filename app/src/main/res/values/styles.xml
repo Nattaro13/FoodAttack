@@ -6,17 +6,14 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
 
 
-        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
-        <item name="dropDownListViewStyle">@style/PopupMenuListView</item>
-
-        <!-- OverFlow Menu Text Color -->
+        <!-- Overall App Text Color, affects overflow bar as well -->
         <item name="android:textColor">@color/action_item_text_color</item>
 
+        <!-- Overflow menus -->
+        <item name="android:actionBarWidgetTheme">@style/PopupWrapper</item>
+        <item name="android:popupMenuStyle">@style/MyApp.PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
 
-        <!-- Alert Dialog styles -->
-        <!--
-        <item name="android:alertDialogTheme">@style/YourAlertDialogTheme</item>
-        <item name="android:alertDialogStyle">@style/AlertDialog_Sphinx</item> -->
 
     </style>
 
@@ -27,13 +24,25 @@
     </style>
 
 
-    <!-- OverFlow menu Styles -->
 
-    <style name="PopupMenuListView" parent="android:Theme.Holo.Light.DarkActionBar" >
-        <!-- <item name="android:divider">#F44336</item>
-        <item name="android:dividerHeight">1dp</item> -->
-        <item name="android:background">#FFFFFF</item>
+    <!-- OverFlow menu Styles: Override Holo Dark Wrapper, then put colors -->
+    <style name="PopupWrapper" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/MyApp.PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
     </style>
+
+    <!-- Background color for Action Bar overflow menu -->
+    <style name="MyApp.PopupMenu" parent="android:Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_overflow</item>
+    </style>
+
+    <!-- Change Overflow Menu ListView Divider Property -->
+    <style name="PopupMenuListView" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:divider">#BDBDBD</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
+
 
 
 
