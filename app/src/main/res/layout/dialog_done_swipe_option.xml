@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:paddingTop="16dp"
-        android:hint="@string/restock_hint" />
+        android:hint="eg. 31 Aug 2018" />
 
 </LinearLayout>

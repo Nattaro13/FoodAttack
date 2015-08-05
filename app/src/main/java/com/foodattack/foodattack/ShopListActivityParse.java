@@ -253,7 +253,7 @@ public class ShopListActivityParse extends Activity {
         /* set what the alert dialog will look like */
         //set title and msg of dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ShopListActivityParse.this);
-        builder.setTitle("Add a restock duration for " + itemName);
+        builder.setTitle("Add a restock date for " + itemName);
 
         //set layout of dialog
         final AlertDialog alertDialog = builder.create();
@@ -386,11 +386,11 @@ public class ShopListActivityParse extends Activity {
     //TODO solved the refresh prob for add but not edit in shoplistactivityparse
     // edit's refresh works sometimes only
     // --> maybe use startactivtyforresult and onactivity result
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        updateShopList();
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        updateShopList();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -432,10 +432,10 @@ public class ShopListActivityParse extends Activity {
                 break;
             }
 
-            case R.id.action_settings: {
-                // Do something when user selects Settings from Action Bar overlay
-                break;
-            }
+//            case R.id.action_settings: {
+//                // Do something when user selects Settings from Action Bar overlay
+//                break;
+//            }
         }
 
         return super.onOptionsItemSelected(item);

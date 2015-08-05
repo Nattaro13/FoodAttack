@@ -192,14 +192,14 @@ public class StockListActivityParse extends Activity {
         });
     }
 
-    //TODO solved the refresh prob for add but not edit
-    // edit's refresh works sometimes only
-    // --> maybe use startactivtyforresult and onactivity result
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        updateStockList();
-    }
+//    //TODO solved the refresh prob for add but not edit
+//    // edit's refresh works sometimes only
+//    // --> maybe use startactivtyforresult and onactivity result
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        updateStockList();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -241,10 +241,10 @@ public class StockListActivityParse extends Activity {
                 break;
             }
 
-            case R.id.action_settings: {
-                // Do something when user selects Settings from Action Bar overlay
-                break;
-            }
+//            case R.id.action_settings: {
+//                // Do something when user selects Settings from Action Bar overlay
+//                break;
+//            }
         }
 
         return super.onOptionsItemSelected(item);
