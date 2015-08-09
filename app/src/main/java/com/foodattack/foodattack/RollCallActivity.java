@@ -176,8 +176,9 @@ public class RollCallActivity extends Activity {
         View v = (View) view.getParent();
         //get all your variable info
         final TextView personName = (TextView) v.findViewById(R.id.roll_call_member_name);
+        Log.d("Person Clicked",personName.getText().toString());
         final TextView mealID = (TextView) v.findViewById(R.id.roll_call_meal_type);
-
+        //meal ID is a transparent value on the screen, so people can't see it.
 
         //Find user on the "Family" database
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Family");
@@ -199,8 +200,8 @@ public class RollCallActivity extends Activity {
     /*
     Update the meal preferences for a family member
      */
-    public void updateMealPreferences(String MemberID,String mealID) {
-        final String personObjectID = MemberID;
+    public void updateMealPreferences(String memberID,String mealID) {
+        final String personObjectID = memberID;
         final String mealType = mealID;
 
         ParseQuery <ParseObject> query = ParseQuery.getQuery("Family");
